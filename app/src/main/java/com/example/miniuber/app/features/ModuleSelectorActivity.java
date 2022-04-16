@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import android.view.View;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -31,7 +30,7 @@ public class ModuleSelectorActivity extends AppCompatActivity {
         riderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ModuleSelectorActivity.this, SignUpActivity.class);
+                Intent intent = new Intent(ModuleSelectorActivity.this, SignInActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -44,7 +43,7 @@ public class ModuleSelectorActivity extends AppCompatActivity {
         driverButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ModuleSelectorActivity.this, SignUpActivity.class);
+                Intent intent = new Intent(ModuleSelectorActivity.this, SignInActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }

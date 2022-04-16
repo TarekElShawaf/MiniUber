@@ -5,4 +5,5 @@
     <string name="please_choose">Please Choose</string>
     <string name="rider">Rider</string>
     <string name="driver">Driver</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
