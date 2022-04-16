@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Mini Uber"
 include ':app'
+include ':driverModule'
+include ':riderModule'

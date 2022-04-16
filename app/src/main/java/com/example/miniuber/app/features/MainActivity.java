@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_selector);
         getSupportActionBar().hide();
+
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
