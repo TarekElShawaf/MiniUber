@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -74,12 +76,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(binding.getRoot());
         searchMap = findViewById(R.id.searchMap);
         currentLocation = findViewById(R.id.gps);
+
         //UserId = getIntent().getExtras().getString("ID");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+       // Window window = this.getWindow();
+        //window.setStatusBarColor(getResources().getColor(R.color.white));
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        Window window = this.getWindow();
+        window.setStatusBarColor(getResources().getColor(R.color.mapsStatus));
         getLocationPermission();
+
+    }
+    private  void setDarkMapStyle(){
+        boolean success = googleMap.setMapStyle(new MapStyleOptions(getResources()
+                .getString(R.string.style_json)));
     }
     @Override
     public void onMapReady(GoogleMap googleMapp) {
@@ -93,6 +106,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
             googleMap.setMyLocationEnabled(true);
             googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+            setDarkMapStyle();
             init();
         }
     }
