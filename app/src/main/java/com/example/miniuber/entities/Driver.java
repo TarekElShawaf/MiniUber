@@ -8,4 +8,12 @@ public class Driver extends User{
         super(name, email, password, phoneNumber, userId);
         this.drivingLicense=drivingLicense;
     }
+
+    public String getDrivingLicense() {
+        return drivingLicense;
+    }
+
+    public void setDrivingLicense(String drivingLicense) {
+        this.drivingLicense = drivingLicense;
+    }
 }

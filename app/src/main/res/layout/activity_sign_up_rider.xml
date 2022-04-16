@@ -11,21 +11,20 @@
     <TextView
 
         android:id="@+id/textView3"
-        android:layout_width="212dp"
-        android:layout_height="95dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="380dp"
+        android:layout_height="103dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/poppin_bold"
         android:gravity="center"
-        android:text="Welcome"
+        android:text="Create An Account "
 
         android:textColor="@color/white"
         android:textFontWeight="@android:integer/config_longAnimTime"
         android:textSize="35dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintHorizontal_bias="0.032"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
 
@@ -36,7 +35,7 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/poppin"
         android:gravity="center"
-        android:text="Sign in to Continue ! "
+        android:text="Sign up to Continue ! "
         android:textColor="@color/white"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,11 +45,53 @@
 
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/appCompatEditText"
+        android:id="@+id/signUpName"
         android:layout_width="368dp"
 
         android:layout_height="57dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/input_bg"
+        android:drawableLeft="@drawable/ic_baseline_person_24"
+        android:drawablePadding="20dp"
+        android:elevation="20dp"
+        android:gravity="fill"
+        android:hint="Name"
+        android:inputType="number"
+        android:paddingLeft="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+    </androidx.appcompat.widget.AppCompatEditText>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/signUpEmail"
+        android:layout_width="368dp"
+
+        android:layout_height="57dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/input_bg"
+        android:drawableLeft="@drawable/ic_baseline_email_24"
+        android:drawablePadding="20dp"
+        android:elevation="20dp"
+        android:gravity="fill"
+        android:hint="Email"
+        android:inputType="number"
+        android:paddingLeft="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUpName">
+
+    </androidx.appcompat.widget.AppCompatEditText>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/signUpPhoneNumber"
+        android:layout_width="368dp"
+
+        android:layout_height="57dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_phone_24"
         android:drawablePadding="20dp"
@@ -62,7 +103,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9">
+        app:layout_constraintTop_toBottomOf="@+id/appCompatEditText2">
 
     </androidx.appcompat.widget.AppCompatEditText>
 
@@ -71,7 +112,7 @@
         android:layout_width="368dp"
 
         android:layout_height="57dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="36dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_lock_24"
         android:drawablePadding="20dp"
@@ -83,92 +124,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatEditText">
+        app:layout_constraintTop_toBottomOf="@+id/signUpEmail">
 
     </androidx.appcompat.widget.AppCompatEditText>
-
-    <com.facebook.login.widget.LoginButton
-
-        android:id="@+id/loginFacebook"
-        android:layout_width="309dp"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/facebook_login"
-        android:elevation="20dp"
-        android:padding="10dp"
-        android:text="Login with Facebook"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatEditText2">
-
-    </com.facebook.login.widget.LoginButton>
-
-    <TextView
-
-        android:id="@+id/textView8"
-        android:layout_width="253dp"
-        android:layout_height="41dp"
-        android:layout_marginBottom="40dp"
-        android:fontFamily="@font/poppin"
-        android:gravity="center"
-        android:text="Don't Have an Account ?"
-        android:textColor="@color/white"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.006"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/registerText"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:clickable="true"
-        android:fontFamily="@font/poppin_bold"
-        android:gravity="center"
-        android:text="Register Now"
-
-        android:textColor="@color/white"
-        android:textFontWeight="@android:integer/config_longAnimTime"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-
-        />
 
     <ProgressBar
         android:id="@+id/loginProgressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="9dp"
+        android:layout_marginTop="16dp"
         android:outlineSpotShadowColor="@color/white"
+
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/textView8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintVertical_bias="0.928" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpPhoneNumber" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="186dp"
-        android:id="@+id/signInButton"
         android:layout_height="54dp"
-        android:layout_marginBottom="24dp"
         android:background="@drawable/facebook_login"
         android:fontFamily="@font/poppin_bold"
-        android:text="Sign In"
+        android:text="Sign Up"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/loginProgressBar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginProgressBar">
 
     </androidx.appcompat.widget.AppCompatButton>
 

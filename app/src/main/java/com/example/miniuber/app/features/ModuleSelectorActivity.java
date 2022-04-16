@@ -14,6 +14,7 @@ public class ModuleSelectorActivity extends AppCompatActivity {
 
     private AppCompatButton driverButton;
     private AppCompatButton riderButton;
+    private int moduleOption ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,8 @@ public class ModuleSelectorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ModuleSelectorActivity.this, SignInActivity.class);
+                moduleOption=1;
+                intent.putExtra("Module Choice",moduleOption);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -44,6 +47,8 @@ public class ModuleSelectorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ModuleSelectorActivity.this, SignInActivity.class);
+                moduleOption=2;
+                intent.putExtra("Module Choice",moduleOption);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
