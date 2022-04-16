@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1F0945"
-    tools:context=".ModuleSelectorActivity">
+    android:background="@color/defaultBackground"
+    tools:context=".app.features.ModuleSelectorActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="500dp"
@@ -43,17 +43,19 @@
             android:layout_marginTop="28dp"
             android:fontFamily="@font/poppin"
             android:gravity="center"
-            android:text="Uber"
+            android:text="@string/Uber"
             android:textColor="#FFFFFF"
             android:textSize="50dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.205"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></TextView>
+            app:layout_constraintTop_toTopOf="parent">
+
+        </TextView>
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textView2"
@@ -62,20 +64,22 @@
         android:layout_marginTop="124dp"
         android:fontFamily="@font/poppin"
         android:gravity="center"
-        android:text="Get There"
+        android:text="@string/get_there"
         android:textColor="#FFFFFF"
         android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <android.support.v7.widget.AppCompatButton
+    </TextView>
+
+    <androidx.appcompat.widget.AppCompatButton
         android:layout_width="165dp"
         android:layout_height="77dp"
         android:background="@drawable/roundedcorners"
         android:fontFamily="@font/poppin"
-        android:text="Driver"
+        android:text="@string/driver"
         android:textColor="#FFFFFF"
         android:id="@+id/driverButton"
 
@@ -87,14 +91,14 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         app:layout_constraintVertical_bias="0.733">
 
-    </android.support.v7.widget.AppCompatButton>
+    </androidx.appcompat.widget.AppCompatButton>
 
-    <android.support.v7.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:layout_width="165dp"
         android:layout_height="77dp"
         android:background="@drawable/roundedcorners"
         android:fontFamily="@font/poppin"
-        android:text="Rider"
+        android:text="@string/rider"
         android:id="@+id/riderButton"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
@@ -105,7 +109,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         app:layout_constraintVertical_bias="0.733">
 
-    </android.support.v7.widget.AppCompatButton>
+    </androidx.appcompat.widget.AppCompatButton>
 
     <TextView
         android:id="@+id/textView3"
@@ -113,7 +117,7 @@
         android:layout_height="58dp"
         android:fontFamily="@font/poppin"
         android:gravity="center"
-        android:text="Please Choose"
+        android:text="@string/please_choose"
         android:textColor="#FFFFFF"
         android:textSize="30dp"
         android:textStyle="bold"
@@ -121,5 +125,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.182"></TextView>
-</android.support.constraint.ConstraintLayout>
+        app:layout_constraintVertical_bias="0.182">
+
+    </TextView>
+</androidx.constraintlayout.widget.ConstraintLayout>

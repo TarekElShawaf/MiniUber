@@ -1,9 +1,13 @@
-package com.example.miniuber;
+package com.example.miniuber.app.features;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.miniuber.R;
 
 public class MainActivity extends AppCompatActivity {
 
