@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -70,7 +71,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap googleMap;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private EditText searchMap;
-    private ImageView currentLocation;
+    private AppCompatButton currentLocation;
     private Location location;
     private String UserId;
     private DatabaseReference addLocationReference;
@@ -87,6 +88,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(binding.getRoot());
         searchMap = findViewById(R.id.searchMap);
         currentLocation = findViewById(R.id.gps);
+
+
+
+        getSupportActionBar().hide();
+        settingNavigation();
+        settingEditText();
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        Window window = this.getWindow();
+        window.setStatusBarColor(getResources().getColor(R.color.mapsStatus));
+        getLocationPermission();
+
+    }
+    private void settingEditText(){
+        currentLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentLocation.setText("");
+            }
+        });
+    }
+    private void settingNavigation(){
         drawerLayout=findViewById(R.id.drawerLayout);
         navigationView=findViewById(R.id.navigationView);
         actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.menu_Open,R.string.menu_Close);
@@ -116,19 +140,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return true;
             }
         });
-
-        //UserId = getIntent().getExtras().getString("ID");
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-
-        getSupportActionBar().hide();
-       // Window window = this.getWindow();
-        //window.setStatusBarColor(getResources().getColor(R.color.white));
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-        Window window = this.getWindow();
-        window.setStatusBarColor(getResources().getColor(R.color.mapsStatus));
-        getLocationPermission();
 
     }
 

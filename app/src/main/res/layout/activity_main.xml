@@ -27,20 +27,20 @@
             android:src="@drawable/car"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintVertical_bias="0.98"
             tools:ignore="MissingConstraints">
 
         </ImageView>
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="221dp"
-            android:layout_height="97dp"
-            android:layout_marginTop="28dp"
+            android:layout_width="263dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="32dp"
             android:fontFamily="@font/poppin"
             android:gravity="center"
             android:text="@string/Uber"
@@ -48,45 +48,44 @@
             android:textSize="50dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.205"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="388dp"
+            android:layout_height="65dp"
+            android:fontFamily="@font/poppin"
+            android:gravity="center"
+            android:text="Move the way you want."
+            android:textColor="#FFFFFF"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
         </TextView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="163dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="124dp"
-        android:fontFamily="@font/poppin"
-        android:gravity="center"
-        android:text="@string/get_there"
-        android:textColor="#FFFFFF"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </TextView>
-
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="165dp"
-        android:layout_height="77dp"
+        android:id="@+id/driverButton"
+        android:layout_width="157dp"
+        android:layout_height="44dp"
         android:background="@drawable/roundedcorners"
         android:fontFamily="@font/poppin"
-        android:text="@string/driver"
+        android:text="Employee"
         android:textColor="#FFFFFF"
-        android:id="@+id/driverButton"
 
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.121"
+        app:layout_constraintHorizontal_bias="0.113"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         app:layout_constraintVertical_bias="0.733">
@@ -94,12 +93,12 @@
     </androidx.appcompat.widget.AppCompatButton>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="165dp"
-        android:layout_height="77dp"
+        android:id="@+id/riderButton"
+        android:layout_width="157dp"
+        android:layout_height="44dp"
         android:background="@drawable/roundedcorners"
         android:fontFamily="@font/poppin"
         android:text="@string/rider"
-        android:id="@+id/riderButton"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

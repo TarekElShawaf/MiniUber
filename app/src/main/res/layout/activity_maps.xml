@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.drawerlayout.widget.DrawerLayout android:layout_width="match_parent"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawerLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <RelativeLayout xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android" >
+        android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="75dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="650dp"
+            android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
             android:elevation="10dp"
             >
@@ -30,6 +29,7 @@
                 android:hint="Enter Destination You Want "
                 android:imeOptions="actionSearch"
                 android:paddingLeft="15dp"
+
                 android:textColor="@color/white"
                 android:textColorHint="@color/white">
 
@@ -46,17 +46,20 @@
             android:layout_height="match_parent"
             tools:context=".MapsActivity" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/gps"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="125dp"
             android:layout_marginRight="10dp"
+            android:background="@drawable/input_black"
+            android:drawableStart="@drawable/gps"
+            android:paddingStart="8dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/gps">
+            android:textCursorDrawable="@drawable/gps">
 
-        </ImageView>
+        </androidx.appcompat.widget.AppCompatButton>
     </RelativeLayout>
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"

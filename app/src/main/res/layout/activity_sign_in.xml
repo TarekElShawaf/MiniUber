@@ -93,12 +93,13 @@
         android:layout_width="309dp"
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/facebook_login"
+        android:layout_marginTop="132dp"
+        android:background="@drawable/roundedcorners"
         android:elevation="20dp"
         android:padding="10dp"
         android:text="Login with Facebook"
         android:textColor="@color/black"
+        android:fontFamily="@font/poppin_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatEditText2">
@@ -123,9 +124,9 @@
 
     <TextView
         android:id="@+id/registerText"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
+        android:layout_width="127dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="40dp"
         android:clickable="true"
         android:fontFamily="@font/poppin_bold"
         android:gravity="center"
@@ -136,7 +137,7 @@
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.727"
         app:layout_constraintStart_toEndOf="@+id/textView8"
 
         />
@@ -157,11 +158,11 @@
         app:layout_constraintVertical_bias="0.928" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="186dp"
         android:id="@+id/signInButton"
+        android:layout_width="186dp"
         android:layout_height="54dp"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/facebook_login"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/roundedcorners"
         android:fontFamily="@font/poppin_bold"
         android:text="Sign In"
         android:textColor="@color/black"

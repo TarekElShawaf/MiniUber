@@ -50,7 +50,7 @@
         android:layout_height="57dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/input_bg"
-        android:drawableLeft="@drawable/ic_baseline_person_24"
+        android:drawableLeft="@drawable/personn"
         android:drawablePadding="20dp"
         android:elevation="20dp"
         android:gravity="fill"
@@ -166,7 +166,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="186dp"
         android:layout_height="54dp"
-        android:background="@drawable/facebook_login"
+        android:background="@drawable/roundedcorners"
         android:fontFamily="@font/poppin_bold"
         android:text="Sign Up"
         android:textColor="@color/black"
