@@ -82,6 +82,9 @@ dependencies {
     //Facebook Auth
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 
+
+    //Rounded Image View
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
     //implementation project(':driver')
    // implementation project(':driverModule')
   //  implementation project(':riderModule')

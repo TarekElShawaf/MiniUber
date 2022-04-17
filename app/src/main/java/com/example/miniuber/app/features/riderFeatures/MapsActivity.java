@@ -1,20 +1,24 @@
 package com.example.miniuber.app.features.riderFeatures;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -23,9 +27,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.miniuber.R;
 import com.example.miniuber.databinding.ActivityMapsBinding;
+import com.example.miniuber.entities.Location;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,6 +43,7 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,7 +55,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
@@ -64,9 +71,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FusedLocationProviderClient fusedLocationProviderClient;
     private EditText searchMap;
     private ImageView currentLocation;
-    private cLocation location;
+    private Location location;
     private String UserId;
     private DatabaseReference addLocationReference;
+    private  DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +87,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(binding.getRoot());
         searchMap = findViewById(R.id.searchMap);
         currentLocation = findViewById(R.id.gps);
+        drawerLayout=findViewById(R.id.drawerLayout);
+        navigationView=findViewById(R.id.navigationView);
+        actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.menu_Open,R.string.menu_Close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.navhome:
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.navlogOut:
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.navsettings:
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.navtrips:
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+
+
+
+                }
+                return true;
+            }
+        });
 
         //UserId = getIntent().getExtras().getString("ID");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
+        getSupportActionBar().hide();
        // Window window = this.getWindow();
         //window.setStatusBarColor(getResources().getColor(R.color.white));
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -90,6 +131,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getLocationPermission();
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(actionBarDrawerToggle.onOptionsItemSelected(item)){
+            return  true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private  void setDarkMapStyle(){
         boolean success = googleMap.setMapStyle(new MapStyleOptions(getResources()
                 .getString(R.string.style_json)));
@@ -167,7 +217,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if (task.isSuccessful()) {
                             if (location != null) {
                                 Log.d(TAG, "onComplete: found Location");
-                                Location currentLocation = (Location) task.getResult();
+                                android.location.Location currentLocation = (android.location.Location) task.getResult();
                                 moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), defaultZoom, "My Location");
                                 Geocoder geocoder = new Geocoder(MapsActivity.this);
                                 List<Address> addresses = new ArrayList<>();
@@ -288,7 +338,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 } else {
 
-                    location = new cLocation(LocationName, lat, log, 1, UserId, 0);
+                    location = new Location(LocationName, lat, log,  UserId);
                     addLocationReference = FirebaseDatabase.getInstance().getReference("Locations");
                     addLocationReference.child(LocationName).setValue(location);
                     userLocationList(LocationName);

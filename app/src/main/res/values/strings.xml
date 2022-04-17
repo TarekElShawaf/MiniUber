@@ -199,4 +199,6 @@
     }
   ]
   </string>
+  <string name="menu_Close">Close</string>
+  <string name="menu_Open">Open</string>
 </resources>
