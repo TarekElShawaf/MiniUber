@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "222761941301",
+    "project_id": "miniuber-1f120",
+    "storage_bucket": "miniuber-1f120.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222761941301:android:0079ec871016f190b4b47c",
+        "android_client_info": {
+          "package_name": "com.example.miniuber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "222761941301-8o4dimeo0f1tliuuf4camn0ui4ieok4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDHM0tC4xKiimaFilxQT9uDSUXjwlY5WI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "222761941301-8o4dimeo0f1tliuuf4camn0ui4ieok4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
