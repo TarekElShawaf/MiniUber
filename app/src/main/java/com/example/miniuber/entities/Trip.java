@@ -1,29 +1,51 @@
 package com.example.miniuber.entities;
 
+import java.sql.Time;
 import java.util.Date;
 
 public class Trip {
-    private String pickupPoint ;
+    private Location pickupPoint ;
     private Float fare ;
     private Date tripDate ;
-    private String Destination ;
+    private Location Destination ;
     private Driver diver ;
+    private Time time;
+    private float rate;
     private Rider rider ;
 
-    public Trip(String pickupPoint, Float fare, Date tripDate, String destination, Driver diver, Rider rider) {
+
+    public Trip(Location pickupPoint, Float fare, Date tripDate, Location destination, Driver diver, Time time, float rate, Rider rider) {
         this.pickupPoint = pickupPoint;
         this.fare = fare;
         this.tripDate = tripDate;
-        Destination = destination;
+        this.Destination = destination;
         this.diver = diver;
+        this.time = time;
+        this.rate = rate;
         this.rider = rider;
     }
 
-    public String getPickupPoint() {
+    public float getRate() {
+        return rate;
+    }
+
+    public void setRate(float rate) {
+        this.rate = rate;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
+
+    public Location getPickupPoint() {
         return pickupPoint;
     }
 
-    public void setPickupPoint(String pickupPoint) {
+    public void setPickupPoint(Location pickupPoint) {
         this.pickupPoint = pickupPoint;
     }
 
@@ -43,11 +65,11 @@ public class Trip {
         this.tripDate = tripDate;
     }
 
-    public String getDestination() {
+    public Location getDestination() {
         return Destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(Location destination) {
         Destination = destination;
     }
 

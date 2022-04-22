@@ -7,13 +7,24 @@ public  abstract  class User {
     private String password ;
     private String phoneNumber ;
     private String userId ;
+    private float rate ;
 
-    public User(String name, String email, String password, String phoneNumber, String userId) {
+
+    public User(String name, String email, String password, String phoneNumber, String userId, float rate) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.userId = userId;
+        this.rate = rate;
+    }
+
+    public float getRate() {
+        return rate;
+    }
+
+    public void setRate(float rate) {
+        this.rate = rate;
     }
 
     public String getName() {

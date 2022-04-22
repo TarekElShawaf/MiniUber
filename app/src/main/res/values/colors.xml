@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="defaultBackground">#1F0945</color>
     <color name="mapsStatus">#5C02FA</color>
+    <color name="mapsStatusBar">#161F53</color>
 </resources>
