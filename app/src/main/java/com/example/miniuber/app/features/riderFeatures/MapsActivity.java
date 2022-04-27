@@ -159,34 +159,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-   /* private void setLocationMark() {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        MarkerOptions markerOptions = new MarkerOptions();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        fusedLocationProviderClient.getLastLocation();
-        Task location = fusedLocationProviderClient.getLastLocation();
-      location.addOnCompleteListener(new OnCompleteListener() {
-          @Override
-          public void onComplete(@NonNull Task task) {
-              if(location!=null){
-                  android.location.Location currentLocation = (android.location.Location) location.getResult();
-                  markerOptions.position(new LatLng(currentLocation.getLongitude(),currentLocation.getLongitude()));
-                  markerOptions.draggable(true);
-                  markerOptions.title("Pickup Point");
-                  googleMap.addMarker(markerOptions);
-              }
-          }
-      });
-    }*/
 
 
     private void init() {
@@ -204,12 +176,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void geoLocate() {
-        //Log.d(TAG, "geoLocate: geoLocation");
+
 
         String searchString = searchMap.getText().toString();
         Geocoder geocoder = new Geocoder(MapsActivity.this);
         List<Address> addresses = new ArrayList<>();
         try {
+
 
             addresses = geocoder.getFromLocationName(searchString, 4);
         } catch (IOException e) {
@@ -225,9 +198,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
- /*   private void moveCursor() {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-    }*/
+
 
     private void getDeviceLocation() {
         Log.d(TAG, "getDeviceLocation: getting Device Location");
@@ -251,11 +222,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 } catch (IOException e) {
                                     Log.d(TAG, "geoLocate: " + e.getMessage());
                                 }
-                              /*  if (addresses.size() > 0) {
-                                  //  Address address = addresses.get(0);
 
-
-                                }*/
                             }
 
                         } else {
@@ -278,7 +245,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         MarkerOptions options = new MarkerOptions().position(latLng).title(title);
         options.draggable(true);
         googleMap.addMarker(options);
+       googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+           @Override
+           public void onMarkerDrag(@NonNull Marker marker) {
+               marker.setPosition(marker.getPosition());
+               marker.setTitle(marker.getTitle());
+               Log.d(TAG, "onMarkerDrag: title is :  "+marker.getTitle());
+               Log.d(TAG, "onMarkerDrag: position  is :  "+marker.getPosition());
+               Geocoder geocoder = new Geocoder(MapsActivity.this);
+               List<Address> addresses = new ArrayList<>();
+               try {
+                   addresses= geocoder.getFromLocation(marker.getPosition().latitude,marker.getPosition().longitude,4);
 
+                   marker.setTitle(addresses.get(0).getAddressLine(0));
+
+               } catch (IOException e) {
+                   e.printStackTrace();
+               }
+           }
+
+           @Override
+           public void onMarkerDragEnd(@NonNull Marker marker) {
+
+           }
+
+           @Override
+           public void onMarkerDragStart(@NonNull Marker marker) {
+
+           }
+       });
         hideSoftKeyboard();
 
     }
@@ -334,9 +329,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMarkerDrag(@NonNull Marker marker) {
-        marker.setPosition(marker.getPosition());
-        marker.setTitle(marker.getTitle());
-        Log.d(TAG, "onMarkerDrag: title is :  "+marker.getTitle());
+
+
+
     }
 
     @Override
