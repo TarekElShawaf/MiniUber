@@ -25,6 +25,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.miniuber.R;
+
 import com.example.miniuber.databinding.ActivityMapsBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -84,7 +85,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
         Window window = this.getWindow();
-        window.setStatusBarColor(getResources().getColor(R.color.mapsStatusBar));
+        window.setStatusBarColor(getResources().getColor(R.color.defaultBackground));
         getLocationPermission();
 
     }
@@ -137,7 +138,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void setDarkMapStyle() {
         googleMap.setMapStyle(new MapStyleOptions(getResources()
-                .getString(R.string.style_json)));
+                .getString(R.string.style_json_light)));
     }
 
     @Override

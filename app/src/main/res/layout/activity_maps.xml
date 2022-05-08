@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
-                android:background="@drawable/input_black"
+                android:background="@drawable/roundedcorners"
                 android:drawableLeft="@drawable/search"
                 android:gravity="center"
                 android:hint="Enter Destination You Want "
@@ -57,12 +57,11 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="125dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/input_black"
+            android:background="@drawable/roundedcorners"
             android:drawableStart="@drawable/gps"
             android:paddingStart="8dp"
             android:scaleType="centerCrop"
-            android:textCursorDrawable="@drawable/gps">
-        </androidx.appcompat.widget.AppCompatButton>
+            android:textCursorDrawable="@drawable/gps"></androidx.appcompat.widget.AppCompatButton>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/navigationIcon"
@@ -71,7 +70,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="125dp"
             android:layout_marginRight="350dp"
-            android:background="@drawable/input_black"
+            android:background="@drawable/roundedcorners"
             android:drawableStart="@drawable/ic_baseline_menu_24"
             android:paddingStart="8dp"
             android:scaleType="centerCrop"
