@@ -199,7 +199,7 @@
     }
   ]
   </string>
-  <string name="style_json_light">[
+    <string name="style_json_light">[
   {
     "featureType": "administrative",
     "elementType": "geometry",
@@ -235,6 +235,6 @@
     ]
   }
 ]</string>
-  <string name="menu_Close">Close</string>
-  <string name="menu_Open">Open</string>
+    <string name="menu_Close">Close</string>
+    <string name="menu_Open">Open</string>
 </resources>

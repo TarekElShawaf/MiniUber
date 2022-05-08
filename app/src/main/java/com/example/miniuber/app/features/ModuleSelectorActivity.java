@@ -14,6 +14,7 @@ public class ModuleSelectorActivity extends AppCompatActivity {
 
     private AppCompatButton driverButton;
     private AppCompatButton riderButton;
+    private AppCompatButton employeeButton;
     private int moduleOption ;
 
     @Override
@@ -23,7 +24,22 @@ public class ModuleSelectorActivity extends AppCompatActivity {
       getSupportActionBar().hide();
         setDriverButton();
         setRiderButton();
+        setEmployeeButton();
 
+    }
+
+    void setEmployeeButton() {
+        employeeButton = findViewById(R.id.employeeButton);
+        employeeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ModuleSelectorActivity.this, SignInActivity.class);
+                moduleOption=1;
+                intent.putExtra("Module Choice",moduleOption);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
     }
 
     void setRiderButton() {
@@ -32,7 +48,7 @@ public class ModuleSelectorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ModuleSelectorActivity.this, SignInActivity.class);
-                moduleOption=1;
+                moduleOption=2;
                 intent.putExtra("Module Choice",moduleOption);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -47,7 +63,7 @@ public class ModuleSelectorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ModuleSelectorActivity.this, SignInActivity.class);
-                moduleOption=2;
+                moduleOption=3;
                 intent.putExtra("Module Choice",moduleOption);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

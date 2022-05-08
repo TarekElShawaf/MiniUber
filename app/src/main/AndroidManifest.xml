@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MiniUber">
         <activity
+            android:name=".app.features.OnBoardActivity"
+            android:exported="false" />
+        <activity
             android:name=".app.features.driverFeatures.SignUpDriverActivity"
             android:exported="false" />
         <!--
