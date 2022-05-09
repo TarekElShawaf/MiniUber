@@ -2,6 +2,9 @@ package com.example.miniuber.app.features.riderFeatures;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -33,6 +36,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
@@ -60,7 +65,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap googleMap;
     private EditText searchMap;
     private AppCompatButton currentLocation;
-
+    private ArrayList<LatLng> markers =new ArrayList<>();
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -87,6 +92,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Window window = this.getWindow();
         window.setStatusBarColor(getResources().getColor(R.color.defaultBackground));
         getLocationPermission();
+
+
 
     }
 
@@ -136,7 +143,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return super.onOptionsItemSelected(item);
     }
 
-    private void setDarkMapStyle() {
+    private void setMapStyle() {
         googleMap.setMapStyle(new MapStyleOptions(getResources()
                 .getString(R.string.style_json_light)));
     }
@@ -146,14 +153,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d(TAG, "onMapReady: map is ready");
         this.googleMap = googleMap;
         if (locationPermissionGranted) {
-            // getDeviceLocation();
+
+            getDeviceLocation();
+            //geoLocate();
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
                 return;
             }
             this.googleMap.setMyLocationEnabled(true);
             this.googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-            setDarkMapStyle();
+            setMapStyle();
             //setLocationMark();
             init();
 
@@ -245,7 +254,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         MarkerOptions options = new MarkerOptions().position(latLng).title(title);
         options.draggable(true);
-        googleMap.addMarker(options);
+        int height = 100;
+        int width = 100;
+        if(markers.contains(latLng)!=true)
+        {
+            BitmapDrawable bitMapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.marker_icon);
+            Bitmap b = bitMapDrawable.getBitmap();
+            Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+            options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+
+            googleMap.addMarker(options);
+            markers.add(latLng);
+        }
+
+
        googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
            @Override
            public void onMarkerDrag(@NonNull Marker marker) {

@@ -39,6 +39,11 @@ public class OnBoardActivity extends AppCompatActivity {
         onBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(onBoardViewPager.getCurrentItem()!=2)
+                {
+                    onBoardViewPager.setCurrentItem(onBoardViewPager.getCurrentItem()+1,true);
+
+                }
 
 
             }
