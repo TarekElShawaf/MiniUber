@@ -73,7 +73,7 @@ public class SignUpDriverActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             progressBar.setVisibility(View.INVISIBLE);
-                            sendEmailVerification();
+                      //      sendEmailVerification();
                         } else {
                             progressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(getBaseContext(), task.getException().toString(), Toast.LENGTH_LONG).show();
@@ -90,26 +90,26 @@ public class SignUpDriverActivity extends AppCompatActivity {
         driverLicense = etDriverLicense.getText().toString();
     }
 
-    private void sendEmailVerification() {
-        FirebaseUser user = auth.getCurrentUser();
-
-        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    //Email is sent successfully
-                    Driver driver = new Driver(name, email, password, phoneNo,
-                            auth.getCurrentUser().getUid(), 0, driverLicense);
-                    driverRef.push().setValue(driver);
-                    Toast.makeText(getBaseContext(), "Email is sent please verify your account", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getBaseContext(), SignInActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getBaseContext(), task.getException().toString(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
+//    private void sendEmailVerification() {
+//        FirebaseUser user = auth.getCurrentUser();
+//
+//        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                if (task.isSuccessful()) {
+//                    //Email is sent successfully
+//                    Driver driver = new Driver(name, email, password, phoneNo,
+//                            auth.getCurrentUser().getUid(), 0, driverLicense);
+//                    driverRef.push().setValue(driver);
+//                    Toast.makeText(getBaseContext(), "Email is sent please verify your account", Toast.LENGTH_LONG).show();
+//                    Intent intent = new Intent(getBaseContext(), SignInActivity.class);
+//                    startActivity(intent);
+//                } else {
+//                    Toast.makeText(getBaseContext(), task.getException().toString(), Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
+//    }
 
 
     private void initialize() {

@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.example.miniuber.ModuleOption;
 import com.example.miniuber.R;
 
 public class ModuleSelectorActivity extends AppCompatActivity {
@@ -15,7 +16,6 @@ public class ModuleSelectorActivity extends AppCompatActivity {
     private AppCompatButton driverButton;
     private AppCompatButton riderButton;
     private AppCompatButton employeeButton;
-    private int moduleOption ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +34,7 @@ public class ModuleSelectorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ModuleSelectorActivity.this, SignInActivity.class);
-                moduleOption=1;
-                intent.putExtra("Module Choice",moduleOption);
+                intent.putExtra("Module Choice", ModuleOption.EMPLOYEE);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -48,8 +47,7 @@ public class ModuleSelectorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ModuleSelectorActivity.this, SignInActivity.class);
-                moduleOption=2;
-                intent.putExtra("Module Choice",moduleOption);
+                intent.putExtra("Module Choice",ModuleOption.RIDER);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -63,8 +61,7 @@ public class ModuleSelectorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ModuleSelectorActivity.this, SignInActivity.class);
-                moduleOption=3;
-                intent.putExtra("Module Choice",moduleOption);
+                intent.putExtra("Module Choice",ModuleOption.DRIVER);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }

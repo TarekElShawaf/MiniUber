@@ -1,19 +1,19 @@
 package com.example.miniuber.entities;
 
-public  abstract  class User {
+import java.io.Serializable;
+
+public  abstract  class User implements Serializable {
 
     private String name ;
     private String email ;
-    private String password ;
     private String phoneNumber ;
     private String userId ;
     private float rate ;
 
 
-    public User(String name, String email, String password, String phoneNumber, String userId, float rate) {
+    public User(String name, String email, String phoneNumber, String userId, float rate) {
         this.name = name;
         this.email = email;
-        this.password = password;
         this.phoneNumber = phoneNumber;
         this.userId = userId;
         this.rate = rate;
@@ -41,14 +41,6 @@ public  abstract  class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getPhoneNumber() {

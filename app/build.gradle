@@ -87,6 +87,12 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     //Lootie
     implementation 'com.airbnb.android:lottie:3.4.1'
+
+    //for country code picker in sign in activity
+    implementation 'com.hbb20:ccp:latest.release'
+
+    //for pinView in phoneVerification activity
+    implementation 'com.github.GoodieBag:Pinview:v1.4'
     //implementation project(':driver')
    // implementation project(':driverModule')
   //  implementation project(':riderModule')

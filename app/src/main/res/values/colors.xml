@@ -10,4 +10,6 @@
     <color name="defaultBackground">#4CE5B1</color>
     <color name="mapsStatus">#5C02FA</color>
     <color name="mapsStatusBar">#161F53</color>
+    <color  name="lineColor">#EFEFF4</color>
+    <color name="grey">#C8C7CC</color>
 </resources>
