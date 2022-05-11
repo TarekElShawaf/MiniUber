@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="defaultBackground">#1F0945</color>
+    <color name="defaultBackground">#4CE5B1</color>
     <color name="mapsStatus">#5C02FA</color>
     <color name="mapsStatusBar">#161F53</color>
 </resources>
