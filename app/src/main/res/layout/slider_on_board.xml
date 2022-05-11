@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="630dp">
+
+    <ImageView
+        android:id="@+id/onBoardImage"
+        android:layout_width="271dp"
+        android:layout_height="252dp"
+        android:layout_marginTop="56dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/onBoardTitle"
+
+        android:layout_width="375dp"
+        android:layout_height="103dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:height="58dp"
+        android:fontFamily="@font/poppin_bold"
+        android:gravity="center"
+        android:text="Find your  Comfort Food here"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/onBoardImage"
+        app:layout_constraintVertical_bias="0.15">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/onBoardInfo"
+        android:layout_width="310dp"
+        android:layout_height="97dp"
+        android:width="244dp"
+        android:height="44dp"
+
+        android:fontFamily="@font/poppin"
+        android:gravity="center"
+        android:text="Here You Can find a chef or dish for every taste and color. Enjoy"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/onBoardTitle"
+        app:layout_constraintVertical_bias="0.319">
+
+    </TextView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

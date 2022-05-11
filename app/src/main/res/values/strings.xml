@@ -6,7 +6,7 @@
     <string name="rider">Rider</string>
     <string name="driver">Driver</string>
     <string name="title_activity_maps">MapsActivity</string>
-    <string name="style_json">
+    <string name="style_json_dark">
   [
     {
       \"featureType\": \"all\",
@@ -199,6 +199,42 @@
     }
   ]
   </string>
-  <string name="menu_Close">Close</string>
-  <string name="menu_Open">Open</string>
+    <string name="style_json_light">[
+  {
+    "featureType": "administrative",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  }
+]</string>
+    <string name="menu_Close">Close</string>
+    <string name="menu_Open">Open</string>
 </resources>

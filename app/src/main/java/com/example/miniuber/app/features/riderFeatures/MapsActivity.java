@@ -2,6 +2,9 @@ package com.example.miniuber.app.features.riderFeatures;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -25,6 +28,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.miniuber.R;
+
 import com.example.miniuber.databinding.ActivityMapsBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -32,6 +36,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
@@ -59,7 +65,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap googleMap;
     private EditText searchMap;
     private AppCompatButton currentLocation;
-
+    private ArrayList<LatLng> markers =new ArrayList<>();
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -84,8 +90,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
         Window window = this.getWindow();
-        window.setStatusBarColor(getResources().getColor(R.color.mapsStatusBar));
+        window.setStatusBarColor(getResources().getColor(R.color.defaultBackground));
         getLocationPermission();
+
+
 
     }
 
@@ -135,9 +143,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return super.onOptionsItemSelected(item);
     }
 
-    private void setDarkMapStyle() {
+    private void setMapStyle() {
         googleMap.setMapStyle(new MapStyleOptions(getResources()
-                .getString(R.string.style_json)));
+                .getString(R.string.style_json_light)));
     }
 
     @Override
@@ -145,48 +153,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d(TAG, "onMapReady: map is ready");
         this.googleMap = googleMap;
         if (locationPermissionGranted) {
-            // getDeviceLocation();
+
+            getDeviceLocation();
+            //geoLocate();
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
                 return;
             }
             this.googleMap.setMyLocationEnabled(true);
             this.googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-            setDarkMapStyle();
+            setMapStyle();
             //setLocationMark();
             init();
 
         }
     }
 
-   /* private void setLocationMark() {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        MarkerOptions markerOptions = new MarkerOptions();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        fusedLocationProviderClient.getLastLocation();
-        Task location = fusedLocationProviderClient.getLastLocation();
-      location.addOnCompleteListener(new OnCompleteListener() {
-          @Override
-          public void onComplete(@NonNull Task task) {
-              if(location!=null){
-                  android.location.Location currentLocation = (android.location.Location) location.getResult();
-                  markerOptions.position(new LatLng(currentLocation.getLongitude(),currentLocation.getLongitude()));
-                  markerOptions.draggable(true);
-                  markerOptions.title("Pickup Point");
-                  googleMap.addMarker(markerOptions);
-              }
-          }
-      });
-    }*/
 
 
     private void init() {
@@ -204,12 +186,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void geoLocate() {
-        //Log.d(TAG, "geoLocate: geoLocation");
+
 
         String searchString = searchMap.getText().toString();
         Geocoder geocoder = new Geocoder(MapsActivity.this);
         List<Address> addresses = new ArrayList<>();
         try {
+
 
             addresses = geocoder.getFromLocationName(searchString, 4);
         } catch (IOException e) {
@@ -225,9 +208,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
- /*   private void moveCursor() {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-    }*/
+
 
     private void getDeviceLocation() {
         Log.d(TAG, "getDeviceLocation: getting Device Location");
@@ -251,11 +232,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 } catch (IOException e) {
                                     Log.d(TAG, "geoLocate: " + e.getMessage());
                                 }
-                              /*  if (addresses.size() > 0) {
-                                  //  Address address = addresses.get(0);
 
-
-                                }*/
                             }
 
                         } else {
@@ -277,8 +254,49 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         MarkerOptions options = new MarkerOptions().position(latLng).title(title);
         options.draggable(true);
-        googleMap.addMarker(options);
+        int height = 100;
+        int width = 100;
+        if(markers.contains(latLng)!=true)
+        {
+            BitmapDrawable bitMapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.marker_icon);
+            Bitmap b = bitMapDrawable.getBitmap();
+            Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+            options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
 
+            googleMap.addMarker(options);
+            markers.add(latLng);
+        }
+
+
+       googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+           @Override
+           public void onMarkerDrag(@NonNull Marker marker) {
+               marker.setPosition(marker.getPosition());
+               marker.setTitle(marker.getTitle());
+               Log.d(TAG, "onMarkerDrag: title is :  "+marker.getTitle());
+               Log.d(TAG, "onMarkerDrag: position  is :  "+marker.getPosition());
+               Geocoder geocoder = new Geocoder(MapsActivity.this);
+               List<Address> addresses = new ArrayList<>();
+               try {
+                   addresses= geocoder.getFromLocation(marker.getPosition().latitude,marker.getPosition().longitude,4);
+
+                   marker.setTitle(addresses.get(0).getAddressLine(0));
+
+               } catch (IOException e) {
+                   e.printStackTrace();
+               }
+           }
+
+           @Override
+           public void onMarkerDragEnd(@NonNull Marker marker) {
+
+           }
+
+           @Override
+           public void onMarkerDragStart(@NonNull Marker marker) {
+
+           }
+       });
         hideSoftKeyboard();
 
     }
@@ -334,9 +352,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMarkerDrag(@NonNull Marker marker) {
-        marker.setPosition(marker.getPosition());
-        marker.setTitle(marker.getTitle());
-        Log.d(TAG, "onMarkerDrag: title is :  "+marker.getTitle());
+
+
+
     }
 
     @Override
