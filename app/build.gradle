@@ -96,6 +96,7 @@ dependencies {
     //implementation project(':driver')
    // implementation project(':driverModule')
   //  implementation project(':riderModule')
+    implementation 'androidx.browser:browser:1.0.0'
 
 
 

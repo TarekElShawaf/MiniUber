@@ -1,4 +1,4 @@
-package com.example.miniuber.app.features;
+package com.example.miniuber.app.features.commonFeatures;
 
 import android.content.Context;
 import android.view.LayoutInflater;

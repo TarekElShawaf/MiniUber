@@ -21,7 +21,7 @@
             android:name=".PhoneVerificationActivity"
             android:exported="false" />
         <activity
-            android:name=".app.features.OnBoardActivity"
+            android:name=".app.features.commonFeatures.OnBoardActivity"
             android:exported="false" />
         <activity
             android:name=".app.features.driverFeatures.SignUpDriverActivity"
@@ -42,17 +42,17 @@
             android:value="AIzaSyCwSNYh_1b4tVKBJzjQ-pKRiSuWVlF6MXA" />
 
         <activity
-            android:name=".app.features.riderFeatures.MapsActivity"
+            android:name=".app.features.commonFeatures.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".app.features.riderFeatures.SignUpRiderActivity"
             android:exported="false" />
         <activity
-            android:name=".app.features.SignInActivity"
+            android:name=".app.features.registration.SignInActivity"
             android:exported="false" />
         <activity
-            android:name=".app.features.MainActivity"
+            android:name=".app.features.commonFeatures.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,7 +60,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".app.features.ModuleSelectorActivity" />
+        <activity android:name=".app.features.commonFeatures.ModuleSelectorActivity" />
     </application>
 
 </manifest>

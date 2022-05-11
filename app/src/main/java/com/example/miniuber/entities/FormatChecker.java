@@ -1,4 +1,4 @@
-package com.example.miniuber;
+package com.example.miniuber.entities;
 
 import android.util.Patterns;
 

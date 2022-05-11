@@ -1,4 +1,4 @@
-package com.example.miniuber;
+package com.example.miniuber.entities;
 
 public class ModuleOption {
     public static final int EMPLOYEE = 1;

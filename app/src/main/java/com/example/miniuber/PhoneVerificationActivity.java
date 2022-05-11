@@ -7,8 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.miniuber.app.features.SignInActivity;
-import com.example.miniuber.app.features.riderFeatures.MapsActivity;
+import com.example.miniuber.app.features.registration.SignInActivity;
+import com.example.miniuber.app.features.commonFeatures.MapsActivity;
 import com.example.miniuber.entities.Rider;
 
 import com.google.firebase.FirebaseException;

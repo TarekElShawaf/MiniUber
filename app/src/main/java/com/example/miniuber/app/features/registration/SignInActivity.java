@@ -1,4 +1,4 @@
-package com.example.miniuber.app.features;
+package com.example.miniuber.app.features.registration;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,13 +16,12 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 
-import com.example.miniuber.FormatChecker;
-import com.example.miniuber.ModuleOption;
+import com.example.miniuber.entities.FormatChecker;
+import com.example.miniuber.entities.ModuleOption;
 import com.example.miniuber.PhoneVerificationActivity;
 import com.example.miniuber.R;
 
 import com.example.miniuber.entities.Rider;
-import com.example.miniuber.entities.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

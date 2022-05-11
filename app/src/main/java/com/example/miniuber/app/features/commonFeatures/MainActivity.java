@@ -1,4 +1,4 @@
-package com.example.miniuber.app.features;
+package com.example.miniuber.app.features.commonFeatures;
 
 import android.content.Intent;
 import android.os.Handler;
