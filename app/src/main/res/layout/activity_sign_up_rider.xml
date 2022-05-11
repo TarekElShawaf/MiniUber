@@ -45,7 +45,7 @@
 
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/signUpName"
+        android:id="@+id/signUpNameRider"
         android:layout_width="368dp"
 
         android:layout_height="57dp"
@@ -56,7 +56,7 @@
         android:elevation="20dp"
         android:gravity="fill"
         android:hint="Name"
-        android:inputType="number"
+        android:inputType="text"
         android:paddingLeft="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
@@ -66,7 +66,7 @@
     </androidx.appcompat.widget.AppCompatEditText>
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/signUpEmail"
+        android:id="@+id/signUpEmailRider"
         android:layout_width="368dp"
 
         android:layout_height="57dp"
@@ -77,17 +77,17 @@
         android:elevation="20dp"
         android:gravity="fill"
         android:hint="Email"
-        android:inputType="number"
+        android:inputType="textEmailAddress"
         android:paddingLeft="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpName">
+        app:layout_constraintTop_toBottomOf="@+id/signUpNameRider">
 
     </androidx.appcompat.widget.AppCompatEditText>
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/signUpPhoneNumber"
+        android:id="@+id/signUpPhoneNumberRider"
         android:layout_width="368dp"
 
         android:layout_height="57dp"
@@ -103,12 +103,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatEditText2">
+        app:layout_constraintTop_toBottomOf="@+id/signUpPasswordRider">
 
     </androidx.appcompat.widget.AppCompatEditText>
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/appCompatEditText2"
+        android:id="@+id/signUpPasswordRider"
         android:layout_width="368dp"
 
         android:layout_height="57dp"
@@ -124,12 +124,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpEmail">
+        app:layout_constraintTop_toBottomOf="@+id/signUpEmailRider">
 
     </androidx.appcompat.widget.AppCompatEditText>
 
     <ProgressBar
-        android:id="@+id/loginProgressBar"
+        android:id="@+id/progress_bar_signup_rider"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -140,19 +140,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpPhoneNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpPhoneNumberRider" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_signupRider"
         android:layout_width="186dp"
         android:layout_height="54dp"
-        android:background="@drawable/roundedcorners"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/facebook_login"
         android:fontFamily="@font/poppin_bold"
         android:text="Sign Up"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginProgressBar">
+        app:layout_constraintTop_toBottomOf="@+id/progress_bar_signup_rider">
 
     </androidx.appcompat.widget.AppCompatButton>
 
