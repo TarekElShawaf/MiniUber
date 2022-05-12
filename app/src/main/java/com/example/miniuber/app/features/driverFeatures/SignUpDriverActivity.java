@@ -98,7 +98,8 @@ public class SignUpDriverActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     //Email is sent successfully
-                    Driver driver = new Driver(name, email, password, phoneNo,
+                    //Car car ;
+                    Driver driver = new Driver(name, email, phoneNo,
                             auth.getCurrentUser().getUid(), 0, driverLicense);
                     driverRef.push().setValue(driver);
                     Toast.makeText(getBaseContext(), "Email is sent please verify your account", Toast.LENGTH_LONG).show();

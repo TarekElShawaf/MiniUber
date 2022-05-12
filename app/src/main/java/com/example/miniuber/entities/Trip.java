@@ -8,22 +8,34 @@ public class Trip {
     private Float fare ;
     private Date tripDate ;
     private Location Destination ;
-    private Driver diver ;
+    private Driver driver ;
     private Time time;
     private float rate;
     private Rider rider ;
+   // private Car car;
 
 
-    public Trip(Location pickupPoint, Float fare, Date tripDate, Location destination, Driver diver, Time time, float rate, Rider rider) {
+    public Trip(Location pickupPoint, Float fare, Date tripDate, Location destination, Driver driver, Time time, float rate, Rider rider
+    ,String driverLicense) {
         this.pickupPoint = pickupPoint;
         this.fare = fare;
         this.tripDate = tripDate;
         this.Destination = destination;
-        this.diver = diver;
+        this.driver = driver;
         this.time = time;
         this.rate = rate;
         this.rider = rider;
+        //this.car=car;
     }
+
+   /* public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+    */
 
     public float getRate() {
         return rate;
@@ -73,12 +85,12 @@ public class Trip {
         Destination = destination;
     }
 
-    public Driver getDiver() {
-        return diver;
+    public Driver getDriver() {
+        return driver;
     }
 
     public void setDiver(Driver diver) {
-        this.diver = diver;
+        this.driver = diver;
     }
 
     public Rider getRider() {

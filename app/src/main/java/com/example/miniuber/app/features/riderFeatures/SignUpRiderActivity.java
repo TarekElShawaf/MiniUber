@@ -81,7 +81,7 @@ public class SignUpRiderActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     //Email is sent successfully
-                    Rider rider = new Rider (name,email,password ,phoneNo,auth.getCurrentUser().getUid(),0);
+                    Rider rider = new Rider (name,email,phoneNo,auth.getCurrentUser().getUid(),0);
                     riderRef.push().setValue(rider);
                     Toast.makeText(getBaseContext(), "Email is sent please verify your account", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getBaseContext(), SignInActivity.class);

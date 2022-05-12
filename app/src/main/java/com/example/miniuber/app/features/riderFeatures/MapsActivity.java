@@ -119,7 +119,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     case R.id.navlogOut:
                         //drawerLayout.closeDrawer(GravityCompat.START);
                         break;
-                    case R.id.navsettings:
+                    case R.id.navpersonalinfo:
                         // drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.navtrips:

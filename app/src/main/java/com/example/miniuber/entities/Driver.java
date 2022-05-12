@@ -1,20 +1,14 @@
 package com.example.miniuber.entities;
 
-public class Driver extends User{
+import java.io.Serializable;
 
-    private  String  drivingLicense ;
+public class Driver extends User implements Serializable {
 
-
-    public Driver(String name, String email, String password, String phoneNumber, String userId, float rate, String drivingLicense) {
-        super(name, email, password, phoneNumber, userId, rate);
-        this.drivingLicense = drivingLicense;
+    //Car car;
+    String driverLicense;
+    public Driver(String name, String email, String phoneNumber, String userId, float rate, String drivingLicense) {
+        super(name, email, phoneNumber, userId, rate);
+        this.driverLicense = driverLicense;
     }
 
-    public String getDrivingLicense() {
-        return drivingLicense;
-    }
-
-    public void setDrivingLicense(String drivingLicense) {
-        this.drivingLicense = drivingLicense;
-    }
 }

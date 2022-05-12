@@ -7,15 +7,25 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.miniuber.R;
+import com.example.miniuber.RecyclerViewAdapter;
+import com.example.miniuber.entities.Driver;
+import com.example.miniuber.entities.Rider;
+import com.example.miniuber.entities.Trip;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     Handler handler ;
     LottieAnimationView lottieAnimationView;
     TextView appName ;
+    RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,5 +48,14 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         },6000);
+        //recycler view
+        rv.findViewById(R.id.rv_main);
+        ArrayList<Trip> trips  = new ArrayList<Trip>();
+
+        RecyclerViewAdapter adapter =  new RecyclerViewAdapter(trips);
+        RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(lm);
+        rv.setAdapter(adapter);
     }
 }

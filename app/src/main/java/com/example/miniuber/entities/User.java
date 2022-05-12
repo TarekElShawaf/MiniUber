@@ -10,7 +10,7 @@ public  abstract  class User {
     private float rate ;
 
 
-    public User(String name, String email, String password, String phoneNumber, String userId, float rate) {
+    public User(String name, String email, String phoneNumber, String userId, float rate) {
         this.name = name;
         this.email = email;
         this.password = password;
