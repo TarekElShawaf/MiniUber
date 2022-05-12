@@ -1,4 +1,4 @@
-package com.example.miniuber;
+package com.example.miniuber.app.features.commonFeatures;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -7,8 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.miniuber.R;
 import com.example.miniuber.app.features.registration.SignInActivity;
-import com.example.miniuber.app.features.commonFeatures.MapsActivity;
 import com.example.miniuber.entities.Rider;
 
 import com.google.firebase.FirebaseException;
@@ -78,6 +78,7 @@ public class PhoneVerificationActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(),"insert the code in the correct format",Toast.LENGTH_LONG).show();
                 return;
             }
+
 
             //verifying the code entered manually
             verifyVerificationCode(code);

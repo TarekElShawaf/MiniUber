@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MiniUber">
         <activity
-            android:name=".PhoneVerificationActivity"
+            android:name=".app.features.commonFeatures.PhoneVerificationActivity"
             android:exported="false" />
         <activity
             android:name=".app.features.commonFeatures.OnBoardActivity"
@@ -43,7 +43,7 @@
 
         <activity
             android:name=".app.features.commonFeatures.MapsActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".app.features.riderFeatures.SignUpRiderActivity"

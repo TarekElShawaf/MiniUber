@@ -18,7 +18,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.miniuber.entities.FormatChecker;
 import com.example.miniuber.entities.ModuleOption;
-import com.example.miniuber.PhoneVerificationActivity;
+import com.example.miniuber.app.features.commonFeatures.PhoneVerificationActivity;
 import com.example.miniuber.R;
 
 import com.example.miniuber.entities.Rider;

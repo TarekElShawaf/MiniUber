@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -65,7 +66,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private EditText searchMap;
     private AppCompatButton currentLocation;
     private ArrayList<LatLng> markers =new ArrayList<>();
-
+    private TextView pickUpPoint ;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
@@ -79,10 +80,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(binding.getRoot());
         searchMap = findViewById(R.id.searchMap);
         currentLocation = findViewById(R.id.gps);
+        pickUpPoint=findViewById(R.id.pickUpPoint);
 
 
         Objects.requireNonNull(getSupportActionBar()).hide();
-        settingNavigation();
+       // settingNavigation();
         settingEditText();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -100,7 +102,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         currentLocation.setOnClickListener(view -> currentLocation.setText(""));
     }
 
-    private void settingNavigation() {
+   /* private void settingNavigation() {
         AppCompatButton navigationButton;
         navigationButton = findViewById(R.id.navigationIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
@@ -132,7 +134,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
 
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -200,8 +202,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         if (addresses.size() > 0) {
             Address address = addresses.get(0);
-
-
+            searchMap.setText(addresses.get(0).getAddressLine(0));
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), defaultZoom, address.getAddressLine(0));
 
         }
@@ -281,6 +282,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                    addresses= geocoder.getFromLocation(marker.getPosition().latitude,marker.getPosition().longitude,4);
 
                    marker.setTitle(addresses.get(0).getAddressLine(0));
+                   pickUpPoint.setText(addresses.get(0).getAddressLine(0));
 
                } catch (IOException e) {
                    e.printStackTrace();
@@ -346,7 +348,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void hideSoftKeyboard() {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        searchMap.setText("");
+        //searchMap.setText("");
     }
 
 

@@ -197,7 +197,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/roundedcorners"
                 android:fontFamily="@font/poppin"
-                android:text="Next"
+                android:text="Sign In"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="25sp"
