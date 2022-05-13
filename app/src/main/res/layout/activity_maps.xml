@@ -17,7 +17,7 @@
             android:id="@+id/map"
             class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="400dp"
             android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -45,27 +45,26 @@
         </androidx.appcompat.widget.AppCompatButton>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/scrollView2"
-            android:layout_width="match_parent"
-            android:layout_height="226dp"
+            android:id="@+id/constraint_layout_2"
+            android:layout_width="408dp"
+            android:layout_height="242dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/map"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintVertical_bias="0.0">
 
             <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="57dp"
                 android:layout_height="6dp"
                 android:layout_gravity="center|top"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 android:src="@drawable/bar"
                 app:layout_constraintBottom_toTopOf="@+id/textView7"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintStart_toStartOf="parent">
 
             </ImageView>
 
@@ -84,10 +83,12 @@
                 android:id="@+id/markerSearch"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:layout_marginTop="124dp"
                 android:src="@drawable/marker_icon"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.529"
                 app:layout_constraintStart_toEndOf="@+id/searchMap"
-                tools:layout_editor_absoluteY="127dp"></ImageView>
+                app:layout_constraintTop_toTopOf="parent"></ImageView>
 
             <ImageView
                 android:id="@+id/imageView8"
@@ -104,14 +105,14 @@
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="26dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginBottom="12dp"
                 android:fontFamily="@font/poppin"
                 android:text="PickUp"
                 android:textSize="15dp"
-                app:layout_constraintEnd_toStartOf="@+id/imageView4"
-                app:layout_constraintHorizontal_bias="0.449"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintBottom_toTopOf="@+id/pickUpPoint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.151"
+                app:layout_constraintStart_toStartOf="parent">
 
             </TextView>
 
@@ -133,6 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="56dp"
                 android:fontFamily="@font/poppin"
                 android:text="My Current Location"
                 android:textColor="@color/black"
@@ -140,7 +142,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/imageView5"
-                app:layout_constraintTop_toBottomOf="@+id/textView7">
+                app:layout_constraintTop_toTopOf="parent">
 
             </TextView>
 
@@ -149,6 +151,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
                 android:src="@drawable/green_light"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7">
