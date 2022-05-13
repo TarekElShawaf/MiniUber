@@ -33,27 +33,26 @@
     <ConstraintSet android:id="@+id/start">
         <Constraint
             motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="416dp"
-            android:layout_height="556dp"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
             motion:layout_constraintHorizontal_bias="1.0"
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="4dp"
             android:id="@+id/riderMap"
             motion:layout_constraintBottom_toTopOf="@+id/constraint_layout_2"
-            android:layout_marginBottom="2dp"
-            motion:layout_constraintVertical_bias="0.857" />
+            android:layout_marginBottom="2dp" />
         <Constraint
             motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="412dp"
-            android:layout_height="149dp"
+            android:layout_width="match_parent"
+            android:layout_height="226dp"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintVertical_bias="1.0"
             motion:layout_constraintTop_toBottomOf="@+id/riderMap"
+            motion:layout_constraintHorizontal_bias="1.0"
             motion:layout_constraintStart_toStartOf="parent"
             android:id="@+id/constraint_layout_2"
-            android:layout_marginTop="2dp"
-            motion:layout_editor_absoluteY="582dp" />
+            android:layout_marginTop="2dp" />
         <Constraint
             motion:layout_editor_absoluteY="195dp"
             motion:layout_constraintStart_toStartOf="parent"
@@ -67,46 +66,22 @@
             motion:layout_constraintTop_toBottomOf="@+id/searchMap"
             android:id="@+id/appCompatButton4" />
         <Constraint
-            android:layout_height="wrap_content"
-            android:layout_width="408dp"
-            android:id="@+id/constraint_layout_4"
-            motion:layout_constraintVertical_bias="0.0"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="192dp"
-            motion:layout_constraintHorizontal_bias="1.0"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/riderMap" />
-        <Constraint
-            android:layout_height="534dp"
-            motion:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="24dp"
-            motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintHorizontal_bias="1.0"
-            motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="410dp"
-            android:id="@+id/driverMap"
-            motion:layout_constraintBottom_toTopOf="@+id/constraint_layout_2" />
+            motion:layout_editor_absoluteY="1dp"
+            android:layout_height="600dp"
+            motion:layout_editor_absoluteX="0dp"
+            android:layout_width="match_parent"
+            android:id="@+id/driverMap" />
         <Constraint
             motion:layout_constraintVertical_bias="0.928"
             android:layout_height="40dp"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="@+id/riderMap"
             motion:layout_constraintBottom_toBottomOf="@+id/driverMap"
-            android:layout_marginBottom="28dp"
-            motion:layout_constraintHorizontal_bias="0.959"
+            android:layout_marginBottom="32dp"
+            motion:layout_constraintHorizontal_bias="0.956"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="40dp"
-            android:id="@+id/gpsDriver"
-            android:layout_marginTop="476dp" />
-        <Constraint
-            motion:layout_editor_absoluteY="565dp"
-            android:id="@+id/constraintLayout4"
-            android:layout_width="283dp"
-            android:layout_height="150dp"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_editor_absoluteX="31dp" />
+            android:id="@+id/gpsDriver" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">

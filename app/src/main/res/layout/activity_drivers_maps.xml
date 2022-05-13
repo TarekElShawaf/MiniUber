@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawerLayoutDriver"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/constraintLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/activity_maps_xml_constraintlayout3_scene">
+
+        <fragment
+            android:id="@+id/driverMap"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".MapsActivity" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/gpsDriver"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/input_bg"
+            android:drawableStart="@drawable/ic_baseline_gps_fixed_24"
+            android:paddingStart="8dp"
+            android:scaleType="centerCrop"
+            android:textCursorDrawable="@drawable/gps"
+            app:layout_constraintBottom_toBottomOf="@+id/riderMap"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.956"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/riderMap"
+            app:layout_constraintVertical_bias="0.928">
+
+        </androidx.appcompat.widget.AppCompatButton>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout_2"
+            android:layout_width="400dp"
+            android:layout_height="184dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/riderMap"
+            app:layout_constraintVertical_bias="0.0">
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/searchRiders"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/roundedcorners"
+                android:fontFamily="@font/poppin_bold"
+                android:text="Go"
+                android:textSize="25dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+            </androidx.appcompat.widget.AppCompatButton>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/navigationViewDriver"
+        app:headerLayout="@layout/header"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/main_menu"
+        android:background="@color/defaultBackground"
+        android:fitsSystemWindows="true"
+        android:layout_gravity="start"
+        >
+
+    </com.google.android.material.navigation.NavigationView>
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

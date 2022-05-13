@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawerLayout"
+    android:id="@+id/drawerLayoutRider"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.motion.widget.MotionLayout
@@ -14,7 +14,7 @@
         app:layoutDescription="@xml/activity_maps_xml_constraintlayout3_scene">
 
         <fragment
-            android:id="@+id/map"
+            android:id="@+id/riderMap"
             class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="400dp"
@@ -26,7 +26,7 @@
             tools:context=".MapsActivity" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/gps"
+            android:id="@+id/gpsRider"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
@@ -35,11 +35,11 @@
             android:paddingStart="8dp"
             android:scaleType="centerCrop"
             android:textCursorDrawable="@drawable/gps"
-            app:layout_constraintBottom_toBottomOf="@+id/map"
+            app:layout_constraintBottom_toBottomOf="@+id/riderMap"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.956"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/map"
+            app:layout_constraintTop_toTopOf="@+id/riderMap"
             app:layout_constraintVertical_bias="0.928">
 
         </androidx.appcompat.widget.AppCompatButton>
@@ -52,7 +52,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/map"
+            app:layout_constraintTop_toBottomOf="@+id/riderMap"
             app:layout_constraintVertical_bias="0.0">
 
             <ImageView
@@ -88,7 +88,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.529"
                 app:layout_constraintStart_toEndOf="@+id/searchMap"
-                app:layout_constraintTop_toTopOf="parent"></ImageView>
+                app:layout_constraintTop_toTopOf="parent">
+
+            </ImageView>
 
             <ImageView
                 android:id="@+id/imageView8"
@@ -113,7 +115,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.151"
                 app:layout_constraintStart_toStartOf="parent">
-
             </TextView>
 
             <TextView
@@ -181,11 +182,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/pickUpPoint">
 
             </ImageView>
-         =
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="200dp"
                 android:layout_height="50dp"
+                android:id="@+id/searchDrivers"
                 android:background="@drawable/roundedcorners"
                 android:text="Search For Drivers"
                 android:visibility="visible"

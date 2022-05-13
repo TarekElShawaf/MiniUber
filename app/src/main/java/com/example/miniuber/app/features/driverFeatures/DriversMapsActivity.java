@@ -1,4 +1,12 @@
-package com.example.miniuber.app.features.commonFeatures;
+package com.example.miniuber.app.features.driverFeatures;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -20,18 +28,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import com.example.miniuber.R;
-
 import com.example.miniuber.app.features.commonFeatures.directions.FetchURL;
 import com.example.miniuber.app.features.commonFeatures.directions.TaskLoadedCallback;
+import com.example.miniuber.app.features.riderFeatures.RiderMapsActivity;
 import com.example.miniuber.databinding.ActivityMapsBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -56,8 +56,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-
-public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener , TaskLoadedCallback {
+public class DriversMapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener , TaskLoadedCallback {
 
 
     private static final String TAG = "MapsActivity";
@@ -68,13 +67,11 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     private static final int locationPermissionRequestCode = 1;
     private static final float defaultZoom = 15;
     private GoogleMap googleMap;
-    private EditText searchMap;
-    private ImageView markerSearch;
     private AppCompatButton currentLocation;
     private ArrayList<LatLng> markers =new ArrayList<>();
     private int ids = 0;
     private HashMap<Integer,LatLng> markersHashMap = new HashMap<>();
-    private TextView pickUpPoint ;
+
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
@@ -85,17 +82,17 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         super.onCreate(savedInstanceState);
         ActivityMapsBinding binding;
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        searchMap = findViewById(R.id.searchMap);
-        currentLocation = findViewById(R.id.gps);
-        pickUpPoint=findViewById(R.id.pickUpPoint);
+        setContentView( R.layout.activity_drivers_maps);
+
+        currentLocation = findViewById(R.id.gpsDriver);
+
 
 
         Objects.requireNonNull(getSupportActionBar()).hide();
-       // settingNavigation();
+        // settingNavigation();
         settingEditText();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.driverMap);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
         Window window = this.getWindow();
@@ -182,46 +179,17 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
 
     private void init() {
         Log.d(TAG, "init: initializing ");
-        markerSearch=findViewById(R.id.markerSearch);
-
-        markerSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
 
-                if(searchMap.getText().toString().equals("")){
-                    Toast.makeText(RiderMapsActivity.this, "Please enter a location", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    geoLocate();
-                    if(ids>1)
-                    {
-                        String route = getRoute(markersHashMap.get(0), markersHashMap.get(ids-1), "driving");
-                        new FetchURL(RiderMapsActivity.this).execute(route, "driving");
-                    }
-
-                }
-
-            }
-        });
-        searchMap.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE ||
-                    event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER) {
-                geoLocate();
-
-
-            }
-            return false;
-        });
         currentLocation.setOnClickListener(v -> getDeviceLocation());
         hideSoftKeyboard();
     }
 
-    private void geoLocate() {
+    /*private void geoLocate() {
 
 
         String searchString = searchMap.getText().toString();
-        Geocoder geocoder = new Geocoder(RiderMapsActivity.this);
+        Geocoder geocoder = new Geocoder(DriversMapsActivity.this);
         List<Address> addresses = new ArrayList<>();
         try {
 
@@ -237,7 +205,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), defaultZoom, address.getAddressLine(0),1);
 
         }
-    }
+    }*/
 
 
 
@@ -256,8 +224,8 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                                 Log.d(TAG, "onComplete: found Location");
                                 android.location.Location currentLocation = (android.location.Location) task.getResult();
                                 moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), defaultZoom, "My Location",0);
-                               
-                                Geocoder geocoder = new Geocoder(RiderMapsActivity.this);
+
+                                Geocoder geocoder = new Geocoder(DriversMapsActivity.this);
                                 List<Address> addresses = new ArrayList<>();
                                 try {
                                     addresses = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 4);
@@ -269,7 +237,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
 
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
-                            Toast.makeText(RiderMapsActivity.this, "Unable To find Current Location", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DriversMapsActivity.this, "Unable To find Current Location", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -292,7 +260,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         {
             BitmapDrawable bitMapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.marker_icon);
             Bitmap b = bitMapDrawable.getBitmap();
-            options.draggable(true);
+            options.draggable(false);
             Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
             options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
             googleMap.addMarker(options);
@@ -313,44 +281,45 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         }
 
 
-       googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-           @Override
-           public void onMarkerDrag(@NonNull Marker marker) {
-               marker.setPosition(marker.getPosition());
-               marker.setTitle(marker.getTitle());
-               Log.d(TAG, "onMarkerDrag: title is :  "+marker.getTitle());
-               Log.d(TAG, "onMarkerDrag: position  is :  "+marker.getPosition());
-               Geocoder geocoder = new Geocoder(RiderMapsActivity.this);
-               List<Address> addresses = new ArrayList<>();
-               try {
-                   addresses= geocoder.getFromLocation(marker.getPosition().latitude,marker.getPosition().longitude,4);
+        googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDrag(@NonNull Marker marker) {
+                marker.setPosition(marker.getPosition());
+                marker.setTitle(marker.getTitle());
 
-                   marker.setTitle(addresses.get(0).getAddressLine(0));
-                   pickUpPoint.setText(addresses.get(0).getAddressLine(0));
-                   markersHashMap.put(0,new LatLng(marker.getPosition().latitude,marker.getPosition().longitude));
+                Log.d(TAG, "onMarkerDrag: title is :  "+marker.getTitle());
+                Log.d(TAG, "onMarkerDrag: position  is :  "+marker.getPosition());
+                Geocoder geocoder = new Geocoder(DriversMapsActivity.this);
+                List<Address> addresses = new ArrayList<>();
+                try {
+                    addresses= geocoder.getFromLocation(marker.getPosition().latitude,marker.getPosition().longitude,4);
 
-               } catch (IOException e) {
-                   e.printStackTrace();
-               }
-           }
+                    marker.setTitle(addresses.get(0).getAddressLine(0));
 
-           @Override
-           public void onMarkerDragEnd(@NonNull Marker marker) {
+                    markersHashMap.put(0,new LatLng(marker.getPosition().latitude,marker.getPosition().longitude));
 
-           }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
-           @Override
-           public void onMarkerDragStart(@NonNull Marker marker) {
+            @Override
+            public void onMarkerDragEnd(@NonNull Marker marker) {
 
-           }
-       });
+            }
+
+            @Override
+            public void onMarkerDragStart(@NonNull Marker marker) {
+
+            }
+        });
         hideSoftKeyboard();
 
     }
 
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.driverMap);
         mapFragment.getMapAsync(this);
 
     }
