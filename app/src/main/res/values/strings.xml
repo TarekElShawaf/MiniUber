@@ -6,6 +6,7 @@
     <string name="rider">Rider</string>
     <string name="driver">Driver</string>
     <string name="title_activity_maps">MapsActivity</string>
+  <string name="maps_key">AIzaSyCwSNYh_1b4tVKBJzjQ-pKRiSuWVlF6MXA"</string>
     <string name="style_json_dark">
   [
     {

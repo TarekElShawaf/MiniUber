@@ -42,7 +42,7 @@
             android:value="AIzaSyCwSNYh_1b4tVKBJzjQ-pKRiSuWVlF6MXA" />
 
         <activity
-            android:name=".app.features.commonFeatures.MapsActivity"
+            android:name=".app.features.commonFeatures.RiderMapsActivity"
             android:exported="true"
             android:label="@string/title_activity_maps" />
         <activity
