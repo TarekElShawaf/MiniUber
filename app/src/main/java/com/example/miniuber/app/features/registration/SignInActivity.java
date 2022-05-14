@@ -104,7 +104,7 @@ public class SignInActivity extends AppCompatActivity {
         etName.setVisibility(View.GONE);
         loginMessage.setVisibility(View.VISIBLE);
         etPhoneNo.getText().clear();
-        signInAndSignUpBtn.setText("Next");
+        signInAndSignUpBtn.setText("Sign In");
 
     }
 

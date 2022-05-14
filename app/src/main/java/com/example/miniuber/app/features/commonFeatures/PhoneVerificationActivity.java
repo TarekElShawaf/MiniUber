@@ -1,15 +1,18 @@
 package com.example.miniuber.app.features.commonFeatures;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.miniuber.R;
 import com.example.miniuber.app.features.registration.SignInActivity;
 import com.example.miniuber.app.features.riderFeatures.RiderMapsActivity;
+import com.example.miniuber.entities.ModuleOption;
 import com.example.miniuber.entities.Rider;
 
 import com.google.firebase.FirebaseException;
@@ -34,7 +37,7 @@ public class PhoneVerificationActivity extends AppCompatActivity {
     Pinview pinview;
     String phoneNo;
     int signOption;
-    AppCompatButton verify;
+    AppCompatButton resendOTP;
     FirebaseAuth auth;
     private String mVerificationId;
     Rider rider;
@@ -53,10 +56,15 @@ public class PhoneVerificationActivity extends AppCompatActivity {
         else{
             sendVerificationCode(phoneNo);
         }
-        setVerifyButton();
 
+        pinview.setPinViewEventListener(new Pinview.PinViewEventListener() {
+            @Override
+            public void onDataEntered(Pinview pinview, boolean fromUser) {
+                verifyVerificationCode(pinview.getValue());
+            }
+        });
 
-
+        setResendOTPButton();
 
     }
 
@@ -64,26 +72,21 @@ public class PhoneVerificationActivity extends AppCompatActivity {
         pinview = findViewById(R.id.pinview);
         phoneNo = getIntent().getStringExtra("phoneNo");
         signOption = getIntent().getIntExtra("signOption",0);
-        verify = findViewById(R.id.btn_verify);
+        resendOTP = findViewById(R.id.btn_resendOTP);
         auth = FirebaseAuth.getInstance();
 
 
 
     }
 
-    private void setVerifyButton() {
+    private void setResendOTPButton() {
 
-        verify.setOnClickListener(view -> {
-            String code = pinview.getValue();
-            if (code.isEmpty() || code.length() < 6) {
-                Toast.makeText(getBaseContext(),"insert the code in the correct format",Toast.LENGTH_LONG).show();
-                return;
-            }
-
-
-            //verifying the code entered manually
-            verifyVerificationCode(code);
-        });
+      resendOTP.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              sendVerificationCode(phoneNo);
+          }
+      });
 
     }
 
@@ -122,8 +125,20 @@ public class PhoneVerificationActivity extends AppCompatActivity {
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             mVerificationId = s;
+            resendOTP.setEnabled(false);
+            resendOTP.setAlpha(0.50f);
+            resendOTP.setBackgroundResource(R.drawable.disabled_resendotp_button);
+        }
+
+        @Override
+        public void onCodeAutoRetrievalTimeOut(@NonNull String s) {
+            super.onCodeAutoRetrievalTimeOut(s);
+            resendOTP.setAlpha(1);
+            resendOTP.setEnabled(true);
+            resendOTP.setBackgroundResource(R.drawable.roundedcorners);
         }
     };
+
     private void verifyVerificationCode(String otp) {
         //creating the credential
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, otp);
