@@ -104,7 +104,7 @@ public class SignInActivity extends AppCompatActivity {
         etName.setVisibility(View.GONE);
         loginMessage.setVisibility(View.VISIBLE);
         etPhoneNo.getText().clear();
-        signInAndSignUpBtn.setText("Next");
+        signInAndSignUpBtn.setText("Sign In");
 
     }
 
@@ -236,6 +236,7 @@ public class SignInActivity extends AppCompatActivity {
 
                     Rider rider = new Rider(name,email,fullNumber,"",0);
                     intent.putExtra("rider", rider);
+                    intent.putExtra("moduleOption",moduleOption);
                     intent.putExtra("signOption", SignInActivity.SIGN_UP_MODE);
                     startActivity(intent);
                 }
