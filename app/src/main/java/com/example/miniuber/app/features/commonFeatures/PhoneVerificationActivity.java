@@ -4,29 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
+import com.example.miniuber.database.MyFireBase;
 import com.example.miniuber.R;
 import com.example.miniuber.app.features.registration.SignInActivity;
-import com.example.miniuber.app.features.riderFeatures.RiderMapsActivity;
-import com.example.miniuber.entities.ModuleOption;
+
 import com.example.miniuber.entities.Rider;
 
 import com.google.firebase.FirebaseException;
 
 
-
 import com.goodiebag.pinview.Pinview;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 import java.util.concurrent.TimeUnit;
@@ -34,13 +27,12 @@ import java.util.concurrent.TimeUnit;
 
 public class PhoneVerificationActivity extends AppCompatActivity {
 
-    Pinview pinview;
-    String phoneNo;
-    int signOption;
-    AppCompatButton resendOTP;
-    FirebaseAuth auth;
+    private Pinview pinview;
+    private String phoneNo;
+    private int signOption, moduleOption;
+    private AppCompatButton resendOTP;
     private String mVerificationId;
-    Rider rider;
+    private Rider rider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,20 +41,15 @@ public class PhoneVerificationActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         initialize();
 
-        if (signOption == SignInActivity.SIGN_UP_MODE){
+        if (signOption == SignInActivity.SIGN_UP_MODE) {
             rider = (Rider) getIntent().getSerializableExtra("rider");
             sendVerificationCode(rider.getPhoneNumber());
-        }
-        else{
+        } else {
             sendVerificationCode(phoneNo);
         }
 
-        pinview.setPinViewEventListener(new Pinview.PinViewEventListener() {
-            @Override
-            public void onDataEntered(Pinview pinview, boolean fromUser) {
-                verifyVerificationCode(pinview.getValue());
-            }
-        });
+        pinview.setPinViewEventListener(
+                (pinview, fromUser) -> verifyVerificationCode(pinview.getValue()));
 
         setResendOTPButton();
 
@@ -71,22 +58,15 @@ public class PhoneVerificationActivity extends AppCompatActivity {
     private void initialize() {
         pinview = findViewById(R.id.pinview);
         phoneNo = getIntent().getStringExtra("phoneNo");
-        signOption = getIntent().getIntExtra("signOption",0);
+        signOption = getIntent().getIntExtra("signOption", 0);
+        moduleOption = getIntent().getIntExtra("moduleOption", 0);
         resendOTP = findViewById(R.id.btn_resendOTP);
-        auth = FirebaseAuth.getInstance();
-
-
 
     }
 
     private void setResendOTPButton() {
 
-      resendOTP.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              sendVerificationCode(phoneNo);
-          }
-      });
+        resendOTP.setOnClickListener(view -> sendVerificationCode(phoneNo));
 
     }
 
@@ -99,6 +79,7 @@ public class PhoneVerificationActivity extends AppCompatActivity {
                 this,
                 mCallbacks);
     }
+
     private final PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks
             = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
@@ -143,42 +124,18 @@ public class PhoneVerificationActivity extends AppCompatActivity {
         //creating the credential
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, otp);
 
-        //signing the user
-        signInWithPhoneAuthCredential(credential);
+        MyFireBase myFireBase = new MyFireBase(credential, getBaseContext());
+
+        if (signOption != 1) {
+            //signing the user
+            myFireBase.signInUser();
+        } else {
+            //user is creating a new account
+            myFireBase.createUserAccount(rider, moduleOption);
+
+        }
+
+
     }
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        auth.signInWithCredential(credential)
-                .addOnCompleteListener(PhoneVerificationActivity.this, task -> {
-                    if (task.isSuccessful()) {
-                        //verification successful we will start the Maps activity
-                        if(signOption == 1){
 
-                            //Rider is signingUP
-
-                            DatabaseReference ridersRef =
-                                    FirebaseDatabase.getInstance().getReference("Users").child("Riders");
-                            String riderID = auth.getCurrentUser().getUid();
-                            rider.setUserId(riderID);
-                            ridersRef.push().setValue(rider);
-
-
-                        }
-                        Intent intent = new Intent(PhoneVerificationActivity.this, RiderMapsActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-
-                    } else {
-
-                        //verification unsuccessful.. display an error message
-
-                        String message = "Something is wrong, we will fix it soon...";
-
-                        if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                            message = "Invalid code entered...";
-                        }
-
-                        Toast.makeText(getBaseContext(),message,Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
 }
