@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-
 import com.example.miniuber.app.features.driverFeatures.DriversMapsActivity;
 import com.example.miniuber.app.features.riderFeatures.RiderMapsActivity;
 import com.example.miniuber.app.features.employeeFeatures.EmployeeActivity;
@@ -103,4 +102,6 @@ public class MyFireBase {
 
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
+
+
 }

@@ -13,6 +13,7 @@ import com.example.miniuber.app.features.registration.SignInActivity;
 
 import com.example.miniuber.entities.Rider;
 
+import com.example.miniuber.entities.SignOption;
 import com.google.firebase.FirebaseException;
 
 
@@ -42,7 +43,7 @@ public class PhoneVerificationActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         initialize();
 
-        if (signOption == SignInActivity.SIGN_UP_MODE) {
+        if (signOption == SignOption.SIGN_UP_MODE) {
             rider = (Rider) getIntent().getSerializableExtra("rider");
             sendVerificationCode(rider.getPhoneNumber());
         } else {
