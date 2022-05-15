@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.widget.Toast;
 
 
+import com.example.miniuber.app.features.driverFeatures.DriversMapsActivity;
 import com.example.miniuber.app.features.riderFeatures.RiderMapsActivity;
+import com.example.miniuber.employeeFeatures.EmployeeActivity;
 import com.example.miniuber.entities.ModuleOption;
 import com.example.miniuber.entities.User;
 import com.google.android.gms.tasks.Task;
@@ -20,10 +22,12 @@ public class MyFireBase {
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
     private final PhoneAuthCredential credential;
     private final Context context;
+    private final int moduleOption;
 
-    public MyFireBase(PhoneAuthCredential credential, Context context) {
+    public MyFireBase(PhoneAuthCredential credential, Context context, int moduleOption) {
         this.credential = credential;
         this.context = context;
+        this.moduleOption = moduleOption;
     }
 
 
@@ -41,11 +45,11 @@ public class MyFireBase {
         });
     }
 
-    public void createUserAccount(User user, int moduleOption) {
+    public void createUserAccount(User user) {
 
         auth.signInWithCredential(credential).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                addUserDataToDatabase(user, moduleOption);
+                addUserDataToDatabase(user);
                 handleIntent();
 
             } else {
@@ -59,7 +63,7 @@ public class MyFireBase {
 
     }
 
-    private void addUserDataToDatabase(User user, int moduleOption) {
+    private void addUserDataToDatabase(User user) {
 
         DatabaseReference myRef =
                 FirebaseDatabase.getInstance().getReference("Users").child(ModuleOption.getReferenceName(moduleOption));
@@ -69,9 +73,25 @@ public class MyFireBase {
     }
 
     private void handleIntent() {
-        Intent intent = new Intent(context, RiderMapsActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        context.startActivity(intent);
+
+        if(moduleOption == ModuleOption.EMPLOYEE){
+            Intent intent  = new Intent(context, EmployeeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            context.startActivity(intent);
+        }
+        else if(moduleOption == ModuleOption.RIDER){
+            Intent intent  = new Intent(context, RiderMapsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            context.startActivity(intent);
+
+        }
+        else if (moduleOption == ModuleOption.DRIVER){
+            Intent intent  = new Intent(context, DriversMapsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            context.startActivity(intent);
+        }
+
+
     }
 
     private void handleFailedVerification(Task<AuthResult> task) {

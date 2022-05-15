@@ -2,7 +2,6 @@ package com.example.miniuber.app.features.registration;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ProgressBar;
@@ -29,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
 
+import java.util.Objects;
+
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -50,7 +51,7 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         Window window = this.getWindow();
         window.setStatusBarColor(getResources().getColor(R.color.defaultBackground));
         moduleOption = getIntent().getIntExtra("Module Choice", 0);
@@ -192,11 +193,11 @@ public class SignInActivity extends AppCompatActivity {
                     //Phone number already exists in database
                     Intent intent = new Intent(getBaseContext(), PhoneVerificationActivity.class);
                     intent.putExtra("phoneNo", fullNumber);
+                    intent.putExtra("moduleOption", moduleOption);
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     startActivity(intent);
                 } else {
                     //Phone number does not exist in database
-                    Log.d("ZOZ", "Sa7by account does not exist");
                     Toast.makeText(getBaseContext(), "Account does not exist, please create an account", Toast.LENGTH_SHORT).show();
                 }
 

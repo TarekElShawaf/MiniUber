@@ -22,14 +22,15 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 
 public class PhoneVerificationActivity extends AppCompatActivity {
 
-    private Pinview pinview;
+    private Pinview pinView;
     private String phoneNo;
-    private int signOption, moduleOption;
+    public int signOption, moduleOption;
     private AppCompatButton resendOTP;
     private String mVerificationId;
     private Rider rider;
@@ -38,7 +39,7 @@ public class PhoneVerificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_verification);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         initialize();
 
         if (signOption == SignInActivity.SIGN_UP_MODE) {
@@ -48,18 +49,18 @@ public class PhoneVerificationActivity extends AppCompatActivity {
             sendVerificationCode(phoneNo);
         }
 
-        pinview.setPinViewEventListener(
-                (pinview, fromUser) -> verifyVerificationCode(pinview.getValue()));
+        pinView.setPinViewEventListener(
+                (pinView, fromUser) -> verifyVerificationCode(pinView.getValue()));
 
         setResendOTPButton();
 
     }
 
     private void initialize() {
-        pinview = findViewById(R.id.pinview);
+        pinView = findViewById(R.id.pinview);
         phoneNo = getIntent().getStringExtra("phoneNo");
         signOption = getIntent().getIntExtra("signOption", 0);
-        moduleOption = getIntent().getIntExtra("moduleOption", 0);
+        moduleOption = getIntent().getIntExtra("moduleOption", 0); //not working
         resendOTP = findViewById(R.id.btn_resendOTP);
 
     }
@@ -91,7 +92,7 @@ public class PhoneVerificationActivity extends AppCompatActivity {
             //in this case the code will be null
             //so user has to manually enter the code
             if (code != null) {
-                pinview.setValue(code);
+                pinView.setValue(code);
                 //verifying the code
                 verifyVerificationCode(code);
             }
@@ -103,7 +104,7 @@ public class PhoneVerificationActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+        public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             mVerificationId = s;
             resendOTP.setEnabled(false);
@@ -124,14 +125,14 @@ public class PhoneVerificationActivity extends AppCompatActivity {
         //creating the credential
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, otp);
 
-        MyFireBase myFireBase = new MyFireBase(credential, getBaseContext());
+        MyFireBase myFireBase = new MyFireBase(credential, getBaseContext(),moduleOption);
 
         if (signOption != 1) {
             //signing the user
             myFireBase.signInUser();
         } else {
             //user is creating a new account
-            myFireBase.createUserAccount(rider, moduleOption);
+            myFireBase.createUserAccount(rider);
 
         }
 
