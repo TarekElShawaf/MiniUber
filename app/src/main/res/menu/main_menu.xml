@@ -20,6 +20,11 @@
             android:icon="@drawable/ic_baseline_person_personal_info">
 
         </item>
+        <item android:id="@+id/navproblem"
+            android:title="Report Problem"
+            android:icon="@drawable/ic_baseline_report_problem_24">
+
+        </item>
         <item android:id="@+id/navlogOut"
             android:title="Log Out"
             android:icon="@drawable/logout">
