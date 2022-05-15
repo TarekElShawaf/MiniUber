@@ -1,4 +1,4 @@
-package com.example.miniuber.employeeFeatures;
+package com.example.miniuber.app.features.employeeFeatures;
 
 import androidx.appcompat.app.AppCompatActivity;
 

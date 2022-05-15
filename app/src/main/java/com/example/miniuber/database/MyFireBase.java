@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.example.miniuber.app.features.driverFeatures.DriversMapsActivity;
 import com.example.miniuber.app.features.riderFeatures.RiderMapsActivity;
-import com.example.miniuber.employeeFeatures.EmployeeActivity;
+import com.example.miniuber.app.features.employeeFeatures.EmployeeActivity;
 import com.example.miniuber.entities.ModuleOption;
 import com.example.miniuber.entities.User;
 import com.google.android.gms.tasks.Task;
