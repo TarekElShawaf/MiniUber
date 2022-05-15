@@ -27,6 +27,9 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.miniuber.R;
 
@@ -34,6 +37,7 @@ import com.example.miniuber.app.features.commonFeatures.directions.FetchURL;
 import com.example.miniuber.app.features.commonFeatures.directions.TaskLoadedCallback;
 
 import com.example.miniuber.databinding.ActivityMapsBinding;
+import com.example.miniuber.trips_history_fragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -111,39 +115,45 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         currentLocation.setOnClickListener(view -> currentLocation.setText(""));
     }
 
-   /* private void settingNavigation() {
+    private void settingNavigation() {
         AppCompatButton navigationButton;
-        navigationButton = findViewById(R.id.navigationIcon);
-        drawerLayout = findViewById(R.id.drawerLayout);
+
         navigationView = findViewById(R.id.navigationView);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.menu_Open, R.string.menu_Close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        navigationButton.setOnClickListener(v -> {
-            actionBarDrawerToggle.syncState();
-            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
             navigationView.setNavigationItemSelectedListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.navhome:
-                        drawerLayout.closeDrawer(GravityCompat.START);
+                        //drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.navlogOut:
                         //drawerLayout.closeDrawer(GravityCompat.START);
                         break;
-                    case R.id.navsettings:
+                    case R.id.navspersonalinfo:
                         // drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.navtrips:
-                        // drawerLayout.closeDrawer(GravityCompat.START);
+                        replaceFragment(new trips_history_fragment());
                         break;
-
+                    default: return true;
 
                 }
                 return true;
             });
-        });
 
 
-    }*/
+
+    }
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout,fragment);
+        fragmentTransaction.commit();
+
+
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

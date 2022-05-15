@@ -18,7 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MiniUber">
         <activity
-            android:name=".employeeFeatures.EmployeeActivity"
+            android:name=".trip_info"
+            android:exported="false" />
+        <activity
+            android:name=".report_problem"
             android:exported="false" />
         <activity
             android:name=".app.features.commonFeatures.PhoneVerificationActivity"

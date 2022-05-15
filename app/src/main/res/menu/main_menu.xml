@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item android:id="@+id/navhome"
@@ -13,9 +15,14 @@
             android:icon="@drawable/ic_baseline_history_24">
 
         </item>
-        <item android:id="@+id/navsettings"
-            android:title="Settings"
-            android:icon="@drawable/ic_baseline_settings_24">
+        <item android:id="@+id/navspersonalinfo"
+            android:title="Personal Information"
+            android:icon="@drawable/ic_baseline_person_personal_info">
+
+        </item>
+        <item android:id="@+id/navproblem"
+            android:title="Report Problem"
+            android:icon="@drawable/ic_baseline_report_problem_24">
 
         </item>
         <item android:id="@+id/navlogOut"
