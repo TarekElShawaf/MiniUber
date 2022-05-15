@@ -57,7 +57,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             pt_trip_fare = itemView.findViewById(R.id.pt_trip_fare);
             pt_trip_date = itemView.findViewById(R.id.pt_trip_date);
             pt_trip_rate = itemView.findViewById(R.id.pt_trip_rate);*/
-            pt_driver_name = itemView.findViewById(R.id.pt_driver_name);
+            pt_driver_name = itemView.findViewById(R.id.customitem_driver_name);
             // pt_car_type=itemView.findViewById(R.id.pt_car_type);
             //pt_car_color=itemView.findViewById(R.id.pt_car_color);
         }
