@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RadioButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -12,11 +14,14 @@ import com.example.miniuber.app.features.registration.SignInActivity;
 import com.example.miniuber.entities.ModuleOption;
 import com.example.miniuber.R;
 
+
 public class ModuleSelectorActivity extends AppCompatActivity {
 
     private AppCompatButton driverButton;
     private AppCompatButton riderButton;
     private AppCompatButton employeeButton;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +31,6 @@ public class ModuleSelectorActivity extends AppCompatActivity {
         setDriverButton();
         setRiderButton();
         setEmployeeButton();
-
     }
 
     void setEmployeeButton() {

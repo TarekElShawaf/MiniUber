@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn ="navigation_view"
+    >
+<group android:checkableBehavior="single">
+
+    <item android:id="@+id/nav_account_info"
+        android:title="Account Information"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        />
+    <item android:id="@+id/nav_sign_up_driver"
+        android:title="Sign Up Driver"
+        android:icon="@drawable/ic_baseline_app_registration_24"
+        />
+
+    <item android:id="@+id/nav_add_car"
+        android:title="Add Car"
+        android:icon="@drawable/ic_car"
+        />
+    <item android:id="@+id/nav_assign_car_to_driver"
+        android:title="Assign Car To Driver"
+        android:icon="@drawable/ic_assign_car_to_driver"
+        />
+
+</group>
+    <item android:id="@+id/nav_logout"
+        android:title="Sign Out"
+        android:icon="@drawable/ic_baseline_signout_24"
+        />
+</menu>
