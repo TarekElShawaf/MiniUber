@@ -32,17 +32,13 @@
             app:textSize="15sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_resendOTP"
+            android:id="@+id/btn_verify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="70dp"
-            android:background="@drawable/disabled_resendotp_button"
-            android:alpha="0.5"
-            android:text="Resend Code"
-
-
-            android:enabled="false"
+            android:background="@drawable/roundedcorners"
+            android:text="Verify Now"
             android:textAllCaps="false"
             android:fontFamily="@font/poppin_bold"
             android:textColor="@color/white"
