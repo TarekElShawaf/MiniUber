@@ -43,7 +43,12 @@ import com.example.miniuber.app.features.commonFeatures.directions.TaskLoadedCal
 import com.example.miniuber.app.features.riderFeatures.personalInfo.PersonalInfoFragment;
 import com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment.TripsHistoryFragment;
 import com.example.miniuber.databinding.ActivityMapsBinding;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryDataEventListener;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -59,12 +64,19 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+
+import retrofit2.http.GET;
 
 
 public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener , TaskLoadedCallback  {
@@ -91,12 +103,14 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     private NavigationView navigationView;
     private ConstraintLayout constraintLayout ;
     private String userPhoneNumber;
+    private AppCompatButton searchDrivers;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    ActivityMapsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMapsBinding binding;
+
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         userPhoneNumber = getIntent().getStringExtra("phoneNumber");
@@ -104,7 +118,9 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
 
         searchMap = findViewById(R.id.searchMap);
         currentLocation = findViewById(R.id.gpsRider);
+        searchDrivers=findViewById(R.id.searchDrivers);;
         pickUpPoint=findViewById(R.id.pickUpPoint);
+        markerSearch=findViewById(R.id.markerSearch);
         Objects.requireNonNull(getSupportActionBar()).hide();
         settingNavigation();
         settingEditText();
@@ -115,11 +131,118 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         Window window = this.getWindow();
         window.setStatusBarColor(getResources().getColor(R.color.defaultBackground));
         getLocationPermission();
-
+        searchForDrivers();
 
 
     }
+    private int searchRadius = 1;
+    private String driverId;
+    private Boolean isDriverFound = false;
 
+
+    private void searchForDrivers(){
+
+        searchDrivers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchDrivers = findViewById(R.id.searchDrivers);
+                if(searchMap.getText().toString().equals("")){
+                    Toast.makeText(RiderMapsActivity.this, "Please enter a location", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                removeOldView();
+                Log.d(TAG, "getClosetDriver: searching near latt :   "+markersHashMap.get(0).latitude+" long :  "+markersHashMap.get(0).longitude);
+
+                getClosetDriver();
+
+                putTripView();
+            }
+        });
+    }
+
+    private void getClosetDriver(){
+        binding.progressBar2.setVisibility(View.VISIBLE);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("AvailableDrivers");
+        //Log.d(TAG, "getClosetDriver:  refrence to String "+ref.toString());
+        GeoFire geoFire = new GeoFire(ref);
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(markersHashMap.get(0).latitude,markersHashMap.get(0).longitude),searchRadius);
+        geoQuery.removeAllListeners();
+        geoQuery.addGeoQueryDataEventListener(new GeoQueryDataEventListener() {
+            @Override
+            public void onDataEntered(DataSnapshot dataSnapshot, GeoLocation location) {
+                if(!isDriverFound){
+                    Log.d(TAG, "onDataEntered: driver found"+dataSnapshot.getKey().toString());
+                    Toast.makeText(RiderMapsActivity.this, "Driver Found"+dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
+                    isDriverFound = true;
+                }
+
+            }
+
+            @Override
+            public void onDataExited(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onDataMoved(DataSnapshot dataSnapshot, GeoLocation location) {
+
+            }
+
+            @Override
+            public void onDataChanged(DataSnapshot dataSnapshot, GeoLocation location) {
+
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+                if(!isDriverFound){
+                    searchRadius++;
+                    Log.d(TAG, "onGeoQueryReady: "+searchRadius);
+                    getClosetDriver();
+                }
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+
+            }
+        });
+        Log.d(TAG, "getClosetDriver: "+searchRadius);
+        Log.d(TAG, "getClosetDriver: "+isDriverFound);
+        binding.progressBar2.setVisibility(View.INVISIBLE);
+    }
+    private void removeOldView(){
+
+        markerSearch.setVisibility(View.INVISIBLE);
+        searchDrivers.setVisibility(View.INVISIBLE);
+        binding.DistanceTextView.setVisibility(View.INVISIBLE);
+        binding.pickupTextView.setVisibility(View.INVISIBLE);
+        binding.dropOffTextView.setVisibility(View.INVISIBLE);
+        binding.lineHorizontal.setVisibility(View.INVISIBLE);
+        binding.lineVertical.setVisibility(View.INVISIBLE);
+        binding.pickUpPoint.setVisibility(View.INVISIBLE);
+        binding.dropOffTextView.setVisibility(View.INVISIBLE);
+        binding.searchMap.setVisibility(View.INVISIBLE);
+
+    }
+    private void putTripView(){
+        binding.DistanceTextView.setVisibility(View.VISIBLE);
+        binding.pickupTextView.setVisibility(View.VISIBLE);
+        binding.dropOffTextView.setVisibility(View.VISIBLE);
+        binding.lineHorizontal.setVisibility(View.VISIBLE);
+        binding.lineVertical.setVisibility(View.VISIBLE);
+        binding.pickUpPoint.setVisibility(View.VISIBLE);
+        binding.dropOffTextView.setVisibility(View.VISIBLE);
+        binding.searchMap.setVisibility(View.VISIBLE);
+        binding.timeTextView.setVisibility(View.VISIBLE);
+        binding.tripTime.setVisibility(View.VISIBLE);
+        binding.tripDistance.setVisibility(View.VISIBLE);
+        binding.tripPrice.setVisibility(View.VISIBLE);
+        binding.DistanceTextView.setVisibility(View.VISIBLE);
+        binding.priceTextview.setVisibility(View.VISIBLE);
+        binding.cancelTrip.setVisibility(View.VISIBLE);
+
+    }
     private void settingEditText() {
         currentLocation.setOnClickListener(view -> currentLocation.setText(""));
     }
@@ -379,6 +502,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                    marker.setTitle(addresses.get(0).getAddressLine(0));
                    pickUpPoint.setText(addresses.get(0).getAddressLine(0));
                    markersHashMap.put(0,new LatLng(marker.getPosition().latitude,marker.getPosition().longitude));
+                   Log.d(TAG, "onMarkerDrag: +"+marker.getPosition().latitude+marker.getPosition().longitude);
 
                } catch (IOException e) {
                    e.printStackTrace();

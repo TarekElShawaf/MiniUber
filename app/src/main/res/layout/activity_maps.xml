@@ -294,16 +294,17 @@
                     </ImageView>
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="250dp"
-                        android:layout_height="45dp"
                         android:id="@+id/cancelTrip"
-                        android:layout_marginTop="212dp"
+                        android:layout_width="157dp"
+                        android:layout_height="41dp"
+                        android:layout_marginTop="88dp"
                         android:background="@drawable/rounded_grey"
                         android:fontFamily="@font/poppin_bold"
                         android:text="Cancel Trip"
                         android:textColor="@color/white"
                         android:visibility="invisible"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.921"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

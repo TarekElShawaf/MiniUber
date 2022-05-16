@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.miniuber.R;
 import com.example.miniuber.app.features.commonFeatures.directions.TaskLoadedCallback;
 import com.example.miniuber.databinding.ActivityMapsBinding;
+import com.firebase.geofire.GeoFire;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -41,6 +42,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -90,7 +92,6 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
         Window window = this.getWindow();
         window.setStatusBarColor(getResources().getColor(R.color.defaultBackground));
         getLocationPermission();
-
 
 
     }

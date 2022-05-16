@@ -33,7 +33,7 @@
 
         <activity
             android:name=".app.features.riderFeatures.riderMapsActivity.RiderMapsActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".app.features.riderFeatures.SignUpRiderActivity"
