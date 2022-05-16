@@ -2,13 +2,23 @@ package com.example.miniuber.app.features.riderFeatures.personalInfo;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.example.miniuber.R;
+import com.example.miniuber.entities.Rider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,19 +34,19 @@ public class PersonalInfoFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
+    String email ;
+    String name ;
+    String phone ;
+    float rate;
+    AppCompatEditText nameView,phoneView,emailView;
+    TextView ratingTxt;
+    RatingBar rating ;
 
     public PersonalInfoFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PersonalInfoFragment.
-     */
+
 
     public static PersonalInfoFragment newInstance(String param1, String param2) {
         PersonalInfoFragment fragment = new PersonalInfoFragment();
@@ -60,6 +70,36 @@ public class PersonalInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_personal_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_personal_info, container, false);
+        DatabaseReference users = FirebaseDatabase.getInstance().getReference("users");
+        Query query = users.orderByChild("name").equalTo("TarekElShawaf");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Rider currentUser = dataSnapshot.getValue(Rider.class);
+                name= currentUser.getName();
+                email=currentUser.getEmail();
+                phone=currentUser.getPhoneNumber();
+                rate= currentUser.getRate();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        nameView = view.findViewById(R.id.nameView);
+        nameView.setText(name);
+        phoneView = view.findViewById(R.id.phoneView);
+        phoneView.setText(phone);
+        emailView = view.findViewById(R.id.emailView);
+        emailView.setText(email);
+
+        rating = view.findViewById(R.id.ratingBar);
+        rating.setRating(rate);
+        ratingTxt = view.findViewById(R.id.ratingTxt);
+        ratingTxt.setText(""+ rate);
+
+        return view;
     }
 }

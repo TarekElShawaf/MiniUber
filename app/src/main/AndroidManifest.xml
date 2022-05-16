@@ -50,7 +50,7 @@
             android:name=".app.features.riderFeatures.SignUpRiderActivity"
             android:exported="false" />
         <activity
-            android:name=".app.features.registration.SignInActivity"
+            android:name=".app.features.commonFeatures.registration.SignInActivity"
             android:exported="false" />
         <activity
             android:name=".app.features.commonFeatures.MainActivity"

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:background="@color/defaultBackground"
-    tools:context=".app.features.registration.SignInActivity">
+    tools:context=".app.features.commonFeatures.registration.SignInActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package com.example.miniuber.app.features.registration;
+package com.example.miniuber.app.features.commonFeatures.registration;
 
 import android.content.Intent;
 import android.os.Bundle;

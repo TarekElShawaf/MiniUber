@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.miniuber.R;
-import com.example.miniuber.app.features.registration.SignInActivity;
+import com.example.miniuber.app.features.commonFeatures.registration.SignInActivity;
 import com.example.miniuber.app.features.riderFeatures.riderMapsActivity.RiderMapsActivity;
 import com.example.miniuber.entities.Rider;
 

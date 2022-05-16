@@ -36,6 +36,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.miniuber.R;
 
+import com.example.miniuber.app.features.commonFeatures.ModuleSelectorActivity;
 import com.example.miniuber.app.features.commonFeatures.directions.FetchURL;
 import com.example.miniuber.app.features.commonFeatures.directions.TaskLoadedCallback;
 
@@ -124,8 +125,6 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
 
 
     private void settingNavigation() {
-        AppCompatButton navigationButton;
-
         navigationView = findViewById(R.id.navigationView);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.menu_Open, R.string.menu_Close);
         drawerLayout= findViewById(R.id.drawerLayoutRider);
@@ -134,23 +133,6 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             navigationView.setNavigationItemSelectedListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.navhome:
-
-                        /*switch (fragmentCounter) {
-                            case 1:
-                              //  Fragment fragment=getSupportFragmentManager().findFragmentById(R.id.log);
-                                //getSupportFragmentManager().beginTransaction().remove().commit();\
-                                break;
-                                case 2:
-                                    Fragment fragment=new PersonalInfoFragment();
-                                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                                    constraintLayout.setVisibility(View.VISIBLE);
-                                    finish();
-
-
-                                    break;
-
-
-                        }*/
                        if(check)
                         {
                             drawerLayout.closeDrawer(GravityCompat.START);
@@ -168,8 +150,10 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                         break;
                     case R.id.navlogOut:
                         check=false;
-                        Toast.makeText(this, "Logout Fragment", Toast.LENGTH_SHORT).show();
-                        constraintLayout.setVisibility(View.INVISIBLE);
+                        //Toast.makeText(this, "Logout Fragment", Toast.LENGTH_SHORT).show();
+                        //open moduleselector activity
+                        Intent intent = new Intent(this, ModuleSelectorActivity.class);
+                        startActivity(intent);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         fragmentCounter=1;
 
