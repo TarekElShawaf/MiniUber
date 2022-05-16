@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.miniuber">
+    package="com.example.miniuber" >
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -16,7 +16,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MiniUber">
+        android:theme="@style/Theme.MiniUber" >
+
         <activity
             android:name=".app.features.commonFeatures.PhoneVerificationActivity"
             android:exported="false" />
@@ -42,8 +43,8 @@
             android:value="AIzaSyCwSNYh_1b4tVKBJzjQ-pKRiSuWVlF6MXA" />
 
         <activity
-            android:name=".app.features.riderFeatures.RiderMapsActivity"
-            android:exported="false"
+            android:name=".app.features.riderFeatures.riderMapsActivity.RiderMapsActivity"
+            android:exported="true"
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".app.features.riderFeatures.SignUpRiderActivity"
@@ -53,7 +54,7 @@
             android:exported="false" />
         <activity
             android:name=".app.features.commonFeatures.MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -62,8 +63,8 @@
         </activity>
         <activity android:name=".app.features.commonFeatures.ModuleSelectorActivity" />
         <activity
-            android:exported="true"
-            android:name=".app.features.driverFeatures.DriversMapsActivity" />
+            android:name=".app.features.driverFeatures.DriversMapsActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

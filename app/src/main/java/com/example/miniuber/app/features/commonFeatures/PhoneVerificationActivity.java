@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.example.miniuber.R;
 import com.example.miniuber.app.features.registration.SignInActivity;
-import com.example.miniuber.app.features.riderFeatures.RiderMapsActivity;
+import com.example.miniuber.app.features.riderFeatures.riderMapsActivity.RiderMapsActivity;
 import com.example.miniuber.entities.Rider;
 
 import com.google.firebase.FirebaseException;

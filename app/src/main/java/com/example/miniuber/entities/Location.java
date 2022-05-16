@@ -7,6 +7,7 @@ public class Location {
     public String userId;
 
 
+
     public Location(String LocationName , double latitude, double longitude , String ID_1 ){
 
         this.LocationName = LocationName;

@@ -1,33 +1,31 @@
-package com.example.miniuber;
+package com.example.miniuber.app.features.riderFeatures.personalInfo;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import com.example.miniuber.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link trips_history_fragment#newInstance} factory method to
+ * Use the {@link PersonalInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class trips_history_fragment extends Fragment {
+public class PersonalInfoFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public trips_history_fragment() {
+    public PersonalInfoFragment() {
         // Required empty public constructor
     }
 
@@ -37,11 +35,11 @@ public class trips_history_fragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment trips_history_fragment.
+     * @return A new instance of fragment PersonalInfoFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static trips_history_fragment newInstance(String param1, String param2) {
-        trips_history_fragment fragment = new trips_history_fragment();
+
+    public static PersonalInfoFragment newInstance(String param1, String param2) {
+        PersonalInfoFragment fragment = new PersonalInfoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,23 +59,7 @@ public class trips_history_fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_trips_history_fragment, container, false);
-
-        RecyclerView rv= v.findViewById(R.id.pt_fragment);
-
-        ArrayList<String> trips  = new ArrayList<String>();
-        trips.add("nour");
-        trips.add("noura");
-        trips.add("nouran");
-
-
-        RecyclerViewAdapter adapter =  new RecyclerViewAdapter(trips);
-        RecyclerView.LayoutManager lm = new LinearLayoutManager(getContext());
-        rv.setHasFixedSize(true);
-        rv.setLayoutManager(lm);
-        rv.setAdapter(adapter);
-
         // Inflate the layout for this fragment
-        return v;
+        return inflater.inflate(R.layout.fragment_personal_info, container, false);
     }
 }

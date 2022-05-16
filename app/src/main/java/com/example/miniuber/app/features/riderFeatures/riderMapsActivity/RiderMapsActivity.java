@@ -1,6 +1,7 @@
-package com.example.miniuber.app.features.riderFeatures;
+package com.example.miniuber.app.features.riderFeatures.riderMapsActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -24,8 +25,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -36,8 +39,9 @@ import com.example.miniuber.R;
 import com.example.miniuber.app.features.commonFeatures.directions.FetchURL;
 import com.example.miniuber.app.features.commonFeatures.directions.TaskLoadedCallback;
 
+import com.example.miniuber.app.features.riderFeatures.personalInfo.PersonalInfoFragment;
+import com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment.TripsHistoryFragment;
 import com.example.miniuber.databinding.ActivityMapsBinding;
-import com.example.miniuber.trips_history_fragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -62,7 +66,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener , TaskLoadedCallback {
+public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener , TaskLoadedCallback  {
 
 
     private static final String TAG = "MapsActivity";
@@ -73,8 +77,10 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     private static final int locationPermissionRequestCode = 1;
     private static final float defaultZoom = 15;
     private GoogleMap googleMap;
+    private Boolean check = true;
     private EditText searchMap;
     private ImageView markerSearch;
+    private int fragmentCounter = 0;
     private AppCompatButton currentLocation;
     private ArrayList<LatLng> markers =new ArrayList<>();
     private int ids = 0;
@@ -82,6 +88,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     private TextView pickUpPoint ;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private ConstraintLayout constraintLayout ;
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
@@ -97,7 +104,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
 
 
         Objects.requireNonNull(getSupportActionBar()).hide();
-       // settingNavigation();
+        settingNavigation();
         settingEditText();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.riderMap);
@@ -115,26 +122,74 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         currentLocation.setOnClickListener(view -> currentLocation.setText(""));
     }
 
+
     private void settingNavigation() {
         AppCompatButton navigationButton;
 
         navigationView = findViewById(R.id.navigationView);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.menu_Open, R.string.menu_Close);
+        drawerLayout= findViewById(R.id.drawerLayoutRider);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
-
+        constraintLayout= findViewById(R.id.constraintLayout3);
             navigationView.setNavigationItemSelectedListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.navhome:
-                        //drawerLayout.closeDrawer(GravityCompat.START);
+
+                        /*switch (fragmentCounter) {
+                            case 1:
+                              //  Fragment fragment=getSupportFragmentManager().findFragmentById(R.id.log);
+                                //getSupportFragmentManager().beginTransaction().remove().commit();\
+                                break;
+                                case 2:
+                                    Fragment fragment=new PersonalInfoFragment();
+                                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                                    constraintLayout.setVisibility(View.VISIBLE);
+                                    finish();
+
+
+                                    break;
+
+
+                        }*/
+                       if(check)
+                        {
+                            drawerLayout.closeDrawer(GravityCompat.START);
+                        }
+                        else{
+                            Intent intent = new Intent(this, RiderMapsActivity.class);
+
+                           overridePendingTransition(1, 1);
+                           startActivity(intent);
+                           overridePendingTransition(1, 1);
+                            check=true;
+                        }
+
+
                         break;
                     case R.id.navlogOut:
+                        check=false;
+                        Toast.makeText(this, "Logout Fragment", Toast.LENGTH_SHORT).show();
+                        constraintLayout.setVisibility(View.INVISIBLE);
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        fragmentCounter=1;
+
                         //drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.navspersonalinfo:
-                        // drawerLayout.closeDrawer(GravityCompat.START);
+                        check=false;
+                        Toast.makeText(this, "Personal Fragment", Toast.LENGTH_SHORT).show();
+                        replaceFragment(new PersonalInfoFragment());
+                        constraintLayout.setVisibility(View.INVISIBLE);
+                         drawerLayout.closeDrawer(GravityCompat.START);
+                        fragmentCounter=2;
                         break;
                     case R.id.navtrips:
-                        replaceFragment(new trips_history_fragment());
+                        check=false;
+                       replaceFragment(new TripsHistoryFragment());
+                        Toast.makeText(this, "History Fragment", Toast.LENGTH_SHORT).show();
+                        constraintLayout.setVisibility(View.INVISIBLE);
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        fragmentCounter=3;
                         break;
                     default: return true;
 
@@ -439,4 +494,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             currentPolyline.remove();
         currentPolyline = googleMap.addPolyline((PolylineOptions) values[0]);
     }
+
+
+
 }
