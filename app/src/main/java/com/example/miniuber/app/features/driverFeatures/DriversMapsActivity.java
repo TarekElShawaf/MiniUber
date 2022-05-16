@@ -18,6 +18,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.example.miniuber.R;
 import com.example.miniuber.app.features.commonFeatures.directions.TaskLoadedCallback;
 import com.example.miniuber.databinding.ActivityMapsBinding;
 import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,6 +44,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
@@ -65,16 +68,18 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
     private ArrayList<LatLng> markers =new ArrayList<>();
     private int ids = 0;
     private HashMap<Integer,LatLng> markersHashMap = new HashMap<>();
-
+    ActivityMapsBinding binding;
+    AppCompatButton searchRider ;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMapsBinding binding;
+
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView( R.layout.activity_drivers_maps);
 
@@ -92,8 +97,18 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
         Window window = this.getWindow();
         window.setStatusBarColor(getResources().getColor(R.color.defaultBackground));
         getLocationPermission();
+        searchRiders();
 
 
+    }
+    private void searchRiders(){
+        searchRider= findViewById(R.id.searchRiders);
+        searchRider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendRequest();
+            }
+        });
     }
 
     private void settingEditText() {
@@ -133,6 +148,13 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
 
 
     }*/
+   private void sendRequest(){
+       DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("AvailableDrivers");
+       GeoFire geoFire = new GeoFire(userRequest);
+       // Toast.makeText(this, "Your Location is - "+userPhoneNumber , Toast.LENGTH_LONG).show();
+       Log.d(TAG, "sendRequest: "+markersHashMap.get(0).latitude);
+       geoFire.setLocation("+2001142434195", new GeoLocation(markersHashMap.get(0).latitude, markersHashMap.get(0).longitude));
+   }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

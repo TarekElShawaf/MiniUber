@@ -139,6 +139,12 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     private String driverId;
     private Boolean isDriverFound = false;
 
+    private void sendRequest(){
+        DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("User Requests");
+        GeoFire geoFire = new GeoFire(userRequest);
+       // Toast.makeText(this, "Your Location is - "+userPhoneNumber , Toast.LENGTH_LONG).show();
+        geoFire.setLocation("+2001142434195", new GeoLocation(markersHashMap.get(0).latitude, markersHashMap.get(0).longitude));
+    }
 
     private void searchForDrivers(){
 
@@ -151,11 +157,14 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                     return;
                 }
                 removeOldView();
+                binding.progressBar2.setVisibility(View.VISIBLE);
+                sendRequest();
+
                 Log.d(TAG, "getClosetDriver: searching near latt :   "+markersHashMap.get(0).latitude+" long :  "+markersHashMap.get(0).longitude);
 
                 getClosetDriver();
 
-                putTripView();
+
             }
         });
     }
@@ -172,9 +181,20 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             public void onDataEntered(DataSnapshot dataSnapshot, GeoLocation location) {
                 if(!isDriverFound){
                     Log.d(TAG, "onDataEntered: driver found"+dataSnapshot.getKey().toString());
+                    double longitude = (double) dataSnapshot.child("l").child("0").getValue();
+                    double lattiude = (double) dataSnapshot.child("l").child("1").getValue();
+                    LatLng driverLocation = new LatLng(lattiude,longitude);
+                   // moveCamera(driverLocation,defaultZoom, "Driver Found",1);
+                    Log.d(TAG, "onDataEntered: driver  lang "+longitude+"  "+lattiude);
+                    Log.d(TAG, "onDataEntered: rider  lang "+markersHashMap.get(0).latitude+"  "+markersHashMap.get(0).longitude);
+                    Toast.makeText(RiderMapsActivity.this, "Driver Found", Toast.LENGTH_SHORT).show();
                     Toast.makeText(RiderMapsActivity.this, "Driver Found"+dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
                     isDriverFound = true;
                 }
+
+
+                binding.progressBar2.setVisibility(View.INVISIBLE);
+                putTripView();
 
             }
 
@@ -209,7 +229,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         });
         Log.d(TAG, "getClosetDriver: "+searchRadius);
         Log.d(TAG, "getClosetDriver: "+isDriverFound);
-        binding.progressBar2.setVisibility(View.INVISIBLE);
+
     }
     private void removeOldView(){
 
@@ -237,6 +257,8 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         binding.timeTextView.setVisibility(View.VISIBLE);
         binding.tripTime.setVisibility(View.VISIBLE);
         binding.tripDistance.setVisibility(View.VISIBLE);
+        binding.carImage.setVisibility(View.VISIBLE);
+        binding.driverImageRider.setVisibility(View.VISIBLE);
         binding.tripPrice.setVisibility(View.VISIBLE);
         binding.DistanceTextView.setVisibility(View.VISIBLE);
         binding.priceTextview.setVisibility(View.VISIBLE);
