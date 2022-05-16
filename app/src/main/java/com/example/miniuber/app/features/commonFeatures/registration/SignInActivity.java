@@ -22,6 +22,7 @@ import com.example.miniuber.app.features.commonFeatures.PhoneVerificationActivit
 import com.example.miniuber.R;
 
 import com.example.miniuber.entities.Rider;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -190,8 +191,11 @@ public class SignInActivity extends AppCompatActivity {
 
                 if (snapshot.getValue() != null) {
                     //Phone number already exists in database
+                    DatabaseReference userAccount =myRef.orderByChild("phoneNumber").equalTo(fullNumber).getRef();
+                    Toast.makeText(getBaseContext(), "Phone number already exists SDADASD"+userAccount.child("userId").toString(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getBaseContext(), PhoneVerificationActivity.class);
                     intent.putExtra("phoneNo", fullNumber);
+
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     startActivity(intent);
                 } else {
