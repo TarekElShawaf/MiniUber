@@ -192,7 +192,7 @@ public class SignInActivity extends AppCompatActivity {
                 if (snapshot.getValue() != null) {
                     //Phone number already exists in database
                     DatabaseReference userAccount =myRef.orderByChild("phoneNumber").equalTo(fullNumber).getRef();
-                    Toast.makeText(getBaseContext(), "Phone number already exists SDADASD"+userAccount.child("userId").toString(), Toast.LENGTH_SHORT).show();
+
                     Intent intent = new Intent(getBaseContext(), PhoneVerificationActivity.class);
                     intent.putExtra("phoneNo", fullNumber);
 

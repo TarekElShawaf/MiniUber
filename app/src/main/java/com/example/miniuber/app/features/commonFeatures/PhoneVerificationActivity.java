@@ -63,6 +63,7 @@ public class PhoneVerificationActivity extends AppCompatActivity {
     private void initialize() {
         pinview = findViewById(R.id.pinview);
         phoneNo = getIntent().getStringExtra("phoneNo");
+        Toast.makeText(this,"Phone Number is : "+phoneNo,Toast.LENGTH_LONG).show();
         signOption = getIntent().getIntExtra("signOption",0);
         verify = findViewById(R.id.btn_verify);
         auth = FirebaseAuth.getInstance();
@@ -148,7 +149,9 @@ public class PhoneVerificationActivity extends AppCompatActivity {
 
 
                         }
+
                         Intent intent = new Intent(PhoneVerificationActivity.this, RiderMapsActivity.class);
+                        intent.putExtra("phoneNumber",phoneNo);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
 

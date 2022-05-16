@@ -90,7 +90,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ConstraintLayout constraintLayout ;
-
+    private String userPhoneNumber;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
@@ -99,11 +99,12 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         ActivityMapsBinding binding;
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        userPhoneNumber = getIntent().getStringExtra("phoneNumber");
+        // function that get User from firebase using phone number
+
         searchMap = findViewById(R.id.searchMap);
         currentLocation = findViewById(R.id.gpsRider);
         pickUpPoint=findViewById(R.id.pickUpPoint);
-
-
         Objects.requireNonNull(getSupportActionBar()).hide();
         settingNavigation();
         settingEditText();
