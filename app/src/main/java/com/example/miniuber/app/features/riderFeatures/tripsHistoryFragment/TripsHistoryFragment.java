@@ -30,18 +30,10 @@ public class TripsHistoryFragment extends Fragment {
     private String mParam2;
 
     public TripsHistoryFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment trips_history_fragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static TripsHistoryFragment newInstance(String param1, String param2) {
         TripsHistoryFragment fragment = new TripsHistoryFragment();
         Bundle args = new Bundle();
@@ -65,7 +57,7 @@ public class TripsHistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_trips_history_fragment, container, false);
 
-        /*RecyclerView rv= v.findViewById(R.id.pt_fragment);
+        RecyclerView rv= v.findViewById(R.id.pt_fragment);
 
         ArrayList<String> trips  = new ArrayList<String>();
         trips.add("nour");
@@ -78,7 +70,7 @@ public class TripsHistoryFragment extends Fragment {
         rv.setHasFixedSize(true);
         rv.setLayoutManager(lm);
         rv.setAdapter(adapter);
-*/
+
         // Inflate the layout for this fragment
         return v;
     }

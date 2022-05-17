@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".app.features.riderFeatures.tripsHistoryFragment.complaints.ReportProblem">
+
+    <RadioGroup
+        android:id="@+id/radiogroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp">
+
+        <RadioButton
+            android:id="@+id/maskproblem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="My driver was not wearing a face mask"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/lostitemproblem"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="I lost an item"></RadioButton>
+        <RadioButton
+            android:id="@+id/accidentproblem"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="I was envolved in an accident"></RadioButton>
+        <RadioButton
+            android:id="@+id/driverproblem"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="My driver was rude or unprofessional"></RadioButton>
+        <RadioButton
+            android:id="@+id/overchargeproblem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="I was overcharged on my cash trip"></RadioButton>
+        <RadioButton
+            android:id="@+id/differentplateproblem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="The car had a different plate number"></RadioButton>
+        <RadioButton
+            android:id="@+id/otherproblem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="writeOtherProblem"
+            android:text="Other"></RadioButton>
+
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/submitproblem"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="95dp"
+        android:layout_marginBottom="117dp"
+        android:onClick="submitProblem"
+        android:text="Submit" />
+
+    <EditText
+        android:id="@+id/problem_msg"
+        android:layout_width="272dp"
+        android:layout_height="136dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="356dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        tools:visibility="invisible" />
+
+</RelativeLayout>

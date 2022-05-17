@@ -9,6 +9,8 @@
         <entry key="..\:/Users/inour/AndroidStudioProjects/MiniUber/app/src/main/res/layout/slider_on_board.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/inour/AndroidStudioProjects/MiniUber/app/src/main/res/layout/trip_custom_item.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/inour/AndroidStudioProjects/MiniUber/app/src/main/res/menu/main_menu.xml" value="0.4" />
+        <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/debug/res/drawable/ic_baseline_access_time_24.xml" value="0.2385" />
+        <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/debug/res/drawable/ic_baseline_location_on_24.xml" value="0.2385" />
         <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/drawable/facebook_login.xml" value="0.1585" />
         <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/drawable/fade_in.xml" value="0.1585" />
         <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/drawable/gps.xml" value="0.21" />
@@ -29,11 +31,13 @@
         <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/layout/activity_maps.xml" value="0.264" />
         <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/layout/activity_on_board.xml" value="0.16485507246376813" />
         <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/layout/activity_phone_verification.xml" value="0.15307971014492755" />
+        <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/layout/activity_report_problem.xml" value="0.264" />
         <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/layout/activity_sign_in.xml" value="0.264" />
         <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/layout/activity_sign_up.xml" value="0.23229166666666667" />
         <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/layout/activity_sign_up_driver.xml" value="0.23229166666666667" />
         <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/layout/activity_sign_up_driver2.xml" value="0.23229166666666667" />
         <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/layout/activity_sign_up_rider.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/layout/activity_trip_info.xml" value="0.23229166666666667" />
         <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/layout/app_bar_main.xml" value="0.23229166666666667" />
         <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/layout/content_main.xml" value="0.23229166666666667" />
         <entry key="..\:/Users/megab/AndroidStudioProjects/MiniUber/app/src/main/res/layout/fade_in.xml" value="0.1" />

@@ -183,12 +183,19 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                     Log.d(TAG, "onDataEntered: driver found"+dataSnapshot.getKey().toString());
                     double longitude = (double) dataSnapshot.child("l").child("0").getValue();
                     double lattiude = (double) dataSnapshot.child("l").child("1").getValue();
-                    LatLng driverLocation = new LatLng(lattiude,longitude);
-                   // moveCamera(driverLocation,defaultZoom, "Driver Found",1);
+                   /* LatLng driverLocation = new LatLng(lattiude,longitude);
+                    MarkerOptions options = new MarkerOptions().position(driverLocation).title("Driver Location");
+                    int height = 100;
+                    int width = 100;
+                    BitmapDrawable bitMapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.marker_icon);
+                    Bitmap b = bitMapDrawable.getBitmap();
+                    options.draggable(true);
+                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+                    options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                    googleMap.addMarker(options);*/
                     Log.d(TAG, "onDataEntered: driver  lang "+longitude+"  "+lattiude);
                     Log.d(TAG, "onDataEntered: rider  lang "+markersHashMap.get(0).latitude+"  "+markersHashMap.get(0).longitude);
-                    Toast.makeText(RiderMapsActivity.this, "Driver Found", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(RiderMapsActivity.this, "Driver Found"+dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RiderMapsActivity.this, "Driver Found"+driverLocation.toString(), Toast.LENGTH_SHORT).show();
                     isDriverFound = true;
                 }
 

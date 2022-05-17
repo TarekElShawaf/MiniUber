@@ -98,8 +98,6 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
         window.setStatusBarColor(getResources().getColor(R.color.defaultBackground));
         getLocationPermission();
         searchRiders();
-
-
     }
     private void searchRiders(){
         searchRider= findViewById(R.id.searchRiders);
@@ -115,44 +113,11 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
         currentLocation.setOnClickListener(view -> currentLocation.setText(""));
     }
 
-   /* private void settingNavigation() {
-        AppCompatButton navigationButton;
-        navigationButton = findViewById(R.id.navigationIcon);
-        drawerLayout = findViewById(R.id.drawerLayout);
-        navigationView = findViewById(R.id.navigationView);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.menu_Open, R.string.menu_Close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        navigationButton.setOnClickListener(v -> {
-            actionBarDrawerToggle.syncState();
-            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-            navigationView.setNavigationItemSelectedListener(item -> {
-                switch (item.getItemId()) {
-                    case R.id.navhome:
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-                    case R.id.navlogOut:
-                        //drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-                    case R.id.navsettings:
-                        // drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-                    case R.id.navtrips:
-                        // drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-
-
-                }
-                return true;
-            });
-        });
-
-
-    }*/
    private void sendRequest(){
        DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("AvailableDrivers");
        GeoFire geoFire = new GeoFire(userRequest);
        // Toast.makeText(this, "Your Location is - "+userPhoneNumber , Toast.LENGTH_LONG).show();
-       Log.d(TAG, "sendRequest: "+markersHashMap.get(0).latitude);
+       Log.d(TAG, "sendRequest: lat  "+markersHashMap.get(0).latitude +" long "+ markersHashMap.get(0).longitude);
        geoFire.setLocation("+2001142434195", new GeoLocation(markersHashMap.get(0).latitude, markersHashMap.get(0).longitude));
    }
 
