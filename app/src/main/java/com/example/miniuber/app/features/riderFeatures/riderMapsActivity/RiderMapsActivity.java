@@ -106,6 +106,10 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     private AppCompatButton searchDrivers;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     ActivityMapsBinding binding;
+    private int searchRadius = 1;
+    private String driverId;
+    private Boolean isDriverFound = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +118,6 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         userPhoneNumber = getIntent().getStringExtra("phoneNumber");
-        // function that get User from firebase using phone number
-
         searchMap = findViewById(R.id.searchMap);
         currentLocation = findViewById(R.id.gpsRider);
         searchDrivers=findViewById(R.id.searchDrivers);;
@@ -135,9 +137,6 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
 
 
     }
-    private int searchRadius = 1;
-    private String driverId;
-    private Boolean isDriverFound = false;
 
     private void sendRequest(){
         DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("User Requests");
@@ -309,13 +308,16 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                         startActivity(intent);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         fragmentCounter=1;
-
                         //drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.navspersonalinfo:
                         check=false;
                         Toast.makeText(this, "Personal Fragment", Toast.LENGTH_SHORT).show();
-                        replaceFragment(new PersonalInfoFragment());
+                        Bundle bundle = new Bundle();
+                        bundle.putString("userPhoneNumber", userPhoneNumber);
+                        Fragment fragment = new PersonalInfoFragment();
+                        fragment.setArguments(bundle);
+                        replaceFragment(fragment);
                         constraintLayout.setVisibility(View.INVISIBLE);
                          drawerLayout.closeDrawer(GravityCompat.START);
                         fragmentCounter=2;
@@ -340,6 +342,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+
         fragmentTransaction.replace(R.id.frameLayout,fragment);
         fragmentTransaction.commit();
 
