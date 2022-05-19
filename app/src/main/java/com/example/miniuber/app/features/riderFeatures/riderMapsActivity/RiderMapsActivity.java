@@ -2,6 +2,7 @@ package com.example.miniuber.app.features.riderFeatures.riderMapsActivity;
 
 import android.Manifest;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -9,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ActionMode;
@@ -115,7 +117,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     private ActionBarDrawerToggle actionBarDrawerToggle;
     ActivityMapsBinding binding;
     private int searchRadius = 1;
-    private String driverId;
+    private String driverPhoneNumber;
     private Boolean isDriverFound = false;
 
 
@@ -144,7 +146,16 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         getLocationPermission();
         searchForDrivers();
         settingTime();
+        settingDriverInformation();
 
+    }
+    private void settingDriverInformation(){
+        binding.carImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDriverDialog();
+            }
+        });
     }
 
     private void sendRequest(){
@@ -199,7 +210,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                     isDriverFound = true;
                 }
 
-
+                driverPhoneNumber = dataSnapshot.getKey();
                 binding.progressBar2.setVisibility(View.INVISIBLE);
                 putTripView();
                 double longitude = (double) dataSnapshot.child("l").child("1").getValue();
@@ -267,6 +278,23 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         binding.dropOffTextView.setVisibility(View.INVISIBLE);
         binding.searchMap.setVisibility(View.INVISIBLE);
         binding.timeChecker.setVisibility(View.INVISIBLE);
+
+    }
+    private void showDriverDialog(){
+        final Dialog dialog = new Dialog(this);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.driver_details_diaglog);
+        dialog.findViewById(R.id.driverRealRate) ;
+        dialog.findViewById(R.id.driverPhoneNumber).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                driverPhoneNumber.substring(3,driverPhoneNumber.length());
+                intent.setData(Uri.parse("tel:"+driverPhoneNumber.substring(3,driverPhoneNumber.length())));
+                startActivity(intent);
+            }
+        });
+        dialog.show();
 
     }
     private void putTripView(){
