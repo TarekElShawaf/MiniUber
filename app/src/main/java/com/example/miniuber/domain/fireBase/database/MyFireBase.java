@@ -1,12 +1,13 @@
-package com.example.miniuber.domain.fireBase.database;
 
+package com.example.miniuber.domain.fireBase.database;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
 import com.example.miniuber.app.features.driverFeatures.DriversMapsActivity;
-
+import com.example.miniuber.app.features.employeeFeatures.EmployeeActivity;
 import com.example.miniuber.app.features.riderFeatures.riderMapsActivity.RiderMapsActivity;
+
 import com.example.miniuber.entities.ModuleOption;
 import com.example.miniuber.entities.User;
 import com.google.android.gms.tasks.Task;
@@ -19,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MyFireBase {
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
-    private final PhoneAuthCredential credential;
+    private  PhoneAuthCredential credential;
     private final Context context;
     private final int moduleOption;
 
@@ -62,7 +63,7 @@ public class MyFireBase {
 
     }
 
-    private void addUserDataToDatabase(User user) {
+    public  void addUserDataToDatabase(User user) {
 
         DatabaseReference myRef =
                 FirebaseDatabase.getInstance().getReference("Users").child(ModuleOption.getReferenceName(moduleOption));
@@ -73,8 +74,12 @@ public class MyFireBase {
 
     private void handleIntent() {
 
-
-         if(moduleOption == ModuleOption.RIDER){
+        if(moduleOption == ModuleOption.EMPLOYEE){
+            Intent intent  = new Intent(context, EmployeeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            context.startActivity(intent);
+        }
+        else if(moduleOption == ModuleOption.RIDER){
             Intent intent  = new Intent(context, RiderMapsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(intent);

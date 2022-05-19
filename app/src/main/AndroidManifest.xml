@@ -42,6 +42,12 @@
             android:name=".app.features.commonFeatures.registration.SignInActivity"
             android:exported="false" />
         <activity
+            android:name=".app.features.employeeFeatures.ComplaintDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".app.features.employeeFeatures.EmployeeActivity"
+            android:exported="false" />
+        <activity
             android:name=".app.features.commonFeatures.MainActivity"
             android:exported="true" >
             <intent-filter>
