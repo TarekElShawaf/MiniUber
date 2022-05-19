@@ -10,5 +10,8 @@ public class FormatChecker {
     public static boolean isValidPhoneNo(String phone){
         return phone.length() > 6 && phone.length() < 16;
     }
+    public static boolean isValidCarYear(String year){
+        return year.length() == 4;
+    }
 
 }

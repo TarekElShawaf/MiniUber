@@ -13,7 +13,7 @@ import com.example.miniuber.entities.converters.PickupConverter;
 import com.example.miniuber.entities.converters.TimeConverter;
 import com.example.miniuber.entities.Trip;
 
-@Database(entities = {Trip.class} ,version = 15, exportSchema = false)
+@Database(entities = {Trip.class} ,version = 16, exportSchema = false)
 public abstract class TripsDatabase extends RoomDatabase {
 
     private static TripsDatabase instance;

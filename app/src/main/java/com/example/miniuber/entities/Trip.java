@@ -19,24 +19,30 @@ public class Trip {
     private String destination;
     private Float fare ;
     private String tripDate ;
-    private int driverId ;
+    private String driverPhoneNo ;
     private float rate;
-    private int  riderId ;
-    @PrimaryKey(autoGenerate = false)
+    private String  riderPhoneNo;
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int tripId =0;
 
-    public Trip(String pickupPoint, String time, String destination, Float fare, String tripDate, int driverId, float rate, int riderId, int tripId) {
+
+
+    public Trip(String pickupPoint, String time, String destination, Float fare, String tripDate, String driverPhoneNumber, float rate, String riderPhoneNumber) {
         this.pickupPoint = pickupPoint;
         this.time = time;
         this.destination = destination;
         this.fare = fare;
         this.tripDate = tripDate;
-        this.driverId = driverId;
+        this.driverPhoneNo = driverPhoneNumber;
         this.rate = rate;
-        this.riderId = riderId;
-        this.tripId = tripId;
+        this.riderPhoneNo = riderPhoneNumber;
+
     }
+    public Trip() {
+
+    }
+
 
     public String getPickupPoint() {
         return pickupPoint;
@@ -78,13 +84,6 @@ public class Trip {
         this.tripDate = tripDate;
     }
 
-    public int getDriverId() {
-        return driverId;
-    }
-
-    public void setDriverId(int driverId) {
-        this.driverId = driverId;
-    }
 
     public float getRate() {
         return rate;
@@ -94,12 +93,20 @@ public class Trip {
         this.rate = rate;
     }
 
-    public int getRiderId() {
-        return riderId;
+    public String getDriverPhoneNo() {
+        return driverPhoneNo;
     }
 
-    public void setRiderId(int riderId) {
-        this.riderId = riderId;
+    public void setDriverPhoneNo(String driverPhoneNo) {
+        this.driverPhoneNo = driverPhoneNo;
+    }
+
+    public String getRiderPhoneNo() {
+        return riderPhoneNo;
+    }
+
+    public void setRiderPhoneNo(String riderPhoneNo) {
+        this.riderPhoneNo = riderPhoneNo;
     }
 
     public int getTripId() {

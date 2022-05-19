@@ -8,8 +8,15 @@ public class Rider extends  User implements Serializable {
     public Rider(String name, String email, String phoneNumber, String userId, float rate) {
         super(name, email, phoneNumber, userId, rate);
     }
+    public Rider(String name, String email, String phoneNumber) {
+        super(name, email, phoneNumber);
+    }
 
-
-
-
+    public Rider() {
+    }
 }
+
+
+
+
+

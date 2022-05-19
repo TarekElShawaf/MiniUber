@@ -18,6 +18,15 @@ public  abstract  class User implements Serializable {
         this.userId = userId;
         this.rate = rate;
     }
+    public User(String name , String email ,String phoneNumber){
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+    public User(){
+
+    }
+
 
     public float getRate() {
         return rate;

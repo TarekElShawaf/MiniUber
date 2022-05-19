@@ -11,6 +11,9 @@ public class Driver extends User implements Serializable {
         super(name, email, phoneNumber, userId, rate);
         this.drivingLicense = drivingLicense;
     }
+    public Driver(String name, String email, String phoneNumber) {
+        super(name, email, phoneNumber);
+    }
 
     public String getDrivingLicense() {
         return drivingLicense;

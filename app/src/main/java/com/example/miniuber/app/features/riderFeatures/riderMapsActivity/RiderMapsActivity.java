@@ -288,14 +288,15 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     }
     private void settingTime() {
         binding.timeChecker.setOnClickListener(view -> {
-            Calendar calendar = Calendar.getInstance();
+            /*Calendar calendar = Calendar.getInstance();
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
             int minute = calendar.get(Calendar.MINUTE);
             TimePickerDialog timePickerDialog = new TimePickerDialog(RiderMapsActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_DARK, (timePicker, hourOfDay, minute1) -> {
                 binding.timeTextView.setText(hourOfDay + ":" + minute1);
             }, hour, minute, true);
             timePickerDialog.show();
-            timePickerDialog.setTitle("Select Time For Pickup");
+            timePickerDialog.setTitle("Select Time For Pickup");*/
+
 
         });
 
