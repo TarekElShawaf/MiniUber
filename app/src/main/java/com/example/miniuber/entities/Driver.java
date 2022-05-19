@@ -33,4 +33,12 @@ public class Driver extends User implements Serializable {
     public void setDrivingLicense(String drivingLicense) {
         this.drivingLicense = drivingLicense;
     }
+
+    public String getCarPlateNumber() {
+        return carPlateNumber;
+    }
+
+    public void setCarPlateNumber(String carPlateNumber) {
+        this.carPlateNumber = carPlateNumber;
+    }
 }
