@@ -6,17 +6,24 @@ public class Car {
     private int year;
     private String color;
     private String plateNumber;
-    private String driverId;
+    private String driverPhoneNo;
 
 
-    public Car() {
+    public Car(String model, int year, String color, String plateNumber, String driverPhoneNo) {
+        this.model = model;
+        this.year = year;
+        this.color = color;
+        this.plateNumber = plateNumber;
+        this.driverPhoneNo = driverPhoneNo;
     }
     public Car(String model, int year, String color, String plateNumber) {
         this.model = model;
         this.year = year;
         this.color = color;
         this.plateNumber = plateNumber;
+
     }
+
 
     public String getModel() {
         return model;
@@ -50,11 +57,11 @@ public class Car {
         this.plateNumber = plateNumber;
     }
 
-    public String getDriverId() {
-        return driverId;
+    public String getDriverPhoneNo() {
+        return driverPhoneNo;
     }
 
-    public void setDriverId(String driverId) {
-        this.driverId = driverId;
+    public void setDriverPhoneNo(String driverPhoneNo) {
+        this.driverPhoneNo = driverPhoneNo;
     }
 }

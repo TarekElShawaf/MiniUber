@@ -5,14 +5,25 @@ import java.io.Serializable;
 public class Driver extends User implements Serializable {
 
     private  String  drivingLicense ;
+    private  String  carPlateNumber ;
 
 
-    public Driver(String name, String email, String phoneNumber, String userId, float rate, String drivingLicense) {
-        super(name, email, phoneNumber, userId, rate);
-        this.drivingLicense = drivingLicense;
-    }
+
     public Driver(String name, String email, String phoneNumber) {
         super(name, email, phoneNumber);
+    }
+
+
+    public Driver(String name, String email, String phoneNumber, String drivingLicense, String carPlateNumber) {
+        super(name, email, phoneNumber);
+        this.drivingLicense = drivingLicense;
+        this.carPlateNumber = carPlateNumber;
+    }
+
+    public Driver(String name, String email, String phoneNumber, float rate, String drivingLicense, String carPlateNumber) {
+        super(name, email, phoneNumber, rate);
+        this.drivingLicense = drivingLicense;
+        this.carPlateNumber = carPlateNumber;
     }
 
     public String getDrivingLicense() {

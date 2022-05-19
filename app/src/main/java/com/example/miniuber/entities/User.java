@@ -7,15 +7,14 @@ public  abstract  class User implements Serializable {
     private String name ;
     private String email ;
     private String phoneNumber ;
-    private String userId ;
     private float rate ;
 
 
-    public User(String name, String email, String phoneNumber, String userId, float rate) {
+    public User(String name, String email, String phoneNumber, float rate) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.userId = userId;
+
         this.rate = rate;
     }
     public User(String name , String email ,String phoneNumber){
@@ -60,11 +59,5 @@ public  abstract  class User implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getUserId() {
-        return userId;
-    }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 }
