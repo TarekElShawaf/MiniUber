@@ -68,7 +68,7 @@ public class MyFireBase {
         DatabaseReference myRef =
                 FirebaseDatabase.getInstance().getReference("Users").child(ModuleOption.getReferenceName(moduleOption));
         String userID = auth.getCurrentUser().getUid();
-        user.setUserId(userID);
+        //user.setUserId(userID);
         myRef.push().setValue(user);
     }
 
