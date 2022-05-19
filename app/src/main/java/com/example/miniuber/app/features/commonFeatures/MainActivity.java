@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         lottieAnimationView = findViewById(R.id.splashImage);
         lottieAnimationView.animate().translationY(1500).setDuration(1000).setStartDelay(5000);
         appName.animate().translationY(1500).setDuration(1000).setStartDelay(5000);
-
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

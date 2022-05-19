@@ -45,16 +45,16 @@
             motion:layout_constraintVertical_bias="0.857" />
         <Constraint
             motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="412dp"
-            android:layout_height="292dp"
+            android:layout_width="413dp"
+            android:layout_height="232dp"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintVertical_bias="1.0"
             motion:layout_constraintTop_toBottomOf="@+id/riderMap"
             motion:layout_constraintStart_toStartOf="parent"
             android:id="@+id/constraint_layout_2"
             android:layout_marginTop="2dp"
-            motion:layout_editor_absoluteY="480dp"
-            motion:layout_editor_absoluteX="2dp" />
+            motion:layout_constraintHorizontal_bias="0.0"
+            motion:layout_editor_absoluteY="499dp" />
         <Constraint
             motion:layout_editor_absoluteY="195dp"
             motion:layout_constraintStart_toStartOf="parent"

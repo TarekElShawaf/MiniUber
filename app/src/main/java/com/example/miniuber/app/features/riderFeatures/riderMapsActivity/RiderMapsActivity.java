@@ -1,9 +1,7 @@
 package com.example.miniuber.app.features.riderFeatures.riderMapsActivity;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.app.TimePickerDialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -48,6 +46,7 @@ import com.example.miniuber.app.features.commonFeatures.directions.TaskLoadedCal
 import com.example.miniuber.app.features.riderFeatures.personalInfo.PersonalInfoFragment;
 import com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment.TripsHistoryFragment;
 
+
 import com.example.miniuber.databinding.ActivityMapsBinding;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
@@ -75,6 +74,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+import com.google.maps.android.SphericalUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -104,6 +104,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     private AppCompatButton currentLocation;
     private ArrayList<LatLng> markers =new ArrayList<>();
     private int ids = 0;
+    private int destinationId = 0;
     private HashMap<Integer,LatLng> markersHashMap = new HashMap<>();
     private TextView pickUpPoint ;
     private DrawerLayout drawerLayout;
@@ -195,9 +196,6 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
 
                     Log.d(TAG, "onDataEntered: driver found"+dataSnapshot.getKey().toString());
 
-                    //Log.d(TAG, "onDataEntered: driver  lang "+longitude+"  "+latitude);
-                   // Log.d(TAG, "onDataEntered: rider  lang "+markersHashMap.get(0).latitude+"  "+markersHashMap.get(0).longitude);
-                    //Toast.makeText(RiderMapsActivity.this, "Driver Found"+driverLocation.toString(), Toast.LENGTH_SHORT).show();
                     isDriverFound = true;
                 }
 
@@ -210,9 +208,10 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                     markersHashMap.put(ids,driverLocation);
                     ids++;
                 moveCamera(driverLocation,defaultZoom, "Your Driver",2 );
-               // Toast.makeText(RiderMapsActivity.this, "Your Pickup  Location is - "+markersHashMap.get(0).toString() , Toast.LENGTH_LONG).show();
-               // Toast.makeText(RiderMapsActivity.this, "Your Driver  Location is latudie - "+markersHashMap.get(ids-1).latitude+ " longituide" + markersHashMap.get(ids-1).longitude, Toast.LENGTH_LONG).show();
-              //  Toast.makeText(RiderMapsActivity.this, "Your Destination  Location is - "+markersHashMap.get(ids-2).toString() , Toast.LENGTH_LONG).show();
+                double distance = SphericalUtil.computeDistanceBetween(markersHashMap.get(0),markersHashMap.get(destinationId));
+                binding.tripDistance.setText(String.valueOf(String.format("%.1f",(distance))+" m"));
+                binding.tripPrice.setText(String.valueOf(String.format("%.2f",(distance*0.4))+"$"));
+                binding.tripTime.setText(String.valueOf(binding.timeChecker.getHour()+":"+binding.timeChecker.getMinute()));
 
             }
 
@@ -249,6 +248,12 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         Log.d(TAG, "getClosetDriver: "+isDriverFound);
 
     }
+    private void settingTripData()
+    {
+
+
+
+    }
     private void removeOldView(){
 
         markerSearch.setVisibility(View.INVISIBLE);
@@ -261,6 +266,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         binding.pickUpPoint.setVisibility(View.INVISIBLE);
         binding.dropOffTextView.setVisibility(View.INVISIBLE);
         binding.searchMap.setVisibility(View.INVISIBLE);
+        binding.timeChecker.setVisibility(View.INVISIBLE);
 
     }
     private void putTripView(){
@@ -288,15 +294,8 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     }
     private void settingTime() {
         binding.timeChecker.setOnClickListener(view -> {
-            /*Calendar calendar = Calendar.getInstance();
-            int hour = calendar.get(Calendar.HOUR_OF_DAY);
-            int minute = calendar.get(Calendar.MINUTE);
-            TimePickerDialog timePickerDialog = new TimePickerDialog(RiderMapsActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_DARK, (timePicker, hourOfDay, minute1) -> {
-                binding.timeTextView.setText(hourOfDay + ":" + minute1);
-            }, hour, minute, true);
-            timePickerDialog.show();
-            timePickerDialog.setTitle("Select Time For Pickup");*/
-
+          String time =  binding.timeChecker.getHour() +":"+ binding.timeChecker.getMinute() ;
+          binding.tripTime.setText(time);
 
         });
 
@@ -466,7 +465,8 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         }
         if (addresses.size() > 0) {
             Address address = addresses.get(0);
-            searchMap.setText(addresses.get(0).getAddressLine(0));
+            //searchMap.setText(addresses.get(0).getAddressLine(0));
+            destinationId =ids;
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), defaultZoom, address.getAddressLine(0),1);
 
         }
@@ -573,7 +573,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                    addresses= geocoder.getFromLocation(marker.getPosition().latitude,marker.getPosition().longitude,4);
 
                    marker.setTitle(addresses.get(0).getAddressLine(0));
-                   pickUpPoint.setText(addresses.get(0).getAddressLine(0));
+                  // pickUpPoint.setText(addresses.get(0).getAddressLine(0));
                    markersHashMap.put(0,new LatLng(marker.getPosition().latitude,marker.getPosition().longitude));
                    Log.d(TAG, "onMarkerDrag: +"+marker.getPosition().latitude+marker.getPosition().longitude);
 

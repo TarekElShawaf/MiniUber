@@ -59,6 +59,7 @@
                     android:id="@+id/constraint_layout_2"
                     android:layout_width="408dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -71,8 +72,8 @@
                         android:id="@+id/carImage"
                         android:layout_width="65dp"
                         android:layout_height="45dp"
-                        android:layout_marginStart="36dp"
-                        android:layout_marginTop="172dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="176dp"
                         android:src="@drawable/car_rider"
                         android:visibility="invisible"
                         app:layout_constraintStart_toStartOf="parent"
@@ -98,8 +99,8 @@
                         android:id="@+id/timeTextView"
                         android:layout_width="62dp"
                         android:layout_height="16dp"
-                        android:layout_marginStart="112dp"
-                        android:layout_marginTop="100dp"
+                        android:layout_marginStart="120dp"
+                        android:layout_marginTop="104dp"
                         android:fontFamily="@font/poppin_bold"
                         android:text="Time"
                         android:visibility="invisible"
@@ -112,7 +113,7 @@
                         android:id="@+id/priceTextview"
                         android:layout_width="62dp"
                         android:layout_height="16dp"
-                        android:layout_marginStart="196dp"
+                        android:layout_marginStart="228dp"
                         android:layout_marginTop="100dp"
                         android:fontFamily="@font/poppin_bold"
                         android:text="Price"
@@ -124,9 +125,9 @@
 
                     <TextView
                         android:id="@+id/tripDistance"
-                        android:layout_width="55dp"
-                        android:layout_height="22dp"
-                        android:layout_marginStart="20dp"
+                        android:layout_width="92dp"
+                        android:layout_height="29dp"
+                        android:layout_marginStart="12dp"
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/poppin"
                         android:text="0.2 Km"
@@ -136,12 +137,13 @@
 
                     </TextView>
 
+
                     <TextView
                         android:id="@+id/tripTime"
-                        android:layout_width="55dp"
-                        android:layout_height="22dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_width="87dp"
+                        android:layout_height="33dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
                         android:fontFamily="@font/poppin"
                         android:text="55 m"
                         android:visibility="invisible"
@@ -152,9 +154,9 @@
 
                     <TextView
                         android:id="@+id/tripPrice"
-                        android:layout_width="55dp"
-                        android:layout_height="22dp"
-                        android:layout_marginStart="24dp"
+                        android:layout_width="86dp"
+                        android:layout_height="27dp"
+                        android:layout_marginStart="12dp"
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/poppin"
                         android:text="$ 25"
@@ -163,7 +165,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/priceTextview">
 
                     </TextView>
-
 
                     <ImageView
                         android:id="@+id/sildeBar"
@@ -261,7 +262,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="44dp"
                         android:fontFamily="@font/poppin"
-                        android:text="My Current Location"
+                        android:text="My Current Location Marker"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -288,18 +289,16 @@
                         android:id="@+id/timeChecker"
                         android:layout_width="139dp"
                         android:layout_height="69dp"
-                        android:layout_marginStart="41dp"
-                        android:layout_marginTop="17dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="28dp"
                         android:background="@drawable/rounded_white"
                         android:elevation="5dp"
                         android:text="Select Time"
                         android:timePickerMode="spinner"
-                        app:layout_constraintBottom_toTopOf="@+id/markerSearch"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.428"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toEndOf="@+id/pickUpPoint"
-                        app:layout_constraintTop_toBottomOf="@+id/sildeBar"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintTop_toTopOf="@+id/sildeBar" />
 
                     <ImageView
                         android:id="@+id/lineVertical"
