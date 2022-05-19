@@ -1,6 +1,9 @@
 package com.example.miniuber.app.features.riderFeatures.riderMapsActivity;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -10,6 +13,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +23,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,6 +47,7 @@ import com.example.miniuber.app.features.commonFeatures.directions.TaskLoadedCal
 
 import com.example.miniuber.app.features.riderFeatures.personalInfo.PersonalInfoFragment;
 import com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment.TripsHistoryFragment;
+
 import com.example.miniuber.databinding.ActivityMapsBinding;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
@@ -72,6 +78,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -132,9 +139,10 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         mapFragment.getMapAsync(this);
         Window window = this.getWindow();
         window.setStatusBarColor(getResources().getColor(R.color.defaultBackground));
+
         getLocationPermission();
         searchForDrivers();
-
+        settingTime();
 
     }
 
@@ -155,6 +163,9 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                     Toast.makeText(RiderMapsActivity.this, "Please enter a location", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                //LatLng test = new LatLng(30.1083169,31.3275619);
+
+
                 removeOldView();
                 binding.progressBar2.setVisibility(View.VISIBLE);
                 sendRequest();
@@ -166,6 +177,8 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
 
             }
         });
+
+
     }
 
     private void getClosetDriver(){
@@ -179,21 +192,11 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             @Override
             public void onDataEntered(DataSnapshot dataSnapshot, GeoLocation location) {
                 if(!isDriverFound){
+
                     Log.d(TAG, "onDataEntered: driver found"+dataSnapshot.getKey().toString());
-                    double longitude = (double) dataSnapshot.child("l").child("0").getValue();
-                    double lattiude = (double) dataSnapshot.child("l").child("1").getValue();
-                   /* LatLng driverLocation = new LatLng(lattiude,longitude);
-                    MarkerOptions options = new MarkerOptions().position(driverLocation).title("Driver Location");
-                    int height = 100;
-                    int width = 100;
-                    BitmapDrawable bitMapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.marker_icon);
-                    Bitmap b = bitMapDrawable.getBitmap();
-                    options.draggable(true);
-                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-                    options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-                    googleMap.addMarker(options);*/
-                    Log.d(TAG, "onDataEntered: driver  lang "+longitude+"  "+lattiude);
-                    Log.d(TAG, "onDataEntered: rider  lang "+markersHashMap.get(0).latitude+"  "+markersHashMap.get(0).longitude);
+
+                    //Log.d(TAG, "onDataEntered: driver  lang "+longitude+"  "+latitude);
+                   // Log.d(TAG, "onDataEntered: rider  lang "+markersHashMap.get(0).latitude+"  "+markersHashMap.get(0).longitude);
                     //Toast.makeText(RiderMapsActivity.this, "Driver Found"+driverLocation.toString(), Toast.LENGTH_SHORT).show();
                     isDriverFound = true;
                 }
@@ -201,6 +204,15 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
 
                 binding.progressBar2.setVisibility(View.INVISIBLE);
                 putTripView();
+                double longitude = (double) dataSnapshot.child("l").child("1").getValue();
+                double latitude = (double) dataSnapshot.child("l").child("0").getValue();
+                    LatLng driverLocation = new LatLng(latitude,longitude);
+                    markersHashMap.put(ids,driverLocation);
+                    ids++;
+                moveCamera(driverLocation,defaultZoom, "Your Driver",2 );
+               // Toast.makeText(RiderMapsActivity.this, "Your Pickup  Location is - "+markersHashMap.get(0).toString() , Toast.LENGTH_LONG).show();
+               // Toast.makeText(RiderMapsActivity.this, "Your Driver  Location is latudie - "+markersHashMap.get(ids-1).latitude+ " longituide" + markersHashMap.get(ids-1).longitude, Toast.LENGTH_LONG).show();
+              //  Toast.makeText(RiderMapsActivity.this, "Your Destination  Location is - "+markersHashMap.get(ids-2).toString() , Toast.LENGTH_LONG).show();
 
             }
 
@@ -264,15 +276,29 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         binding.tripTime.setVisibility(View.VISIBLE);
         binding.tripDistance.setVisibility(View.VISIBLE);
         binding.carImage.setVisibility(View.VISIBLE);
-        binding.driverImageRider.setVisibility(View.VISIBLE);
+
         binding.tripPrice.setVisibility(View.VISIBLE);
         binding.DistanceTextView.setVisibility(View.VISIBLE);
         binding.priceTextview.setVisibility(View.VISIBLE);
-        binding.cancelTrip.setVisibility(View.VISIBLE);
+      //  binding.cancelTrip.setVisibility(View.VISIBLE);
 
     }
     private void settingEditText() {
         currentLocation.setOnClickListener(view -> currentLocation.setText(""));
+    }
+    private void settingTime() {
+        binding.timeChecker.setOnClickListener(view -> {
+            Calendar calendar = Calendar.getInstance();
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int minute = calendar.get(Calendar.MINUTE);
+            TimePickerDialog timePickerDialog = new TimePickerDialog(RiderMapsActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_DARK, (timePicker, hourOfDay, minute1) -> {
+                binding.timeTextView.setText(hourOfDay + ":" + minute1);
+            }, hour, minute, true);
+            timePickerDialog.show();
+            timePickerDialog.setTitle("Select Time For Pickup");
+
+        });
+
     }
 
 
@@ -517,9 +543,23 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             markersHashMap.put(ids,latLng);
             ids++;
         }
+        if(option==2)
+        {
+            height = 75;
+             width = 75;
+            BitmapDrawable bitMapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.car_rider);
+            Bitmap b = bitMapDrawable.getBitmap();
+            options.draggable(false);
+            Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+            options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+            googleMap.addMarker(options);
+            markersHashMap.put(ids,latLng);
+            ids++;
+        }
 
 
-       googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+
+        googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
            @Override
            public void onMarkerDrag(@NonNull Marker marker) {
                marker.setPosition(marker.getPosition());

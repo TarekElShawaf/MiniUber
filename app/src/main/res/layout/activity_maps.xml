@@ -66,12 +66,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/riderMap"
                     app:layout_constraintVertical_bias="0.0">
 
+
                     <ImageView
                         android:id="@+id/carImage"
                         android:layout_width="65dp"
                         android:layout_height="45dp"
                         android:layout_marginStart="36dp"
-                        android:layout_marginTop="164dp"
+                        android:layout_marginTop="172dp"
                         android:src="@drawable/car_rider"
                         android:visibility="invisible"
                         app:layout_constraintStart_toStartOf="parent"
@@ -79,13 +80,12 @@
 
                     </ImageView>
 
-
                     <TextView
                         android:id="@+id/DistanceTextView"
                         android:layout_width="70dp"
                         android:layout_height="16dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="88dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="100dp"
                         android:fontFamily="@font/poppin_bold"
                         android:text="Distance"
                         android:visibility="invisible"
@@ -98,8 +98,8 @@
                         android:id="@+id/timeTextView"
                         android:layout_width="62dp"
                         android:layout_height="16dp"
-                        android:layout_marginStart="116dp"
-                        android:layout_marginTop="88dp"
+                        android:layout_marginStart="112dp"
+                        android:layout_marginTop="100dp"
                         android:fontFamily="@font/poppin_bold"
                         android:text="Time"
                         android:visibility="invisible"
@@ -113,7 +113,7 @@
                         android:layout_width="62dp"
                         android:layout_height="16dp"
                         android:layout_marginStart="196dp"
-                        android:layout_marginTop="88dp"
+                        android:layout_marginTop="100dp"
                         android:fontFamily="@font/poppin_bold"
                         android:text="Price"
                         android:visibility="invisible"
@@ -164,29 +164,19 @@
 
                     </TextView>
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/driverImageRider"
-                        android:layout_width="82dp"
-                        android:layout_height="64dp"
-                        android:layout_marginStart="28dp"
-                        android:layout_marginTop="12dp"
-                        android:src="@drawable/img"
-                        android:visibility="invisible"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/carImage">
-
-                    </de.hdodenhof.circleimageview.CircleImageView>
 
                     <ImageView
                         android:id="@+id/sildeBar"
                         android:layout_width="57dp"
                         android:layout_height="6dp"
                         android:layout_gravity="center|top"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="122dp"
+                        android:layout_marginTop="16dp"
                         android:src="@drawable/bar"
-                        app:layout_constraintBottom_toTopOf="@+id/pickupTextView"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent">
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/pickupTextView"
+                        app:layout_constraintTop_toTopOf="parent">
 
                     </ImageView>
 
@@ -269,7 +259,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="56dp"
+                        android:layout_marginTop="44dp"
                         android:fontFamily="@font/poppin"
                         android:text="My Current Location"
                         android:textColor="@color/black"
@@ -293,20 +283,23 @@
 
                     </ImageView>
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/cancelTrip"
-                        android:layout_width="157dp"
-                        android:layout_height="41dp"
-                        android:layout_marginTop="88dp"
-                        android:background="@drawable/rounded_grey"
-                        android:fontFamily="@font/poppin_bold"
-                        android:text="Cancel Trip"
-                        android:textColor="@color/white"
-                        android:visibility="invisible"
+
+                    <TimePicker
+                        android:id="@+id/timeChecker"
+                        android:layout_width="139dp"
+                        android:layout_height="69dp"
+                        android:layout_marginStart="41dp"
+                        android:layout_marginTop="17dp"
+                        android:background="@drawable/rounded_white"
+                        android:elevation="5dp"
+                        android:text="Select Time"
+                        android:timePickerMode="spinner"
+                        app:layout_constraintBottom_toTopOf="@+id/markerSearch"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.921"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintHorizontal_bias="0.428"
+                        app:layout_constraintStart_toEndOf="@+id/pickUpPoint"
+                        app:layout_constraintTop_toBottomOf="@+id/sildeBar"
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <ImageView
                         android:id="@+id/lineVertical"

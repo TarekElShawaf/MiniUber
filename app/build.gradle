@@ -49,7 +49,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
+    implementation 'com.akexorcist:snap-time-picker:1.0.3'
 
     //FireBase
     implementation 'com.google.firebase:firebase-database:20.0.5'
