@@ -289,7 +289,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                driverPhoneNumber.substring(3,driverPhoneNumber.length());
+                driverPhoneNumber.substring(2,driverPhoneNumber.length());
                 intent.setData(Uri.parse("tel:"+driverPhoneNumber.substring(3,driverPhoneNumber.length())));
                 startActivity(intent);
             }

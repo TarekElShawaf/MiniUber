@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -21,14 +22,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.miniuber.R;
 import com.example.miniuber.app.features.commonFeatures.directions.TaskLoadedCallback;
 
+
+import com.example.miniuber.app.features.riderFeatures.riderMapsActivity.RiderMapsActivity;
 import com.example.miniuber.databinding.ActivityMapsBinding;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryDataEventListener;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -45,8 +51,11 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.maps.android.SphericalUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,8 +80,13 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
     private HashMap<Integer,LatLng> markersHashMap = new HashMap<>();
     ActivityMapsBinding binding;
     AppCompatButton searchRider ;
+    private AppCompatButton searchForRiders;
+    private ProgressBar  progressBar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private int searchRadius = 1;
+    private String riderPhoneNumber;
+    private Boolean isRiderFound = false;
 
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -106,6 +120,12 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onClick(View view) {
                 sendRequest();
+
+
+                // Log.d(TAG, "getClosetDriver: searching near latt :   "+markersHashMap.get(0).latitude+" long :  "+markersHashMap.get(0).longitude);
+
+                getClosetDriver();
+
             }
         });
     }
@@ -119,8 +139,90 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
        GeoFire geoFire = new GeoFire(userRequest);
        // Toast.makeText(this, "Your Location is - "+userPhoneNumber , Toast.LENGTH_LONG).show();
        Log.d(TAG, "sendRequest: lat  "+markersHashMap.get(0).latitude +" long "+ markersHashMap.get(0).longitude);
-       geoFire.setLocation("+2001142434195", new GeoLocation(markersHashMap.get(0).latitude, markersHashMap.get(0).longitude));
+       geoFire.setLocation("+201142434195", new GeoLocation(markersHashMap.get(0).latitude, markersHashMap.get(0).longitude));
+
+       searchRider.setVisibility(View.INVISIBLE);
+       progressBar = findViewById(R.id.searchForRiders);
+       progressBar.setVisibility(View.VISIBLE);
+
    }
+
+    private void getClosetDriver(){
+        binding.progressBar2.setVisibility(View.VISIBLE);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("User Requests");
+        //Log.d(TAG, "getClosetDriver:  refrence to String "+ref.toString());
+        GeoFire geoFire = new GeoFire(ref);
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(markersHashMap.get(0).latitude,markersHashMap.get(0).longitude),searchRadius);
+        geoQuery.removeAllListeners();
+        geoQuery.addGeoQueryDataEventListener(new GeoQueryDataEventListener() {
+            @Override
+            public void onDataEntered(DataSnapshot dataSnapshot, GeoLocation location) {
+                if(!isRiderFound){
+
+                    Log.d(TAG, "onDataEntered: driver found"+dataSnapshot.getKey().toString());
+
+                    isRiderFound = true;
+                }
+
+                riderPhoneNumber = dataSnapshot.getKey();
+
+                double longitude = (double) dataSnapshot.child("l").child("1").getValue();
+                double latitude = (double) dataSnapshot.child("l").child("0").getValue();
+                LatLng riderLocation = new LatLng(latitude,longitude);
+                markersHashMap.put(ids,riderLocation);
+                ids++;
+                moveCamera(riderLocation,defaultZoom, "Your Rider",2 );
+                double distance = SphericalUtil.computeDistanceBetween(markersHashMap.get(0),markersHashMap.get(ids-1));
+                progressBar.setVisibility(View.INVISIBLE);
+               AppCompatButton acceptRider = findViewById(R.id.acceptTrip);
+               acceptRider.setVisibility(View.VISIBLE);
+               acceptRider.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View view) {
+                       Toast.makeText(DriversMapsActivity.this, "Request Accepted "+riderLocation.toString(), Toast.LENGTH_LONG).show();
+                       Log.d(TAG, "onClick: rider location is  "+riderLocation.toString());
+                       acceptRider.setVisibility(View.INVISIBLE);
+                   }
+               });
+
+
+            }
+
+            @Override
+            public void onDataExited(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onDataMoved(DataSnapshot dataSnapshot, GeoLocation location) {
+
+            }
+
+            @Override
+            public void onDataChanged(DataSnapshot dataSnapshot, GeoLocation location) {
+
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+                if(!isRiderFound){
+                    searchRadius++;
+                    Log.d(TAG, "onGeoQueryReady: "+searchRadius);
+                    getClosetDriver();
+                }
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+
+            }
+        });
+        Log.d(TAG, "getClosetDriver: "+searchRadius);
+        Log.d(TAG, "getClosetDriver: "+ isRiderFound);
+
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -239,7 +341,7 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
         int width = 100;
         if(ids==0)
         {
-            BitmapDrawable bitMapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.marker_icon);
+            BitmapDrawable bitMapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.car_rider);
             Bitmap b = bitMapDrawable.getBitmap();
             options.draggable(false);
             Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
@@ -251,6 +353,19 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
 
         if(option==1)
         {
+            BitmapDrawable bitMapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.marker_icon);
+            Bitmap b = bitMapDrawable.getBitmap();
+            options.draggable(false);
+            Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+            options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+            googleMap.addMarker(options);
+            markersHashMap.put(ids,latLng);
+            ids++;
+        }
+        if(option==2)
+        {
+            height = 75;
+            width = 75;
             BitmapDrawable bitMapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.marker_icon);
             Bitmap b = bitMapDrawable.getBitmap();
             options.draggable(false);

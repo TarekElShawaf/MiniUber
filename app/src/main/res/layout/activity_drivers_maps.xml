@@ -75,6 +75,20 @@
 
             </androidx.appcompat.widget.AppCompatButton>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_grey"
+                android:text="Accept Trip"
+                android:id="@+id/acceptTrip"
+                android:visibility="invisible"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.463"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatButton>
+
             <ProgressBar
                 android:layout_width="103dp"
                 android:visibility="invisible"
@@ -83,6 +97,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.467"
                 app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/searchForRiders"
                 app:layout_constraintTop_toTopOf="parent"></ProgressBar>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
