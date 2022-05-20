@@ -24,9 +24,12 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TripViewHolder> {
     ArrayList<Trip> trips;
     Driver driver_;
+    TripsInfoRecyclerViewListener listener ;
 
-    public RecyclerViewAdapter(ArrayList<Trip> trips) {
+    public RecyclerViewAdapter(ArrayList<Trip> trips , TripsInfoRecyclerViewListener listener) {
+
         this.trips = trips;
+        this.listener=listener;
     }
 
     @NonNull
@@ -65,7 +68,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     }
-     public Driver getDriverByPhoneNumber(String PhoneNumber){
+    public Driver getDriverByPhoneNumber(String PhoneNumber){
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers");
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -91,39 +94,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return driver_;
     }
 
-  /*  public Rider getRiderByPhoneNumber(String PhoneNumber){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child("Riders");
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot postSnapshot: snapshot.getChildren()) {
 
-                    rider_ = postSnapshot.getValue(Rider.class);
-                    if(rider_.getPhoneNumber().equals( PhoneNumber))
-                        break;
-
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        return rider_;
-    }*/
 
     @Override
     public int getItemCount() {
         return trips.size();
     }
-    class TripViewHolder extends RecyclerView.ViewHolder {
+    class TripViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-     TextView pt_arrival_time;
+        TextView pt_arrival_time;
         TextView pt_trip_fare;
         TextView pt_trip_date;
         TextView pt_driver_name;
@@ -137,8 +116,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             pt_trip_fare = itemView.findViewById(R.id.customitem_fare);
             pt_trip_date = itemView.findViewById(R.id.customitem_date);
             pt_driver_name = itemView.findViewById(R.id.customitem_driver_name);
-            // pt_car_type=itemView.findViewById(R.id.pt_car_type);
-            //pt_car_color=itemView.findViewById(R.id.pt_car_color);
+
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            listener.onClick(view , getAdapterPosition());
+
         }
     }
 

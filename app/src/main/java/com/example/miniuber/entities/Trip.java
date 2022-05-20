@@ -9,11 +9,12 @@ import androidx.room.TypeConverters;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
 @Entity(tableName = "Trips")
-public class Trip {
+public class Trip implements Serializable {
     private String pickupPoint ;
     private String time;
     private String destination;

@@ -1,4 +1,5 @@
 package com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.miniuber.R;
+import com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment.TripInfo.TripInfoActivity;
 import com.example.miniuber.entities.Driver;
 import com.example.miniuber.entities.Rider;
 import com.example.miniuber.entities.Trip;
@@ -21,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 
 import java.util.ArrayList;
 
@@ -43,6 +46,7 @@ public class TripsHistoryFragment extends Fragment {
     Rider rider_;
     Driver driver_;
     String userPhoneNumber;
+
     public TripsHistoryFragment() {
 
     }
@@ -74,7 +78,6 @@ public class TripsHistoryFragment extends Fragment {
         if (data != null) {
             userPhoneNumber = data.getString("userPhoneNumber");
         }
-        Toast.makeText(getContext(),"pHONE NUMBER IS "+ userPhoneNumber, Toast.LENGTH_SHORT).show();
 
 
         RecyclerView rv = v.findViewById(R.id.pt_fragment);
@@ -104,7 +107,16 @@ public class TripsHistoryFragment extends Fragment {
         });
 
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(trips);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(trips, new TripsInfoRecyclerViewListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(getContext(), TripInfoActivity.class);
+                intent.putExtra("trip", trips.get(position));
+                startActivity(intent);
+
+            }
+        });
+
         RecyclerView.LayoutManager lm = new LinearLayoutManager(getContext());
         rv.setHasFixedSize(true);
         rv.setLayoutManager(lm);
@@ -114,3 +126,4 @@ public class TripsHistoryFragment extends Fragment {
         return v;
     }
 }
+
