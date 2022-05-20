@@ -8,6 +8,8 @@ public class Driver extends User implements Serializable {
     private  String  carPlateNumber ;
 
 
+    public Driver() {
+    }
 
     public Driver(String name, String email, String phoneNumber) {
         super(name, email, phoneNumber);

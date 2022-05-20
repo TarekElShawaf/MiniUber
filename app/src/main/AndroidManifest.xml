@@ -38,6 +38,15 @@
         <activity
             android:name=".app.features.riderFeatures.SignUpRiderActivity"
             android:exported="false" />
+        <activity android:name=".app.features.riderFeatures.tripsHistoryFragment.complaints.ReportProblem"
+            android:exported="false">
+
+        </activity>
+        <activity android:name=".app.features.riderFeatures.tripsHistoryFragment.TripInfo.TripInfoActivity"
+            android:exported="false"
+            >
+
+        </activity>
         <activity
             android:name=".app.features.commonFeatures.registration.SignInActivity"
             android:exported="false" />

@@ -1,17 +1,20 @@
 package com.example.miniuber.domain.repositiries;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
 import com.example.miniuber.domain.room.TripsDatabase;
 import com.example.miniuber.entities.Trip;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class TripLocalImplementation implements TripLocalRepository {
+    private static final String TAG = "maskdm";
     private static TripLocalImplementation instance;
     private TripsDatabase tripsDatabase;
     private Executor executor = Executors.newSingleThreadExecutor();
@@ -30,6 +33,7 @@ public class TripLocalImplementation implements TripLocalRepository {
             @Override
             public void run() {
                 tripsDatabase.tripsDao().insertTrip(trip);
+                Log.d(TAG, "run: trip dest is  "+trip.getDestination());
 
             }
         });
@@ -52,8 +56,17 @@ public class TripLocalImplementation implements TripLocalRepository {
     }
 
     @Override
-    public Trip getTripById(int id) {
-        return tripsDatabase.tripsDao().getTripById(id);
+    public List<Trip> getAllTripsData() {
+        return tripsDatabase.tripsDao().getAllTripsData();
+    }
 
+    @Override
+    public List<Trip> getTripByRiderId(String phoneNumber) {
+        return tripsDatabase.tripsDao().getTripByRiderId(phoneNumber);
+    }
+
+    @Override
+    public List<Trip> getTripByDriverId(String phoneNumber) {
+        return tripsDatabase.tripsDao().getTripByDriverId(phoneNumber);
     }
 }

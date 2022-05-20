@@ -1,5 +1,7 @@
 package com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,14 +12,7 @@ import android.widget.TextView;
 
 import com.example.miniuber.R;
 import com.example.miniuber.entities.Driver;
-import com.example.miniuber.entities.Rider;
 import com.example.miniuber.entities.Trip;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -25,19 +20,42 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     ArrayList<Trip> trips;
     Driver driver_;
     TripsInfoRecyclerViewListener listener ;
+    Context context;
 
-    public RecyclerViewAdapter(ArrayList<Trip> trips , TripsInfoRecyclerViewListener listener) {
+    public ArrayList<Trip> getTrips() {
+        return trips;
+    }
+
+    public void setTrips(ArrayList<Trip> trips) {
+
+        this.trips = trips;
+        notifyDataSetChanged();
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public RecyclerViewAdapter(ArrayList<Trip> trips , TripsInfoRecyclerViewListener listener,Context context) {
 
         this.trips = trips;
         this.listener=listener;
+        this.context=context;
     }
 
     @NonNull
     @Override
     public TripViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.trip_custom_item,null,false);
-        TripViewHolder driverViewHolder = new TripViewHolder(view);
-        return driverViewHolder;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.trip_custom_item,parent,false);
+      //  TripViewHolder driverViewHolder = new TripViewHolder(view);
+       // return driverViewHolder;
+        Log.d("Nouran", "onCreateViewHolder");
+
+        return new TripViewHolder(view);
     }
 
     @Override
@@ -47,30 +65,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.pt_driver_name.setText(trip.toString());
 */
         Trip trip = trips.get(position);
-
-        Driver driver = getDriverByPhoneNumber(trip.getDriverPhoneNo());
-
-        holder.pt_driver_name.setText(driver.getName());
         holder. pt_arrival_time.setText(trip.getTime());
         holder.pt_trip_fare.setText(trip.getFare().toString());
         holder.pt_trip_date.setText(trip.getTripDate());
+        Log.d("Nouran", trip.getTripDate());
 
+      //  Driver driver = getDriverByPhoneNumber(trip.getDriverPhoneNo());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-            }
-        });
+        holder.pt_driver_name.setText(trip.getDriverPhoneNo());
 
 
 
-    }
+
+
+
+    }/*
     public Driver getDriverByPhoneNumber(String PhoneNumber){
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers");
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+       // FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -93,7 +105,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         return driver_;
     }
-
+*/
 
 
     @Override
@@ -123,7 +135,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         @Override
         public void onClick(View view) {
-            listener.onClick(view , getAdapterPosition());
+            listener.click(view , getAdapterPosition());
 
         }
     }
