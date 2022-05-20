@@ -53,13 +53,12 @@
             android:id="@+id/otherproblem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:onClick="writeOtherProblem"
             android:text="Other"></RadioButton>
 
 
     </RadioGroup>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/submitproblem"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
@@ -68,8 +67,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="95dp"
         android:layout_marginBottom="117dp"
-        android:onClick="submitProblem"
-        android:text="Submit" />
+        android:background="@drawable/roundedcorners"
+        android:text="Submit Problem" />
 
     <EditText
         android:id="@+id/problem_msg"
@@ -78,7 +77,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="356dp"
+        android:layout_marginTop="359dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"

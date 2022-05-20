@@ -38,10 +38,10 @@ public class TripsViewModel extends ViewModel {
 
         return tripLocalRepository.getAllTripsData();
     }
-    public Trip getTripByDriverId(String  id) {
+    public List<Trip> getTripByDriverId(String  id) {
        return tripLocalRepository.getTripByDriverId(id);
     }
-    public Trip getTripByRiderId(String  id) {
+    public List<Trip> getTripByRiderId(String  id) {
         return tripLocalRepository.getTripByRiderId(id);
     }
 

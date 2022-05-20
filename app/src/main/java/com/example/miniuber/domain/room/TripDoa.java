@@ -23,8 +23,8 @@ public interface TripDoa {
     List<Trip> getAllTripsData();
     //get trip by id
     @Query("SELECT * FROM Trips WHERE driverPhoneNo = :phoneNumber")
-    Trip getTripByDriverId(String phoneNumber);
+    List<Trip> getTripByDriverId(String phoneNumber);
     @Query("SELECT * FROM Trips WHERE riderPhoneNo = :phoneNumber")
-    Trip getTripByRiderId(String phoneNumber);
+    List<Trip> getTripByRiderId(String phoneNumber);
 
 }

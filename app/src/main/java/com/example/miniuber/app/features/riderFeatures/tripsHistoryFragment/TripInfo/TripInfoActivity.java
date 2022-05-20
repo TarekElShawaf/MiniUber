@@ -36,7 +36,7 @@ public class TripInfoActivity extends AppCompatActivity implements Serializable 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_info);
         trip = (Trip) getIntent().getSerializableExtra("trip");
-
+        getSupportActionBar().hide();
         date = findViewById(R.id.tripdate);
         time = findViewById(R.id.triptime);
         pickup_location = findViewById(R.id.trippickup);

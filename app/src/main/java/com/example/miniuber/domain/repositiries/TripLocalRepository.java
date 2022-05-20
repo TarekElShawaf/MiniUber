@@ -16,8 +16,8 @@ public interface TripLocalRepository {
     LiveData<List<Trip>> getAllTrips();
 
     List<Trip> getAllTripsData();
-    Trip getTripByRiderId(String phoneNumber);
-    Trip getTripByDriverId(String phoneNumber);
+    List<Trip> getTripByRiderId(String phoneNumber);
+    List<Trip> getTripByDriverId(String phoneNumber);
 
 
 }

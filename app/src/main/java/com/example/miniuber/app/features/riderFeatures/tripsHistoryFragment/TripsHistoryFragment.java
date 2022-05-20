@@ -68,7 +68,7 @@ public class TripsHistoryFragment extends Fragment {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Trips");
         //FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+       /* databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
@@ -94,28 +94,31 @@ public class TripsHistoryFragment extends Fragment {
                 //Toast.makeText(getBaseContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
-        });
+        });*/
 
         // = new RecyclerViewAdapter(trips, adapter.listener);
        //adapter = new RecyclerViewAdapter(trips, adapter.listener);
         RecyclerView rv =  v.findViewById(R.id.pt_fragment);
-        Trip testTrip = new Trip("home","15:4","city stars",2.3f,"22/5","011515",2.8f,userPhoneNumber);
-        trips.add(testTrip);
-       // tripViewModel.insertTrip(testTrip);
 
-       Log.d("Nouran Trips size  : ", +tripViewModel.getAllTripsData().size()+"");
+        Trip testTrip = new Trip("Far away ","3:4","mall stars",3.3f,"9/5","011412434195",2.8f,userPhoneNumber);
+       trips.add(testTrip);
+       //tripViewModel.insertTrip(testTrip);
+
+       Log.d("Nouran All Trips size  : ", +tripViewModel.getTripByRiderId(userPhoneNumber).size()+"");
+        Log.d("Nouran All Rider Trips size  : ", +tripViewModel.getAllTripsData().size()+"");
 
 
         adapter = new RecyclerViewAdapter(trips, new TripsInfoRecyclerViewListener() {
             @Override
-            public void onClick(View view, int position) {
+            public void click(View view, int position) {
+
                 Intent intent = new Intent(getContext(), TripInfoActivity.class);
-                intent.putExtra("trip", trips.get(position));
+                intent.putExtra("trip", adapter.getTrips().get(position));
                 startActivity(intent);
             }
 
         }, getContext());
-        adapter.setTrips((ArrayList<Trip>) tripViewModel.getAllTripsData());
+        adapter.setTrips((ArrayList<Trip>) tripViewModel.getTripByRiderId(userPhoneNumber));
         rv.setAdapter(adapter);
 
         rv.setHasFixedSize(true);

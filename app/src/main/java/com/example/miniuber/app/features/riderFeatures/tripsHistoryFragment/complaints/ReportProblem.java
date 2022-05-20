@@ -1,12 +1,14 @@
 package com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment.complaints;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.miniuber.R;
 import com.example.miniuber.entities.Complaint;
@@ -17,10 +19,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class ReportProblem extends AppCompatActivity {
-    RadioButton radioButtonOther;
+    RadioButton radioButton;
+    RadioButton radio;
     EditText editText;
     RadioGroup radioGroup;
     RadioButton selectedRadioButton;
+    AppCompatButton button ;
     Complaint complaint;
     int trip_id ;
 
@@ -28,35 +32,44 @@ public class ReportProblem extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_problem);
-
-        radioButtonOther =findViewById(R.id.otherproblem);
+        getSupportActionBar().hide();
+        radioButton =findViewById(R.id.otherproblem);
         editText=findViewById(R.id.problem_msg);
         radioGroup = (RadioGroup) findViewById(R.id.radiogroup);
-
+        writeOtherProblem();
         trip_id=(Integer) getIntent().getSerializableExtra("tripID");
+        button= findViewById(R.id.submitproblem);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitProblem();
+            }
+        });
+
+        Toast.makeText(this, "Trip ID: "+trip_id, Toast.LENGTH_SHORT).show();
     }
 
-    public void writeOtherProblem(View view) {
-        if(radioButtonOther.isChecked()){
-            editText.setVisibility(view.GONE);
+    public void writeOtherProblem( ) {
+        if(radioButton.isChecked()){
+            editText.setVisibility(View.VISIBLE);
         }
         else
         {
-            editText.setVisibility(view.VISIBLE);
+            editText.setVisibility(View.INVISIBLE);
         }
 
     }
 
-    public void submitProblem(View view) {
+    public void submitProblem( ) {
         String problem;
-        if(radioButtonOther.isChecked()) {
+
+        if(radioButton.isChecked()) {
             problem = editText.getText().toString();
 
         }
         else {
-            int selectedId = radioGroup.getCheckedRadioButtonId();
-            selectedRadioButton = (RadioButton) findViewById(selectedId);
-            problem=selectedRadioButton.getText().toString();
+            radio= (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
+            problem=radio.getText().toString();
 
         }
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Trips");

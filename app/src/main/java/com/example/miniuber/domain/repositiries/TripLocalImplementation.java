@@ -61,12 +61,12 @@ public class TripLocalImplementation implements TripLocalRepository {
     }
 
     @Override
-    public Trip getTripByRiderId(String phoneNumber) {
+    public List<Trip> getTripByRiderId(String phoneNumber) {
         return tripsDatabase.tripsDao().getTripByRiderId(phoneNumber);
     }
 
     @Override
-    public Trip getTripByDriverId(String phoneNumber) {
+    public List<Trip> getTripByDriverId(String phoneNumber) {
         return tripsDatabase.tripsDao().getTripByDriverId(phoneNumber);
     }
 }
