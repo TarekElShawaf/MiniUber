@@ -1,19 +1,24 @@
 package com.example.miniuber.app.features.riderFeatures.personalInfo;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.miniuber.R;
+import com.example.miniuber.app.features.commonFeatures.PhoneVerificationActivity;
+import com.example.miniuber.entities.FormatChecker;
 import com.example.miniuber.entities.Rider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,11 +27,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PersonalInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
 public class PersonalInfoFragment extends Fragment {
 
 
@@ -41,14 +50,15 @@ public class PersonalInfoFragment extends Fragment {
     String phone ;
     float rate;
     AppCompatEditText nameView,phoneView,emailView;
+    private AppCompatButton saveButton;
     TextView ratingTxt;
     RatingBar rating ;
     String userPhoneNumber;
     Rider rider;
+
     public PersonalInfoFragment() {
         // Required empty public constructor
     }
-
 
 
     public static PersonalInfoFragment newInstance(String param1, String param2) {
@@ -91,21 +101,57 @@ public class PersonalInfoFragment extends Fragment {
                     if(rider.getPhoneNumber().equals(userPhoneNumber))
                     {
                         Toast.makeText(getContext(),rider.getPhoneNumber(),Toast.LENGTH_LONG).show();
+                        //Get Values
+                        String riderID = snap.getKey().toString();
                         name=rider.getName();
                         email=rider.getEmail().toString();
                         rate=rider.getRate();
-                        phone=userPhoneNumber;
+                        phone=rider.getPhoneNumber();
+                        //Assign IDs
                         nameView = view.findViewById(R.id.nameView);
-                        nameView.setText(name);
                         phoneView = view.findViewById(R.id.phoneView);
-                        phoneView.setText(phone);
                         emailView = view.findViewById(R.id.emailView);
-                        emailView.setText(email);
-
                         rating = view.findViewById(R.id.ratingBar);
-                        rating.setRating(rate);
                         ratingTxt = view.findViewById(R.id.ratingTxt);
+                        saveButton = view.findViewById(R.id.btn_save_info);
+                        //Set Values
+                        nameView.setText(name);
+                        phoneView.setText(phone);
+                        emailView.setText(email);
+                        rating.setRating(rate);
                         ratingTxt.setText("("+ rate+")");
+                        //Save Edited Values
+                        saveButton.setOnClickListener(view -> {
+                            String editedPhone = phoneView.getText().toString();
+                            String editedName = nameView.getText().toString();
+                            String editedEmail = emailView.getText().toString();
+                            if (editedPhone.isEmpty() || editedName.isEmpty() || editedEmail.isEmpty() ) {
+
+                                Toast.makeText(getContext(), "Fill All Fields", Toast.LENGTH_SHORT).show();
+
+                            }
+                            else if(editedPhone.equals(phone)&&editedName.equals(name)&&editedEmail.equals(email))
+                            {
+                                Toast.makeText(getContext(), "No data changed", Toast.LENGTH_SHORT).show();
+                            }
+                            else if (!FormatChecker.isValidPhoneNo(editedPhone) || !FormatChecker.isValidEmail(editedEmail)) {
+
+                                Toast.makeText(getContext(), "Incorrect phone number format or email format", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                DatabaseReference currentRiderRef = users.child(riderID);
+                                Map<String,Object> riderMap = new HashMap<String,Object>();
+                                riderMap.put("name", editedName);
+                                riderMap.put("email", editedEmail);
+                                riderMap.put("phoneNumber", editedPhone);
+                                currentRiderRef.updateChildren(riderMap);
+                                name=editedName;
+                                email=editedEmail;
+                                phone=editedPhone;
+                                Toast.makeText(getContext(), "Data updated", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }
             }
