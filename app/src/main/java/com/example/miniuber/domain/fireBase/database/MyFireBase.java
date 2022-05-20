@@ -31,11 +31,11 @@ public class MyFireBase {
     }
 
 
-    public void signInUser() {
+    public void signInUser(String phoneNo) {
 
         auth.signInWithCredential(credential).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                handleIntent();
+                handleIntent(phoneNo);
 
             } else {
                 //verification unsuccessful.. display an error message
@@ -50,7 +50,7 @@ public class MyFireBase {
         auth.signInWithCredential(credential).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 addUserDataToDatabase(user);
-                handleIntent();
+                handleIntent(user.getPhoneNumber());
 
             } else {
                 //verification unsuccessful.. display an error message
@@ -72,7 +72,7 @@ public class MyFireBase {
         myRef.push().setValue(user);
     }
 
-    private void handleIntent() {
+    private void handleIntent(String phoneNo) {
 
         if(moduleOption == ModuleOption.EMPLOYEE){
             Intent intent  = new Intent(context, EmployeeActivity.class);
@@ -81,13 +81,14 @@ public class MyFireBase {
         }
         else if(moduleOption == ModuleOption.RIDER){
             Intent intent  = new Intent(context, RiderMapsActivity.class);
-            intent.putExtra("moduleOption",moduleOption);
+            intent.putExtra("phoneNumber",phoneNo);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(intent);
 
         }
         else if (moduleOption == ModuleOption.DRIVER){
             Intent intent  = new Intent(context, DriversMapsActivity.class);
+            intent.putExtra("phoneNumber",phoneNo);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(intent);
         }

@@ -129,7 +129,7 @@ public class PhoneVerificationActivity extends AppCompatActivity {
 
         if (signOption != 1) {
             //signing the user
-            myFireBase.signInUser();
+            myFireBase.signInUser(phoneNo);
         } else {
             //user is creating a new account
             myFireBase.createUserAccount(rider);
