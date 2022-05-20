@@ -36,7 +36,7 @@ public class ReportProblem extends AppCompatActivity {
         radioButton =findViewById(R.id.otherproblem);
         editText=findViewById(R.id.problem_msg);
         radioGroup = (RadioGroup) findViewById(R.id.radiogroup);
-        writeOtherProblem();
+        //writeOtherProblem();
         trip_id=(Integer) getIntent().getSerializableExtra("tripID");
         button= findViewById(R.id.submitproblem);
         button.setOnClickListener(new View.OnClickListener() {
@@ -62,16 +62,10 @@ public class ReportProblem extends AppCompatActivity {
 
     public void submitProblem( ) {
         String problem;
-
-        if(radioButton.isChecked()) {
-            problem = editText.getText().toString();
-
-        }
-        else {
             radio= (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
             problem=radio.getText().toString();
 
-        }
+
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Trips");
         complaint.setProblem(problem);
         complaint.setTripId(trip_id);

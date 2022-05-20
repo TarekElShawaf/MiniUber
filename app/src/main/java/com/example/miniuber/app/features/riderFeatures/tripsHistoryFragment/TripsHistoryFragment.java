@@ -100,13 +100,12 @@ public class TripsHistoryFragment extends Fragment {
        //adapter = new RecyclerViewAdapter(trips, adapter.listener);
         RecyclerView rv =  v.findViewById(R.id.pt_fragment);
 
-        Trip testTrip = new Trip("Far away ","3:4","mall stars",3.3f,"9/5","011412434195",2.8f,userPhoneNumber);
-       trips.add(testTrip);
-       //tripViewModel.insertTrip(testTrip);
+
+        //tripViewModel.insertTrip(testTrip);
 
        Log.d("Nouran All Trips size  : ", +tripViewModel.getTripByRiderId(userPhoneNumber).size()+"");
-        Log.d("Nouran All Rider Trips size  : ", +tripViewModel.getAllTripsData().size()+"");
-
+       // Log.d("Nouran All Trips time  : "  , tripViewModel.getTripByRiderId(userPhoneNumber).get(0).getTime() +"");
+        Log.d("Nouran All Rider Trips size  : ", +tripViewModel.getTripByRiderId(userPhoneNumber).size()+"");
 
         adapter = new RecyclerViewAdapter(trips, new TripsInfoRecyclerViewListener() {
             @Override
@@ -118,7 +117,8 @@ public class TripsHistoryFragment extends Fragment {
             }
 
         }, getContext());
-        adapter.setTrips((ArrayList<Trip>) tripViewModel.getTripByRiderId(userPhoneNumber));
+        adapter.setTrips(((ArrayList<Trip>) tripViewModel.getTripByRiderId(userPhoneNumber)));
+
         rv.setAdapter(adapter);
 
         rv.setHasFixedSize(true);
