@@ -2,6 +2,7 @@ package com.example.miniuber.app.features.riderFeatures.personalInfo;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 
@@ -43,7 +44,7 @@ public class PersonalInfoFragment extends Fragment {
     TextView ratingTxt;
     RatingBar rating ;
     String userPhoneNumber;
-
+    Rider rider;
     public PersonalInfoFragment() {
         // Required empty public constructor
     }
@@ -78,40 +79,43 @@ public class PersonalInfoFragment extends Fragment {
         if(data!=null)
         {
             userPhoneNumber=data.getString("userPhoneNumber");
-            Toast.makeText(getContext(),userPhoneNumber,Toast.LENGTH_LONG).show();
-            Toast.makeText(getContext(),"Not Null",Toast.LENGTH_LONG).show();
         }
-        //Toast.makeText(getContext(),"PHONE nUMBER IS "+userPhoneNumber,Toast.LENGTH_LONG).show();
-        DatabaseReference users = FirebaseDatabase.getInstance().getReference("Users").child("Riders");
-        Query query = users.orderByChild("phoneNumber").equalTo(userPhoneNumber);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        
+        DatabaseReference users = FirebaseDatabase.getInstance().getReference().child("Users").child("Riders");
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists())
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snap : snapshot.getChildren())
                 {
-                    name=dataSnapshot.child(userPhoneNumber).child("name").getValue(String.class);
-                    email=dataSnapshot.child(userPhoneNumber).child("email").getValue(String.class);
-                   // rate= dataSnapshot.child(userPhoneNumber).child("rate").getValue(float.class);
-                    phone=userPhoneNumber;
+                    rider = snap.getValue(Rider.class);
+                    if(rider.getPhoneNumber().equals(userPhoneNumber))
+                    {
+                        Toast.makeText(getContext(),rider.getPhoneNumber(),Toast.LENGTH_LONG).show();
+                        name=rider.getName();
+                        email=rider.getEmail().toString();
+                        rate=rider.getRate();
+                        phone=userPhoneNumber;
+                        nameView = view.findViewById(R.id.nameView);
+                        nameView.setText(name);
+                        phoneView = view.findViewById(R.id.phoneView);
+                        phoneView.setText(phone);
+                        emailView = view.findViewById(R.id.emailView);
+                        emailView.setText(email);
+
+                        rating = view.findViewById(R.id.ratingBar);
+                        rating.setRating(rate);
+                        ratingTxt = view.findViewById(R.id.ratingTxt);
+                        ratingTxt.setText("("+ rate+")");
+                    }
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getContext(),"Error",Toast.LENGTH_LONG).show();
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
-        nameView = view.findViewById(R.id.nameView);
-        nameView.setText("name is "+name);
-        phoneView = view.findViewById(R.id.phoneView);
-        phoneView.setText("Phone is : "+phone);
-        emailView = view.findViewById(R.id.emailView);
-        emailView.setText(email);
 
-        rating = view.findViewById(R.id.ratingBar);
-        rating.setRating(rate);
-        ratingTxt = view.findViewById(R.id.ratingTxt);
-        ratingTxt.setText(""+ rate);
 
         return view;
     }
