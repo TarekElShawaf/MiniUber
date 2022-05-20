@@ -127,7 +127,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         userPhoneNumber = getIntent().getStringExtra("phoneNumber");
-        userPhoneNumber="+201111111111";
+        //userPhoneNumber="+201111111111";
         searchMap = findViewById(R.id.searchMap);
         currentLocation = findViewById(R.id.gpsRider);
         searchDrivers=findViewById(R.id.searchDrivers);;

@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Tarek/Documents/GitHub/MiniUber/app/src/main/res/layout/fragment_personal_info.xml" value="0.24954710144927536" />
+        <entry key="..\:/Users/Tarek/Documents/GitHub/MiniUber/app/src/main/res/layout/activity_sign_in.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/Tarek/Documents/GitHub/MiniUber/app/src/main/res/layout/fragment_personal_info.xml" value="0.33" />
         <entry key="..\:/Users/inour/AndroidStudioProjects/MiniUber/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/inour/AndroidStudioProjects/MiniUber/app/src/main/res/layout/activity_maps.xml" value="0.1" />
         <entry key="..\:/Users/inour/AndroidStudioProjects/MiniUber/app/src/main/res/layout/fragment_trips_history_fragment.xml" value="0.22826086956521738" />
