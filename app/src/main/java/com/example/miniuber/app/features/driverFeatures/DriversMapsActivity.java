@@ -155,36 +155,27 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
         GeoFire geoFire = new GeoFire(ref);
         GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(markersHashMap.get(0).latitude,markersHashMap.get(0).longitude),searchRadius);
         geoQuery.removeAllListeners();
-        String availableDriver = "";
         geoQuery.addGeoQueryDataEventListener(new GeoQueryDataEventListener() {
             @Override
             public void onDataEntered(DataSnapshot dataSnapshot, GeoLocation location) {
-
                 if(!isRiderFound){
-                    DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("AvailableDrivers");
 
-                    userRequest.child("+201142434195").child("driverStatus").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    Log.d(TAG, "onDataEntered: driver found"+dataSnapshot.getKey().toString());
+                    DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("User Requests");
+                    userRequest.child("+201142434195").child("userStatus").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            if(task.isSuccessful()){
-                                Log.d(TAG, "onComplete: driver status is "+task.getResult().getValue());
-
-                                Toast.makeText(DriversMapsActivity.this, "Driver is on the way", Toast.LENGTH_SHORT).show();
-                                String status = task.getResult().getValue().toString();
-                                if(status.equals("0")){
-                                    Log.d(TAG, "onDataEntered: driver found"+dataSnapshot.getKey().toString());
-
-                                    Log.d(TAG, "onDataEntered: ");
-
-                                    isRiderFound = true;
-                                }
-
-
+                            if (!task.isSuccessful()) {
+                                Log.e("firebase", "Error getting data", task.getException());
+                            }
+                            else {
+                                Log.d("firebase", String.valueOf(task.getResult().getValue()));
                             }
                         }
                     });
 
-
+                    Log.d(TAG, "onDataEntered: ");
+                    isRiderFound = true;
                 }
 
                 riderPhoneNumber = dataSnapshot.getKey();
@@ -206,16 +197,6 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
                        Log.d(TAG, "onClick: rider location is  "+riderLocation.toString());
                        DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("AvailableDrivers");
                        userRequest.child("+201142434195").child("driverStatus").setValue(1);
-                       userRequest.child("+201142434195").child("driverStatus").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                           @Override
-                           public void onComplete(@NonNull Task<DataSnapshot> task) {
-                               if(task.isSuccessful()){
-                                   Log.d(TAG, "onComplete: driver status is "+task.getResult().getValue());
-
-                                       Toast.makeText(DriversMapsActivity.this, "Driver is on the way", Toast.LENGTH_SHORT).show();
-                               }
-                           }
-                       });
                        acceptRider.setVisibility(View.INVISIBLE);
                    }
                });
