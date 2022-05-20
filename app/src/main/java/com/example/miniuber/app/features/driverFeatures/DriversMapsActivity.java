@@ -162,7 +162,19 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
 
                     Log.d(TAG, "onDataEntered: driver found"+dataSnapshot.getKey().toString());
                     DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("User Requests");
-                    Log.d(TAG, "onDataEntered: "+userRequest.child("+201142434195").child("userStatus").toString());
+                    userRequest.child("+201142434195").child("userStatus").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            if (!task.isSuccessful()) {
+                                Log.e("firebase", "Error getting data", task.getException());
+                            }
+                            else {
+                                Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                            }
+                        }
+                    });
+
+                    Log.d(TAG, "onDataEntered: ");
                     isRiderFound = true;
                 }
 
