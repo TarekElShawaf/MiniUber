@@ -8,43 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:222761941301:android:a7400f2f63ff0a80b4b47c",
-        "android_client_info": {
-          "package_name": "com.example.driver"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "222761941301-3refha002si12o40orts4ah9f3nmgc2r.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.driver",
-            "certificate_hash": "9ce5579ebb3b85c31e8dbcae95811ac48483571f"
-          }
-        },
-        {
-          "client_id": "222761941301-8o4dimeo0f1tliuuf4camn0ui4ieok4r.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBDHM0tC4xKiimaFilxQT9uDSUXjwlY5WI"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "222761941301-8o4dimeo0f1tliuuf4camn0ui4ieok4r.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:222761941301:android:0079ec871016f190b4b47c",
         "android_client_info": {
           "package_name": "com.example.miniuber"
@@ -60,14 +23,6 @@
           }
         },
         {
-          "client_id": "222761941301-2qnkdn30v8596ut174j43pqfoe0rim5v.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.miniuber",
-            "certificate_hash": "d9b8c30d5b32d8a3f2d0571571214ca9b2849d6b"
-          }
-        },
-        {
           "client_id": "222761941301-csq7ilubnd3odg0gq2r2i3nmogk51efi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -76,48 +31,19 @@
           }
         },
         {
+          "client_id": "222761941301-nkfciu5fnrnn1c7llk24aqnd694gmp8i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.miniuber",
+            "certificate_hash": "d9b8c30d5b32d8a3f2d0571571214ca9b2849d6b"
+          }
+        },
+        {
           "client_id": "222761941301-nthoe9ng4v2drgb3nb6pafuf2oj4jkcb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.miniuber",
             "certificate_hash": "64e8fc84fd506b6d6d4a8c29a1146655592c495e"
-          }
-        },
-        {
-          "client_id": "222761941301-8o4dimeo0f1tliuuf4camn0ui4ieok4r.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBDHM0tC4xKiimaFilxQT9uDSUXjwlY5WI"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "222761941301-8o4dimeo0f1tliuuf4camn0ui4ieok4r.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:222761941301:android:5af3a12330a0036cb4b47c",
-        "android_client_info": {
-          "package_name": "com.example.rider"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "222761941301-u2klu8agnfcdjms0tvuoi885l548rmer.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.rider",
-            "certificate_hash": "9ce5579ebb3b85c31e8dbcae95811ac48483571f"
           }
         },
         {
