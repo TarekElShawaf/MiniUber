@@ -36,6 +36,10 @@ public class ViewRiderComplaintsFragment extends Fragment {
     private final ArrayList<Complaint> complaints = new ArrayList<>();
 
 
+    public ViewRiderComplaintsFragment(){
+        //required empty constructor
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

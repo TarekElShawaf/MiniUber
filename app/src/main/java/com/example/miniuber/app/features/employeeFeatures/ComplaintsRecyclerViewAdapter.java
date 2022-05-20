@@ -30,8 +30,8 @@ public class ComplaintsRecyclerViewAdapter extends RecyclerView.Adapter<Complain
 
     @Override
     public void onBindViewHolder(@NonNull ComplaintsViewHolder holder, int position) {
-        //holder.riderName.setText();
-        holder.date.setText(complaints.get(position).getDate());
+        holder.complaintDate.setText(complaints.get(position).getDate());
+        holder.complaintID.setText(String.valueOf(complaints.get(position).getComplaintID()));
     }
 
     @Override
@@ -40,11 +40,12 @@ public class ComplaintsRecyclerViewAdapter extends RecyclerView.Adapter<Complain
     }
 
     class ComplaintsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView date,type;
+        TextView complaintDate,complaintID;
         public ComplaintsViewHolder(@NonNull View itemView) {
             super(itemView);
-            date = itemView.findViewById(R.id.tv_complaint_date);
-            type = itemView.findViewById(R.id.tv_complaint_type);
+            complaintDate = itemView.findViewById(R.id.tv_complaint_date);
+            complaintID = itemView.findViewById(R.id.tv_complaint_id);
+
             itemView.setOnClickListener(this);
 
         }

@@ -69,7 +69,7 @@ public class ComplaintDetailsActivity extends AppCompatActivity {
         driverPhoneNo = findViewById(R.id.tv_trip_driver_phoneNo);
         problem = findViewById(R.id.tv_trip_problem);
         riderPhoneNo = findViewById(R.id.tv_trip_rider_phoneNo);
-        duration = findViewById(R.id.tv_trip_duration);
+        duration = findViewById(R.id.tv_trip_arrival_time);
         date = findViewById(R.id.tv_trip_date);
     }
     private void setTextViews(Trip trip){

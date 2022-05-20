@@ -3,42 +3,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
-    android:layout_marginHorizontal="15dp"
+    android:layout_height="wrap_content"
+
     android:layout_marginTop="20dp"
     app:cardBackgroundColor="@color/white"
-    app:cardElevation="20dp"
-    app:cardCornerRadius="10dp">
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <TextView
-            android:id="@+id/tv_complaint_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/poppin_bold"
-            android:text="Complaint Type"
-            android:textColor="@color/black"
-            android:textSize="35sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/tv_complaint_date"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppin"
+            android:letterSpacing="0.1"
+            android:text="2021/12/9"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_complaint_id"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.1"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/poppin"
+            android:text="210293"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv1"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-
-            android:fontFamily="@font/poppin"
-            android:text="2021/12/9"
-            android:textColor="@color/black"
-            android:textSize="30sp"
+            android:layout_marginTop="12dp"
+            android:text="Complaint ID"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_complaint_type" />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+</androidx.cardview.widget.CardView>

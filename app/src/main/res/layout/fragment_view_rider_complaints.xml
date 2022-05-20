@@ -5,16 +5,38 @@
     android:layout_height="match_parent"
     android:background="@color/defaultBackground"
 
+
     tools:context=".app.features.employeeFeatures.employeeFragments.ViewRiderComplaintsFragment">
+
+    <TextView
+
+        android:id="@+id/textView3"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:fontFamily="@font/poppin_bold"
+        android:gravity="center"
+        android:text="Customers Complaints "
+        android:textColor="@color/white"
+        android:textFontWeight="@android:integer/config_longAnimTime"
+        android:textSize="35dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_complaints"
         android:layout_width="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        android:layout_height="548dp"
+        android:layout_below="@+id/textView3"
         android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_height="match_parent" />
+        android:layout_marginTop="20dp"
+         />
 
     <TextView
         android:id="@+id/tv_no_available_complaints"

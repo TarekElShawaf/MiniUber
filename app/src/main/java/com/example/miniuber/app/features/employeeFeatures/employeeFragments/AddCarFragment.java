@@ -51,7 +51,7 @@ public class AddCarFragment extends Fragment {
                 Toast.makeText(v.getContext(), "car year is invalid", Toast.LENGTH_SHORT).show();
             } else {
                 progressBar.setVisibility(View.VISIBLE);
-                Car car = new Car(model, Integer.parseInt(year), color, plateNo);
+                Car car = new Car(model, Integer.parseInt(year), color, plateNo,"");
                 FireBaseChecker checker = new FireBaseChecker(ModuleOption.CAR, v.getContext(), progressBar);
                 checker.checkIfCarExists(car, () -> addCarDataToDatabase(car,v));
 
