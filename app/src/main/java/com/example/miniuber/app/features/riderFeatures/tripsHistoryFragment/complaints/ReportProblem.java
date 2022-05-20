@@ -9,12 +9,21 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.miniuber.R;
+import com.example.miniuber.entities.Complaint;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class ReportProblem extends AppCompatActivity {
     RadioButton radioButtonOther;
     EditText editText;
     RadioGroup radioGroup;
     RadioButton selectedRadioButton;
+    Complaint complaint;
+    int trip_id ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +32,8 @@ public class ReportProblem extends AppCompatActivity {
         radioButtonOther =findViewById(R.id.otherproblem);
         editText=findViewById(R.id.problem_msg);
         radioGroup = (RadioGroup) findViewById(R.id.radiogroup);
+
+        trip_id=(Integer) getIntent().getSerializableExtra("tripID");
     }
 
     public void writeOtherProblem(View view) {
@@ -37,10 +48,9 @@ public class ReportProblem extends AppCompatActivity {
     }
 
     public void submitProblem(View view) {
-        int trip_id ;
         String problem;
         if(radioButtonOther.isChecked()) {
-             problem = editText.getText().toString();
+            problem = editText.getText().toString();
 
         }
         else {
@@ -49,6 +59,18 @@ public class ReportProblem extends AppCompatActivity {
             problem=selectedRadioButton.getText().toString();
 
         }
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Trips");
+        complaint.setProblem(problem);
+        complaint.setTripId(trip_id);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar calendar = Calendar.getInstance();
+        String date = sdf.format(calendar.getTime());
+        complaint.setDate(date);
+        complaint.setComplaintID(5);
+
+
+
+        myRef.push().setValue(complaint);
 
     }
 }

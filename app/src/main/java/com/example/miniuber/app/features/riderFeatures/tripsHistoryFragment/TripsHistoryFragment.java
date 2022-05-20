@@ -1,6 +1,7 @@
 package com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,8 +9,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.miniuber.R;
+import com.example.miniuber.entities.Driver;
+import com.example.miniuber.entities.Rider;
+import com.example.miniuber.entities.Trip;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -28,7 +39,10 @@ public class TripsHistoryFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    Trip trip;
+    Rider rider_;
+    Driver driver_;
+    String userPhoneNumber;
     public TripsHistoryFragment() {
 
     }
@@ -56,16 +70,41 @@ public class TripsHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_trips_history_fragment, container, false);
-
-        RecyclerView rv= v.findViewById(R.id.pt_fragment);
-
-        ArrayList<String> trips  = new ArrayList<String>();
-        trips.add("nour");
-        trips.add("noura");
-        trips.add("nouran");
+        Bundle data = getArguments();
+        if (data != null) {
+            userPhoneNumber = data.getString("userPhoneNumber");
+        }
+        Toast.makeText(getContext(),"pHONE NUMBER IS "+ userPhoneNumber, Toast.LENGTH_SHORT).show();
 
 
-        RecyclerViewAdapter adapter =  new RecyclerViewAdapter(trips);
+        RecyclerView rv = v.findViewById(R.id.pt_fragment);
+
+        ArrayList<Trip> trips = new ArrayList<Trip>();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Trips");
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+                    trip = postSnapshot.getValue(Trip.class);
+                    if (trip.getRiderPhoneNo().equals(userPhoneNumber)) {
+
+                        trips.add(trip);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Toast.makeText(getBaseContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(trips);
         RecyclerView.LayoutManager lm = new LinearLayoutManager(getContext());
         rv.setHasFixedSize(true);
         rv.setLayoutManager(lm);

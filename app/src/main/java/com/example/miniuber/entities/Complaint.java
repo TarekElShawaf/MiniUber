@@ -18,6 +18,10 @@ public class Complaint implements Serializable {
         this.date = date;
     }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public int getComplaintID() {
         return complaintID;
     }

@@ -396,7 +396,11 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                         break;
                     case R.id.navtrips:
                         check=false;
-                       replaceFragment(new TripsHistoryFragment());
+                        Bundle bundle2 = new Bundle();
+                        bundle2.putString("userPhoneNumber", userPhoneNumber);
+                        Fragment fragment2 = new TripsHistoryFragment();
+                        fragment2.setArguments(bundle2);
+                       replaceFragment(fragment2);
                         Toast.makeText(this, "History Fragment", Toast.LENGTH_SHORT).show();
                         constraintLayout.setVisibility(View.INVISIBLE);
                         drawerLayout.closeDrawer(GravityCompat.START);
