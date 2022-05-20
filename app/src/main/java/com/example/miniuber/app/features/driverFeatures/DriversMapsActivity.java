@@ -85,7 +85,7 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private int searchRadius = 1;
-    private String riderPhoneNumber;
+    private String driverPhoneNumber;
     private Boolean isRiderFound = false;
 
 
@@ -97,7 +97,11 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView( R.layout.activity_drivers_maps);
+        driverPhoneNumber = getIntent().getStringExtra("phoneNumber");
+        if(driverPhoneNumber == null) {
+            driverPhoneNumber="+201111111111";
 
+        }
         currentLocation = findViewById(R.id.gpsDriver);
 
 
@@ -139,8 +143,8 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
        GeoFire geoFire = new GeoFire(userRequest);
        // Toast.makeText(this, "Your Location is - "+userPhoneNumber , Toast.LENGTH_LONG).show();
        Log.d(TAG, "sendRequest: lat  "+markersHashMap.get(0).latitude +" long "+ markersHashMap.get(0).longitude);
-       geoFire.setLocation("+201142434195", new GeoLocation(markersHashMap.get(0).latitude, markersHashMap.get(0).longitude));
-       userRequest.child("+201142434195").child("driverStatus").setValue(0);
+       geoFire.setLocation(driverPhoneNumber, new GeoLocation(markersHashMap.get(0).latitude, markersHashMap.get(0).longitude));
+       userRequest.child(driverPhoneNumber).child("driverStatus").setValue(0);
 
        searchRider.setVisibility(View.INVISIBLE);
        progressBar = findViewById(R.id.searchForRiders);
@@ -160,25 +164,12 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
             public void onDataEntered(DataSnapshot dataSnapshot, GeoLocation location) {
                 if(!isRiderFound){
 
-                    Log.d(TAG, "onDataEntered: driver found"+dataSnapshot.getKey().toString());
-                    DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("User Requests");
-                    userRequest.child("+201142434195").child("userStatus").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            if (!task.isSuccessful()) {
-                                Log.e("firebase", "Error getting data", task.getException());
-                            }
-                            else {
-                                Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                            }
-                        }
-                    });
 
                     Log.d(TAG, "onDataEntered: ");
                     isRiderFound = true;
                 }
 
-                riderPhoneNumber = dataSnapshot.getKey();
+               String riderPhoneNumber = dataSnapshot.getKey();
 
                 double longitude = (double) dataSnapshot.child("l").child("1").getValue();
                 double latitude = (double) dataSnapshot.child("l").child("0").getValue();
@@ -193,10 +184,10 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
                acceptRider.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View view) {
-                       Toast.makeText(DriversMapsActivity.this, "Request Accepted "+riderLocation.toString(), Toast.LENGTH_LONG).show();
+                       //Toast.makeText(DriversMapsActivity.this, "Request Accepted "+riderLocation.toString(), Toast.LENGTH_LONG).show();
                        Log.d(TAG, "onClick: rider location is  "+riderLocation.toString());
                        DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("AvailableDrivers");
-                       userRequest.child("+201142434195").child("driverStatus").setValue(1);
+                       userRequest.child(driverPhoneNumber).getRef().removeValue();
                        acceptRider.setVisibility(View.INVISIBLE);
                    }
                });

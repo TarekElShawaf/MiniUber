@@ -127,7 +127,11 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         userPhoneNumber = getIntent().getStringExtra("phoneNumber");
-        //userPhoneNumber="+201111111111";
+        if(userPhoneNumber == null) {
+            userPhoneNumber="+201111111111";
+
+        }
+
         searchMap = findViewById(R.id.searchMap);
         currentLocation = findViewById(R.id.gpsRider);
         searchDrivers=findViewById(R.id.searchDrivers);;
@@ -163,8 +167,8 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("User Requests");
         GeoFire geoFire = new GeoFire(userRequest);
        // Toast.makeText(this, "Your Location is - "+userPhoneNumber , Toast.LENGTH_LONG).show();
-        geoFire.setLocation("+2001142434195", new GeoLocation(markersHashMap.get(0).latitude, markersHashMap.get(0).longitude));
-        userRequest.child("+201142434195").child("userStatus").setValue(0);
+        geoFire.setLocation(userPhoneNumber, new GeoLocation(markersHashMap.get(0).latitude, markersHashMap.get(0).longitude));
+        userRequest.child(userPhoneNumber).child("userStatus").setValue(0);
     }
 
     private void searchForDrivers(){
@@ -232,9 +236,9 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                         settingDriverInformation();
                         showDriverDialog();
                         DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("User Requests");
-                        userRequest.child("+201142434195").child("userStatus").setValue(1);
-                        DatabaseReference driverRequest = FirebaseDatabase.getInstance().getReference().child("AvailableDrivers");
-                        Toast.makeText(RiderMapsActivity.this,"Driver Found"+driverRequest.child("+201142434195").child("driverStatus").toString(),Toast.LENGTH_SHORT).show();
+                        userRequest.child(userPhoneNumber).getRef().removeValue();
+                        //DatabaseReference driverRequest = FirebaseDatabase.getInstance().getReference().child("AvailableDrivers");
+                       // Toast.makeText(RiderMapsActivity.this,"Driver Found"+driverRequest.child("+201142434195").child("driverStatus").toString(),Toast.LENGTH_SHORT).show();
                     }
                 });
 
