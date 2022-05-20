@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.example.miniuber.R;
 import com.example.miniuber.app.features.employeeFeatures.AvailableCarsAdapter;
-import com.example.miniuber.app.features.employeeFeatures.ComplaintsRecyclerViewAdapter;
 import com.example.miniuber.app.features.employeeFeatures.DriversWithoutCarsAdapter;
 import com.example.miniuber.entities.Car;
 import com.example.miniuber.entities.Driver;
@@ -50,7 +49,7 @@ public class AssignCarToDriverFragment extends Fragment {
     RecyclerView rvCars;
     RecyclerView rvDrivers;
 
-    private ArrayList<Car> availableCars = new ArrayList<>();
+    private ArrayList<Car>  availableCars = new ArrayList<>();
     private ArrayList<Driver> driversWithoutCars = new ArrayList<>();
 
 
@@ -136,6 +135,7 @@ public class AssignCarToDriverFragment extends Fragment {
                                                                 Driver driver = getDriverFromFireBase(snapshot, fullNumber);
 
                                                                 if (driver.getCarPlateNumber().equals("")) {
+                                                                    //driver not assigned to another car!
 
                                                                     driversRef.child(driverRowID).child("carPlateNumber").setValue(carPlateNo);
                                                                     carsRef.child(carRowID).child("driverPhoneNo").setValue(fullNumber);
@@ -149,11 +149,34 @@ public class AssignCarToDriverFragment extends Fragment {
 
 
                                                                 } else {
-                                                                    //driver is already assigned to a car
-                                                                    Toast.makeText(v.getContext(), "Driver is already assigned to a car",
+                                                                    //driver is already assigned to another car
+
+                                                                    //Ahmed drives an Accent
+                                                                    // No we Want Ahmed to Drive an Astra
+
+                                                                    //Go to Ahmed and set the carPlateNo
+
+                                                                    addCarToAvailableCars(driver);
+                                                                    driversRef.child(driverRowID).child("carPlateNumber").setValue(carPlateNo);
+
+                                                                    //Go to Astra and Set the driver's PhoneNo
+                                                                    carsRef.child(carRowID).child("driverPhoneNo").setValue(fullNumber);
+
+
+                                                                    etCarPlateNo.getText().clear();
+                                                                    etDriverPhoneNo.getText().clear();
+
+                                                                    //Go to Accent and set the driver's Phone No to ""
+                                                                    //how?
+
+
+
+                                                                    Toast.makeText(v.getContext(), "driver assigned to car successfully",
                                                                             Toast.LENGTH_SHORT).show();
+                                                                    progressBar.setVisibility(View.INVISIBLE);
 
                                                                 }
+
 
 
                                                             }
@@ -307,6 +330,37 @@ public class AssignCarToDriverFragment extends Fragment {
 
 
         return driver;
+    }
+
+    private void addCarToAvailableCars(Driver driver){
+
+
+        carsRef.addValueEventListener(new ValueEventListener() {
+            Car car = null;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren() ){
+
+                    Car car = postSnapshot.getValue(Car.class);
+                    if(car.getPlateNumber().equalsIgnoreCase(driver.getCarPlateNumber())){
+                        car.setDriverPhoneNo("");
+                        oldCarRowID = postSnapshot.getKey();
+                        Log.d("Zoz", "key is " + oldCarRowID);
+                        break;
+                    }
+                }
+
+                carsRef.child(oldCarRowID).child("driverPhoneNo").setValue("");
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
 }
