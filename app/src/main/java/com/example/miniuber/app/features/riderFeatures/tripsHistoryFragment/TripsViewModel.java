@@ -11,6 +11,7 @@ import com.example.miniuber.domain.repositiries.TripLocalImplementation;
 import com.example.miniuber.domain.repositiries.TripLocalRepository;
 import com.example.miniuber.entities.Trip;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TripsViewModel extends ViewModel {
@@ -25,16 +26,23 @@ public class TripsViewModel extends ViewModel {
         tripLocalRepository.insertTrip(trip);
     }
 
-    public void deleteFavouriteMovie(Trip trip) {
+    public void deleteTrip(Trip trip) {
         tripLocalRepository.deleteTrip(trip);
     }
 
-    public LiveData<List<Trip>> getFavouriteMovies() {
+    public LiveData<List<Trip>> getAllTrips() {
 
         return tripLocalRepository.getAllTrips();
     }
-    public Trip getTripById(int id) {
-       return tripLocalRepository.getTripById(id);
+    public List<Trip> getAllTripsData() {
+
+        return tripLocalRepository.getAllTripsData();
+    }
+    public Trip getTripByDriverId(String  id) {
+       return tripLocalRepository.getTripByDriverId(id);
+    }
+    public Trip getTripByRiderId(String  id) {
+        return tripLocalRepository.getTripByRiderId(id);
     }
 
 

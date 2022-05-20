@@ -35,7 +35,7 @@ public class TripInfoActivity extends AppCompatActivity implements Serializable 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_info);
-
+        trip = (Trip) getIntent().getSerializableExtra("trip");
 
         date = findViewById(R.id.tripdate);
         time = findViewById(R.id.triptime);
@@ -46,13 +46,13 @@ public class TripInfoActivity extends AppCompatActivity implements Serializable 
         driver_name = findViewById(R.id.tripdriver);
 
 
-        date.setText(trip.getTripDate());
+       date.setText(trip.getTripDate());
         time.setText(trip.getTime());
         pickup_location.setText(trip.getPickupPoint());
         destination_location.setText(trip.getDestination());
         fare.setText(trip.getFare().toString());
         rate.setText(Float.toString(trip.getRate()));
-        driver_name.setText(getDriverByPhoneNumber(trip.getDriverPhoneNo()).getName());
+        driver_name.setText(trip.getDriverPhoneNo());
 
 
 

@@ -1,9 +1,11 @@
 package com.example.miniuber.domain.repositiries;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Query;
 
 import com.example.miniuber.entities.Trip;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface TripLocalRepository {
@@ -12,7 +14,10 @@ public interface TripLocalRepository {
     void deleteTrip(Trip trip);
 
     LiveData<List<Trip>> getAllTrips();
-    Trip getTripById(int id);
+
+    List<Trip> getAllTripsData();
+    Trip getTripByRiderId(String phoneNumber);
+    Trip getTripByDriverId(String phoneNumber);
 
 
 }

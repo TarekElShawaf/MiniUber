@@ -9,6 +9,7 @@ import androidx.room.Query;
 
 import com.example.miniuber.entities.Trip;
 
+import java.util.ArrayList;
 import java.util.List;
 @Dao
 public interface TripDoa {
@@ -18,7 +19,12 @@ public interface TripDoa {
     void deleteTrip(Trip trip);
     @Query("SELECT * FROM Trips ")
     LiveData<List<Trip>> getAllTrips();
- //get trip by id
-    @Query("SELECT * FROM Trips WHERE id = :id")
-    Trip getTripById(int id);
+    @Query("SELECT * FROM Trips ")
+    List<Trip> getAllTripsData();
+    //get trip by id
+    @Query("SELECT * FROM Trips WHERE driverPhoneNo = :phoneNumber")
+    Trip getTripByDriverId(String phoneNumber);
+    @Query("SELECT * FROM Trips WHERE riderPhoneNo = :phoneNumber")
+    Trip getTripByRiderId(String phoneNumber);
+
 }

@@ -7,12 +7,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.miniuber.R;
+import com.example.miniuber.app.features.employeeFeatures.ComplaintsRecyclerViewAdapter;
 import com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment.TripInfo.TripInfoActivity;
 import com.example.miniuber.entities.Driver;
 import com.example.miniuber.entities.Rider;
@@ -27,11 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TripsHistoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class TripsHistoryFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -43,60 +41,52 @@ public class TripsHistoryFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     Trip trip;
-    Rider rider_;
-    Driver driver_;
+    private RecyclerViewAdapter adapter;
+    private RecyclerView recyclerView;
+    ArrayList<Trip> trips = new ArrayList<>();
+    TripsViewModel tripViewModel;
+
     String userPhoneNumber;
 
-    public TripsHistoryFragment() {
-
-    }
 
 
-    public static TripsHistoryFragment newInstance(String param1, String param2) {
-        TripsHistoryFragment fragment = new TripsHistoryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        tripViewModel = new TripsViewModel(getActivity().getApplication());
         View v = inflater.inflate(R.layout.fragment_trips_history_fragment, container, false);
         Bundle data = getArguments();
         if (data != null) {
             userPhoneNumber = data.getString("userPhoneNumber");
+
         }
 
 
-        RecyclerView rv = v.findViewById(R.id.pt_fragment);
-
-        ArrayList<Trip> trips = new ArrayList<Trip>();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Trips");
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        //FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
                     trip = postSnapshot.getValue(Trip.class);
-                    if (trip.getRiderPhoneNo().equals(userPhoneNumber)) {
+                    Log.d("Nouran : " ,trip.getTripDate());
+                    Log.d("Nouran", userPhoneNumber);
+                    Log.d("Nouran", trip.getRiderPhoneNo());
 
-                        trips.add(trip);
-                    }
+
+                    if (trip.getRiderPhoneNo().equals(userPhoneNumber)) {
+                        Log.d("Nouran : Dest", trip.getDestination());
+                        trips.add(new Trip(trip.getPickupPoint(), trip.getTime(), trip.getDestination(), trip.getFare(), trip.getTripDate(), trip.getDriverPhoneNo(),trip.getRate(),trip.getRiderPhoneNo()));
+                        //tripViewModel.insertTrip(trip);
+                   }
                 }
+               //adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -106,21 +96,35 @@ public class TripsHistoryFragment extends Fragment {
             }
         });
 
+        // = new RecyclerViewAdapter(trips, adapter.listener);
+       //adapter = new RecyclerViewAdapter(trips, adapter.listener);
+        RecyclerView rv =  v.findViewById(R.id.pt_fragment);
+        Trip testTrip = new Trip("home","15:4","city stars",2.3f,"22/5","011515",2.8f,userPhoneNumber);
+        trips.add(testTrip);
+       // tripViewModel.insertTrip(testTrip);
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(trips, new TripsInfoRecyclerViewListener() {
+       Log.d("Nouran Trips size  : ", +tripViewModel.getAllTripsData().size()+"");
+
+
+        adapter = new RecyclerViewAdapter(trips, new TripsInfoRecyclerViewListener() {
             @Override
             public void onClick(View view, int position) {
                 Intent intent = new Intent(getContext(), TripInfoActivity.class);
                 intent.putExtra("trip", trips.get(position));
                 startActivity(intent);
-
             }
-        });
 
-        RecyclerView.LayoutManager lm = new LinearLayoutManager(getContext());
-        rv.setHasFixedSize(true);
-        rv.setLayoutManager(lm);
+        }, getContext());
+        adapter.setTrips((ArrayList<Trip>) tripViewModel.getAllTripsData());
         rv.setAdapter(adapter);
+
+        rv.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        rv.setLayoutManager(linearLayoutManager);
+
+
+
 
         // Inflate the layout for this fragment
         return v;
