@@ -45,6 +45,7 @@ import com.example.miniuber.app.features.commonFeatures.ModuleSelectorActivity;
 import com.example.miniuber.app.features.commonFeatures.directions.FetchURL;
 import com.example.miniuber.app.features.commonFeatures.directions.TaskLoadedCallback;
 
+import com.example.miniuber.app.features.driverFeatures.DriversMapsActivity;
 import com.example.miniuber.app.features.riderFeatures.personalInfo.PersonalInfoFragment;
 import com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment.TripsHistoryFragment;
 
@@ -164,7 +165,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         GeoFire geoFire = new GeoFire(userRequest);
        // Toast.makeText(this, "Your Location is - "+userPhoneNumber , Toast.LENGTH_LONG).show();
         geoFire.setLocation("+2001142434195", new GeoLocation(markersHashMap.get(0).latitude, markersHashMap.get(0).longitude));
-        userRequest.child("+201142434195").child("userStatus").setValue(0);
+        userRequest.child("+2001142434195").child("userStatus").setValue(0);
     }
 
     private void searchForDrivers(){
@@ -207,12 +208,34 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             public void onDataEntered(DataSnapshot dataSnapshot, GeoLocation location) {
                 if(!isDriverFound){
 
-                    Log.d(TAG, "onDataEntered: driver found"+dataSnapshot.getKey().toString());
+                    DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("User Requests");
 
-                    isDriverFound = true;
+                    userRequest.child("+2001142434195").child("userStatus").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            if(task.isSuccessful()){
+                                Log.d(TAG, "onComplete: driver status is "+task.getResult().getValue());
+
+                                Toast.makeText(RiderMapsActivity.this, "Driver is on the way", Toast.LENGTH_SHORT).show();
+                                String status = task.getResult().getValue().toString();
+                                if(status.equals("0")){
+                                    Log.d(TAG, "onDataEntered: driver found"+dataSnapshot.getKey().toString());
+
+                                    Log.d(TAG, "onDataEntered: ");
+
+                                    isDriverFound = true;
+                                }
+
+
+                            }
+                        }
+                    });
+
                 }
 
                 driverPhoneNumber = dataSnapshot.getKey();
+
+                Log.d(TAG, "onDataEntered: asdad");
                 binding.progressBar2.setVisibility(View.INVISIBLE);
                 putTripView();
                 double longitude = (double) dataSnapshot.child("l").child("1").getValue();
@@ -229,12 +252,31 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                 binding.confirmTrip.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        settingDriverInformation();
-                        showDriverDialog();
-                        DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("User Requests");
-                        userRequest.child("+201142434195").child("userStatus").setValue(1);
-                        DatabaseReference driverRequest = FirebaseDatabase.getInstance().getReference().child("AvailableDrivers");
-                        Toast.makeText(RiderMapsActivity.this,"Driver Found"+driverRequest.child("+201142434195").child("driverStatus").toString(),Toast.LENGTH_SHORT).show();
+
+                        DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("AvailableDrivers");
+                        userRequest.child("+201142434195").child("driverStatus").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if(task.isSuccessful()){
+                                    String status = task.getResult().getValue().toString();
+                                    while (status.equals("0")){
+                                        Log.d(TAG, "onComplete: status value is  "+status);
+                                        status = task.getResult().getValue().toString();
+                                    }
+                                    Toast.makeText(getApplicationContext(),"Driver is accepted the trip",Toast.LENGTH_SHORT).show();
+
+                                    settingDriverInformation();
+                                    showDriverDialog();
+                                    DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("User Requests");
+                                    userRequest.child("+2001142434195").child("userStatus").setValue(1);
+
+
+                                }
+                            }
+                        });
+
+
+
                     }
                 });
 
@@ -445,7 +487,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             }
             this.googleMap.setMyLocationEnabled(true);
             this.googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-            setMapStyle();
+            //setMapStyle();
             //setLocationMark();
             init();
 
