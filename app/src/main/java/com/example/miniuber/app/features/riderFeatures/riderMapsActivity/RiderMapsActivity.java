@@ -128,6 +128,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         userPhoneNumber = getIntent().getStringExtra("phoneNumber");
+        userPhoneNumber="+201111111111";
         searchMap = findViewById(R.id.searchMap);
         currentLocation = findViewById(R.id.gpsRider);
         searchDrivers=findViewById(R.id.searchDrivers);;
@@ -142,6 +143,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         mapFragment.getMapAsync(this);
         Window window = this.getWindow();
         window.setStatusBarColor(getResources().getColor(R.color.defaultBackground));
+        Toast.makeText(this,"Phone number is : "+ userPhoneNumber, Toast.LENGTH_SHORT).show();
 
         getLocationPermission();
         searchForDrivers();
@@ -366,7 +368,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                         break;
                     case R.id.navspersonalinfo:
                         check=false;
-                        Toast.makeText(this, "Personal Fragment", Toast.LENGTH_SHORT).show();
+
                         Bundle bundle = new Bundle();
                         bundle.putString("userPhoneNumber", userPhoneNumber);
                         Fragment fragment = new PersonalInfoFragment();

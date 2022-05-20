@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.miniuber.R;
 import com.example.miniuber.entities.Rider;
@@ -41,6 +42,7 @@ public class PersonalInfoFragment extends Fragment {
     AppCompatEditText nameView,phoneView,emailView;
     TextView ratingTxt;
     RatingBar rating ;
+    String userPhoneNumber;
 
     public PersonalInfoFragment() {
         // Required empty public constructor
@@ -70,28 +72,39 @@ public class PersonalInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_personal_info, container, false);
-        DatabaseReference users = FirebaseDatabase.getInstance().getReference("users");
-        Query query = users.orderByChild("name").equalTo("TarekElShawaf");
+        Bundle data = getArguments();
+        if(data!=null)
+        {
+            userPhoneNumber=data.getString("userPhoneNumber");
+            Toast.makeText(getContext(),userPhoneNumber,Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),"Not Null",Toast.LENGTH_LONG).show();
+        }
+        //Toast.makeText(getContext(),"PHONE nUMBER IS "+userPhoneNumber,Toast.LENGTH_LONG).show();
+        DatabaseReference users = FirebaseDatabase.getInstance().getReference("Users").child("Riders");
+        Query query = users.orderByChild("phoneNumber").equalTo(userPhoneNumber);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Rider currentUser = dataSnapshot.getValue(Rider.class);
-                name= currentUser.getName();
-                email=currentUser.getEmail();
-                phone=currentUser.getPhoneNumber();
-                rate= currentUser.getRate();
+                if(dataSnapshot.exists())
+                {
+                    name=dataSnapshot.child(userPhoneNumber).child("name").getValue(String.class);
+                    email=dataSnapshot.child(userPhoneNumber).child("email").getValue(String.class);
+                   // rate= dataSnapshot.child(userPhoneNumber).child("rate").getValue(float.class);
+                    phone=userPhoneNumber;
+                }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Toast.makeText(getContext(),"Error",Toast.LENGTH_LONG).show();
             }
         });
         nameView = view.findViewById(R.id.nameView);
-        nameView.setText(name);
+        nameView.setText("name is "+name);
         phoneView = view.findViewById(R.id.phoneView);
-        phoneView.setText(phone);
+        phoneView.setText("Phone is : "+phone);
         emailView = view.findViewById(R.id.emailView);
         emailView.setText(email);
 

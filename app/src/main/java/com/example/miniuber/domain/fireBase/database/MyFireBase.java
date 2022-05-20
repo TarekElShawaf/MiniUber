@@ -81,6 +81,7 @@ public class MyFireBase {
         }
         else if(moduleOption == ModuleOption.RIDER){
             Intent intent  = new Intent(context, RiderMapsActivity.class);
+            intent.putExtra("moduleOption",moduleOption);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(intent);
 
