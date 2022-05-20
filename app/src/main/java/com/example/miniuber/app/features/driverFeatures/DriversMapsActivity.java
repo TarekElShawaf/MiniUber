@@ -4,33 +4,45 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatTextView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.miniuber.R;
+import com.example.miniuber.app.features.commonFeatures.ModuleSelectorActivity;
 import com.example.miniuber.app.features.commonFeatures.directions.TaskLoadedCallback;
 
 
+import com.example.miniuber.app.features.riderFeatures.personalInfo.PersonalInfoFragment;
 import com.example.miniuber.app.features.riderFeatures.riderMapsActivity.RiderMapsActivity;
-import com.example.miniuber.databinding.ActivityMapsBinding;
+import com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment.TripsHistoryFragment;
+
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
@@ -63,6 +75,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class DriversMapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener , TaskLoadedCallback {
 
 
@@ -78,16 +92,28 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
     private ArrayList<LatLng> markers =new ArrayList<>();
     private int ids = 0;
     private HashMap<Integer,LatLng> markersHashMap = new HashMap<>();
-    ActivityMapsBinding binding;
     AppCompatButton searchRider ;
     private AppCompatButton searchForRiders;
     private ProgressBar  progressBar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private int fragmentCounter = 0;
+
     private int searchRadius = 1;
     private String driverPhoneNumber;
+    private String riderPhoneNumber;
     private Boolean isRiderFound = false;
+    RatingBar ratingBar;
+    private Boolean check = true;
 
+    TextView rateRider;
+    TextView driverRealRate;
+    ImageView starRate;
+    TextView textView;
+    TextView riderName;
+    TextView driverRate;
+    CircleImageView profileImage;
+    AppCompatButton callRider;
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
@@ -95,7 +121,7 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMapsBinding.inflate(getLayoutInflater());
+
         setContentView( R.layout.activity_drivers_maps);
         driverPhoneNumber = getIntent().getStringExtra("phoneNumber");
         if(driverPhoneNumber == null) {
@@ -107,7 +133,7 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
 
 
         Objects.requireNonNull(getSupportActionBar()).hide();
-        // settingNavigation();
+         settingNavigation();
         settingEditText();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.driverMap);
@@ -118,15 +144,89 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
         getLocationPermission();
         searchRiders();
     }
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.frameLayout2,fragment);
+        fragmentTransaction.commit();
+
+
+
+    }
+
+    private void settingNavigation() {
+        navigationView = findViewById(R.id.navigationViewDriver);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.menu_Open, R.string.menu_Close);
+        drawerLayout= findViewById(R.id.drawerLayoutDriver);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        ConstraintLayout constraintLayout= findViewById(R.id.constraint);
+        navigationView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.navhome:
+                    if(check)
+                    {
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                    }
+                    else{
+                        Intent intent = new Intent(this, DriversMapsActivity.class);
+
+                        overridePendingTransition(1, 1);
+                        startActivity(intent);
+                        overridePendingTransition(1, 1);
+                        check=true;
+                    }
+
+
+                    break;
+                case R.id.navlogOut:
+                    check=false;
+                    //Toast.makeText(this, "Logout Fragment", Toast.LENGTH_SHORT).show();
+                    //open moduleselector activity
+                    Intent intent = new Intent(this, ModuleSelectorActivity.class);
+                    startActivity(intent);
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    fragmentCounter=1;
+                    //drawerLayout.closeDrawer(GravityCompat.START);
+                    break;
+                case R.id.navspersonalinfo:
+                    check=false;
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userPhoneNumber", driverPhoneNumber);
+                    Fragment fragment = new PersonalInfoFragment();
+                    fragment.setArguments(bundle);
+                    replaceFragment(fragment);
+                    constraintLayout.setVisibility(View.INVISIBLE);
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    fragmentCounter=2;
+                    break;
+                case R.id.navtrips:
+                    check=false;
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putString("userPhoneNumber", driverPhoneNumber);
+                    Fragment fragment2 = new TripsHistoryFragment();
+                    fragment2.setArguments(bundle2);
+                    replaceFragment(fragment2);
+                    constraintLayout.setVisibility(View.INVISIBLE);
+                    Toast.makeText(this, "History Fragment", Toast.LENGTH_SHORT).show();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    fragmentCounter=3;
+                    break;
+                default: return true;
+
+            }
+            return true;
+        });
+
+
+    }
     private void searchRiders(){
         searchRider= findViewById(R.id.searchRiders);
         searchRider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendRequest();
-
-
-                // Log.d(TAG, "getClosetDriver: searching near latt :   "+markersHashMap.get(0).latitude+" long :  "+markersHashMap.get(0).longitude);
 
                 getClosetDriver();
 
@@ -153,7 +253,7 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
    }
 
     private void getClosetDriver(){
-        binding.progressBar2.setVisibility(View.VISIBLE);
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("User Requests");
         //Log.d(TAG, "getClosetDriver:  refrence to String "+ref.toString());
         GeoFire geoFire = new GeoFire(ref);
@@ -169,7 +269,7 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
                     isRiderFound = true;
                 }
 
-               String riderPhoneNumber = dataSnapshot.getKey();
+                riderPhoneNumber = dataSnapshot.getKey();
 
                 double longitude = (double) dataSnapshot.child("l").child("1").getValue();
                 double latitude = (double) dataSnapshot.child("l").child("0").getValue();
@@ -189,6 +289,7 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
                        DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("AvailableDrivers");
                        userRequest.child(driverPhoneNumber).getRef().removeValue();
                        acceptRider.setVisibility(View.INVISIBLE);
+                       addView();
                    }
                });
 
@@ -229,7 +330,47 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
 
     }
 
+    private void addView(){
+         profileImage = findViewById(R.id.driverImageDialog);
+         profileImage.setVisibility(View.VISIBLE);
+         driverRate = findViewById(R.id.driverRate);
+         driverRate.setVisibility(View.VISIBLE);
+         riderName = findViewById(R.id.riderName);
+         riderName.setText(riderPhoneNumber);
+         DatabaseReference driverRef = FirebaseDatabase.getInstance().getReference().child("Users").child(riderPhoneNumber);
+         driverRef.child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+             @Override
+             public void onComplete(@NonNull Task<DataSnapshot> task) {
+                 if(task.isSuccessful()){
+                     String name = task.getResult().getValue().toString();
+                     riderName.setText(name);
+                 }
+             }
+         });
+         riderName.setVisibility(View.VISIBLE);
+         textView = findViewById(R.id.textView);
+         textView.setVisibility(View.VISIBLE);
+         starRate = findViewById(R.id.starRate);
+         starRate.setVisibility(View.VISIBLE);
+         driverRealRate = findViewById(R.id.driverRealRate);
+         driverRate.setVisibility(View.VISIBLE);
+         rateRider = findViewById(R.id.textView8);
+         rateRider.setVisibility(View.VISIBLE);
+         ratingBar = findViewById(R.id.driverRateStars);
+         ratingBar.setVisibility(View.VISIBLE);
+         callRider = findViewById(R.id.driverPhoneNumber);
+         callRider.setVisibility(View.VISIBLE);
+         callRider.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent intent = new Intent(Intent.ACTION_DIAL);
+                 riderPhoneNumber.substring(2,riderPhoneNumber.length());
+                 intent.setData(Uri.parse("tel:"+riderPhoneNumber.substring(2,riderPhoneNumber.length())));
+                 startActivity(intent);
+             }
+         });
 
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -274,29 +415,6 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
         currentLocation.setOnClickListener(v -> getDeviceLocation());
         hideSoftKeyboard();
     }
-
-    /*private void geoLocate() {
-
-
-        String searchString = searchMap.getText().toString();
-        Geocoder geocoder = new Geocoder(DriversMapsActivity.this);
-        List<Address> addresses = new ArrayList<>();
-        try {
-
-
-            addresses = geocoder.getFromLocationName(searchString, 4);
-        } catch (IOException e) {
-            Log.d(TAG, "geoLocate: " + e.getMessage());
-
-        }
-        if (addresses.size() > 0) {
-            Address address = addresses.get(0);
-            searchMap.setText(addresses.get(0).getAddressLine(0));
-            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), defaultZoom, address.getAddressLine(0),1);
-
-        }
-    }*/
-
 
 
     private void getDeviceLocation() {

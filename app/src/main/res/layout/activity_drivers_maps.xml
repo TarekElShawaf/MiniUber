@@ -13,6 +13,16 @@
         android:layout_height="match_parent"
         app:layoutDescription="@xml/activity_maps_xml_constraintlayout3_scene">
 
+<FrameLayout
+    android:layout_width="match_parent"
+    android:id="@+id/frameLayout2"
+    android:layout_height="match_parent"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:id="@+id/constraint"
+        android:layout_height="match_parent"
+        >
         <fragment
             android:id="@+id/driverMap"
             class="com.google.android.gms.maps.SupportMapFragment"
@@ -56,7 +66,142 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/driverMap">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/driverImageDialog"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:visibility="invisible"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_baseline_person_pin_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <TextView
+                android:id="@+id/driverRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:visibility="invisible"
+
+                android:fontFamily="@font/poppin_bold"
+                android:text="Rider Rate"
+                app:layout_constraintStart_toEndOf="@+id/driverImageDialog"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/riderName"
+                android:layout_width="120dp"
+                android:visibility="invisible"
+
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="32dp"
+                android:fontFamily="@font/poppin"
+                android:gravity="center"
+                android:text="Ahmed Maged"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/driverRateStars"
+                app:layout_constraintVertical_bias="0.0">
+
+            </TextView>
+
+            <TextView
+
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:visibility="invisible"
+                android:id="@+id/textView"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/poppin_bold"
+                android:gravity="center"
+                android:text="Rider Name"
+                app:layout_constraintEnd_toStartOf="@+id/riderName"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/driverPhoneNumber"
+                app:layout_constraintTop_toBottomOf="@+id/driverRealRate">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/starRate"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_baseline_star_24"
+                app:layout_constraintStart_toEndOf="@+id/driverImageDialog"
+                app:layout_constraintTop_toBottomOf="@+id/driverRate"></ImageView>
+
+            <TextView
+                android:id="@+id/driverRealRate"
+                android:layout_width="36dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppin"
+                android:visibility="invisible"
+
+                android:text="3.96"
+                app:layout_constraintStart_toEndOf="@+id/starRate"
+                app:layout_constraintTop_toBottomOf="@+id/driverRate">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/textView8"
+                android:visibility="invisible"
+
+                android:layout_width="94dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="64dp"
+
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/poppin_bold"
+                android:text="Rate Rider"
+                app:layout_constraintStart_toEndOf="@+id/driverRate"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+            <RatingBar
+                android:id="@+id/driverRateStars"
+                android:layout_width="240dp"
+                android:visibility="invisible"
+
+                android:layout_height="39dp"
+                android:numStars="4"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/driverRealRate"
+                app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+            </RatingBar>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/driverPhoneNumber"
+                android:layout_width="50dp"
+                android:visibility="invisible"
+
+                android:layout_height="50dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/call_dialer"
+                android:elevation="7dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/driverImageDialog">
+
+            </androidx.appcompat.widget.AppCompatButton>
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/searchRiders"
                 android:layout_width="124dp"
@@ -100,6 +245,10 @@
                 android:id="@+id/searchForRiders"
                 app:layout_constraintTop_toTopOf="parent"></ProgressBar>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
