@@ -140,6 +140,7 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
        // Toast.makeText(this, "Your Location is - "+userPhoneNumber , Toast.LENGTH_LONG).show();
        Log.d(TAG, "sendRequest: lat  "+markersHashMap.get(0).latitude +" long "+ markersHashMap.get(0).longitude);
        geoFire.setLocation("+201142434195", new GeoLocation(markersHashMap.get(0).latitude, markersHashMap.get(0).longitude));
+       userRequest.child("+201142434195").child("driverStatus").setValue(0);
 
        searchRider.setVisibility(View.INVISIBLE);
        progressBar = findViewById(R.id.searchForRiders);
@@ -160,7 +161,8 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
                 if(!isRiderFound){
 
                     Log.d(TAG, "onDataEntered: driver found"+dataSnapshot.getKey().toString());
-
+                    DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("User Requests");
+                    Log.d(TAG, "onDataEntered: "+userRequest.child("+201142434195").child("userStatus").toString());
                     isRiderFound = true;
                 }
 
@@ -181,6 +183,8 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
                    public void onClick(View view) {
                        Toast.makeText(DriversMapsActivity.this, "Request Accepted "+riderLocation.toString(), Toast.LENGTH_LONG).show();
                        Log.d(TAG, "onClick: rider location is  "+riderLocation.toString());
+                       DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("AvailableDrivers");
+                       userRequest.child("+201142434195").child("driverStatus").setValue(1);
                        acceptRider.setVisibility(View.INVISIBLE);
                    }
                });

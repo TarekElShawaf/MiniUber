@@ -124,7 +124,6 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         userPhoneNumber = getIntent().getStringExtra("phoneNumber");
@@ -148,7 +147,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         getLocationPermission();
         searchForDrivers();
         settingTime();
-        settingDriverInformation();
+
 
     }
     private void settingDriverInformation(){
@@ -165,6 +164,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         GeoFire geoFire = new GeoFire(userRequest);
        // Toast.makeText(this, "Your Location is - "+userPhoneNumber , Toast.LENGTH_LONG).show();
         geoFire.setLocation("+2001142434195", new GeoLocation(markersHashMap.get(0).latitude, markersHashMap.get(0).longitude));
+        userRequest.child("+201142434195").child("userStatus").setValue(0);
     }
 
     private void searchForDrivers(){
@@ -225,6 +225,18 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                 binding.tripDistance.setText(String.valueOf(String.format("%.1f",(distance))+" m"));
                 binding.tripPrice.setText(String.valueOf(String.format("%.2f",(distance*0.4))+"$"));
                 binding.tripTime.setText(String.valueOf(binding.timeChecker.getHour()+":"+binding.timeChecker.getMinute()));
+                binding.confirmTrip.setVisibility(View.VISIBLE);
+                binding.confirmTrip.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        settingDriverInformation();
+                        showDriverDialog();
+                        DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("User Requests");
+                        userRequest.child("+201142434195").child("userStatus").setValue(1);
+                        DatabaseReference driverRequest = FirebaseDatabase.getInstance().getReference().child("AvailableDrivers");
+                        Toast.makeText(RiderMapsActivity.this,"Driver Found"+driverRequest.child("+201142434195").child("driverStatus").toString(),Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
 
@@ -292,7 +304,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 driverPhoneNumber.substring(2,driverPhoneNumber.length());
-                intent.setData(Uri.parse("tel:"+driverPhoneNumber.substring(3,driverPhoneNumber.length())));
+                intent.setData(Uri.parse("tel:"+driverPhoneNumber.substring(2,driverPhoneNumber.length())));
                 startActivity(intent);
             }
         });

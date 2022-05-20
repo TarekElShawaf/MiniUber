@@ -81,6 +81,22 @@
 
                     </ImageView>
 
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="132dp"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="31dp"
+                        android:background="@drawable/rounded_grey"
+                        android:text="Confirm Trip"
+                        android:id="@+id/confirmTrip"
+                        android:visibility="invisible"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/pickUpPoint"
+                        app:layout_constraintTop_toBottomOf="@+id/sildeBar">
+
+                    </androidx.appcompat.widget.AppCompatButton>
+
                     <TextView
                         android:id="@+id/DistanceTextView"
                         android:layout_width="70dp"
@@ -290,13 +306,13 @@
                         android:layout_width="139dp"
                         android:layout_height="69dp"
                         android:layout_marginStart="5dp"
-                        android:layout_marginTop="28dp"
+                        android:layout_marginTop="36dp"
                         android:background="@drawable/rounded_white"
                         android:elevation="5dp"
                         android:text="Select Time"
                         android:timePickerMode="spinner"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintHorizontal_bias="0.181"
                         app:layout_constraintStart_toEndOf="@+id/pickUpPoint"
                         app:layout_constraintTop_toTopOf="@+id/sildeBar" />
 
