@@ -4,145 +4,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/slight_white"
     tools:context=".app.features.commonFeatures.ModuleSelectorActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="340dp"
+        android:background="@color/defaultBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:src="@drawable/car"
+            android:id="@+id/imageView4"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.98"
-            tools:ignore="MissingConstraints">
-
-        </ImageView>
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="263dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/poppin"
-            android:gravity="center"
-            android:text="@string/Uber"
-            android:textColor="@color/black"
-            android:textSize="50dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="388dp"
-            android:layout_height="65dp"
-            android:fontFamily="@font/poppin"
-            android:gravity="center"
-            android:text="Move the way you want."
-            android:textColor="@color/black"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/imageView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
-
-        </TextView>
-
-
+            app:srcCompat="@drawable/ic_car_steering_wheel" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/employeeButton"
-        android:layout_width="157dp"
-        android:layout_height="44dp"
-        android:background="@drawable/roundedcorners"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/module_selector_button_shape"
+        android:elevation="40dp"
         android:fontFamily="@font/poppin"
-        android:text="Employee"
-        android:textColor="#FFFFFF"
 
+        android:drawableStart="@drawable/ic_settings"
+        android:paddingStart="40dp"
+        android:paddingEnd="80dp"
+        android:text="Employee"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.582">
+        app:layout_constraintTop_toBottomOf="@+id/driverButton">
 
     </androidx.appcompat.widget.AppCompatButton>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/driverButton"
-        android:layout_width="157dp"
-        android:layout_height="44dp"
-        android:background="@drawable/roundedcorners"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/module_selector_button_shape"
+        android:elevation="40dp"
         android:fontFamily="@font/poppin"
         android:text="Driver"
-        android:textColor="#FFFFFF"
-
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:drawableStart="@drawable/ic_wheel"
+        android:paddingStart="40dp"
+        android:paddingEnd="80dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.914">
+        app:layout_constraintTop_toBottomOf="@+id/riderButton">
 
     </androidx.appcompat.widget.AppCompatButton>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/riderButton"
-        android:layout_width="157dp"
-        android:layout_height="44dp"
-        android:background="@drawable/roundedcorners"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/module_selector_button_shape"
+        android:elevation="40dp"
         android:fontFamily="@font/poppin"
         android:text="@string/rider"
-        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:drawableStart="@drawable/ic_user"
+        android:paddingStart="36dp"
+        android:paddingEnd="80dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.937"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.582">
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
 
     </androidx.appcompat.widget.AppCompatButton>
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="290dp"
-        android:layout_height="58dp"
-        android:fontFamily="@font/poppin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/poppin_bold"
         android:gravity="center"
-        android:text="@string/please_choose"
+        android:text="Login as"
         android:textColor="@color/black"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.182">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
     </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

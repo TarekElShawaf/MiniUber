@@ -12,4 +12,5 @@
     <color name="mapsStatusBar">#161F53</color>
     <color  name="lineColor">#EFEFF4</color>
     <color name="grey">#C8C7CC</color>
+    <color name="slight_white">#F8F8F8</color>
 </resources>
