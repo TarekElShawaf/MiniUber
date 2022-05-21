@@ -122,7 +122,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     private int searchRadius = 1;
     private String driverPhoneNumber;
     private Boolean isDriverFound = false;
-    private TripsViewModel tripsViewModel = new TripsViewModel(getApplication());
+    private TripsViewModel tripsViewModel ;
 
 
     @Override
@@ -130,6 +130,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         super.onCreate(savedInstanceState);
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        tripsViewModel= new TripsViewModel(getApplication());
         userPhoneNumber = getIntent().getStringExtra("phoneNumber");
         if(userPhoneNumber == null) {
             userPhoneNumber="+201111111111";
@@ -399,6 +400,8 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
 
                         Bundle bundle = new Bundle();
                         bundle.putString("userPhoneNumber", userPhoneNumber);
+                        bundle.putString("userType", "rider");
+
                         Fragment fragment = new PersonalInfoFragment();
                         fragment.setArguments(bundle);
                         replaceFragment(fragment);
@@ -410,6 +413,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                         check=false;
                         Bundle bundle2 = new Bundle();
                         bundle2.putString("userPhoneNumber", userPhoneNumber);
+                        bundle2.putString("userType", "rider");
                         Fragment fragment2 = new TripsHistoryFragment();
                         fragment2.setArguments(bundle2);
                        replaceFragment(fragment2);

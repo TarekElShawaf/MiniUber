@@ -194,6 +194,7 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
 
                     Bundle bundle = new Bundle();
                     bundle.putString("userPhoneNumber", driverPhoneNumber);
+                    bundle.putString("userType", "driver");
                     Fragment fragment = new PersonalInfoFragment();
                     fragment.setArguments(bundle);
                     replaceFragment(fragment);
@@ -205,6 +206,7 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
                     check=false;
                     Bundle bundle2 = new Bundle();
                     bundle2.putString("userPhoneNumber", driverPhoneNumber);
+                    bundle2.putString("userType", "driver");
                     Fragment fragment2 = new TripsHistoryFragment();
                     fragment2.setArguments(bundle2);
                     replaceFragment(fragment2);
