@@ -6,11 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.miniuber.R;
+import com.example.miniuber.app.features.driverFeatures.DriversMapsActivity;
+import com.example.miniuber.app.features.riderFeatures.riderMapsActivity.RiderMapsActivity;
 import com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment.complaints.ReportProblem;
 import com.example.miniuber.entities.Driver;
+import com.example.miniuber.entities.Rider;
 import com.example.miniuber.entities.Trip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +40,18 @@ public class TripInfoActivity extends AppCompatActivity implements Serializable 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_info);
         trip = (Trip) getIntent().getSerializableExtra("trip");
+        String userType = getIntent().getStringExtra("userType");
+        if (userType.equals("driver")) {
+            Button button = findViewById(R.id.button4);
+            button.setText("Return To Maps");
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(TripInfoActivity.this, DriversMapsActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
         getSupportActionBar().hide();
         date = findViewById(R.id.tripdate);
         time = findViewById(R.id.triptime);

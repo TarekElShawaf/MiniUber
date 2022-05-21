@@ -131,7 +131,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="199dp"
-        android:onClick="makeComplaint"
         android:background="@drawable/roundedcorners"
+        android:onClick="makeComplaint"
         android:text="report problem" />
 </RelativeLayout>

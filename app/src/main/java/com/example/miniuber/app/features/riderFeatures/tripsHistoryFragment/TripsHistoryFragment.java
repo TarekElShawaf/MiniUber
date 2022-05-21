@@ -47,6 +47,7 @@ public class TripsHistoryFragment extends Fragment {
     TripsViewModel tripViewModel;
 
     String userPhoneNumber;
+    String userType;
 
 
 
@@ -57,55 +58,20 @@ public class TripsHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         tripViewModel = new TripsViewModel(getActivity().getApplication());
+        Trip tip = new Trip("home","1:4","college",2.3f,"25/30","+201111111111",3.5f,"+201142434195");
+        //tripViewModel.insertTrip(tip);
         View v = inflater.inflate(R.layout.fragment_trips_history_fragment, container, false);
         Bundle data = getArguments();
         if (data != null) {
             userPhoneNumber = data.getString("userPhoneNumber");
+            userType = data.getString("userType");
 
         }
 
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Trips");
-        //FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-       /* databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-
-                    trip = postSnapshot.getValue(Trip.class);
-                    Log.d("Nouran : " ,trip.getTripDate());
-                    Log.d("Nouran", userPhoneNumber);
-                    Log.d("Nouran", trip.getRiderPhoneNo());
-
-
-                    if (trip.getRiderPhoneNo().equals(userPhoneNumber)) {
-                        Log.d("Nouran : Dest", trip.getDestination());
-                        trips.add(new Trip(trip.getPickupPoint(), trip.getTime(), trip.getDestination(), trip.getFare(), trip.getTripDate(), trip.getDriverPhoneNo(),trip.getRate(),trip.getRiderPhoneNo()));
-                        //tripViewModel.insertTrip(trip);
-                   }
-                }
-               //adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                //Toast.makeText(getBaseContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-
-            }
-        });*/
-
-        // = new RecyclerViewAdapter(trips, adapter.listener);
-       //adapter = new RecyclerViewAdapter(trips, adapter.listener);
         RecyclerView rv =  v.findViewById(R.id.pt_fragment);
-
-
-        //tripViewModel.insertTrip(testTrip);
-
-       Log.d("Nouran All Trips size  : ", +tripViewModel.getTripByRiderId(userPhoneNumber).size()+"");
-       // Log.d("Nouran All Trips time  : "  , tripViewModel.getTripByRiderId(userPhoneNumber).get(0).getTime() +"");
-        Log.d("Nouran All Rider Trips size  : ", +tripViewModel.getTripByRiderId(userPhoneNumber).size()+"");
 
         adapter = new RecyclerViewAdapter(trips, new TripsInfoRecyclerViewListener() {
             @Override
@@ -113,11 +79,19 @@ public class TripsHistoryFragment extends Fragment {
 
                 Intent intent = new Intent(getContext(), TripInfoActivity.class);
                 intent.putExtra("trip", adapter.getTrips().get(position));
+                intent.putExtra("userType", userType);
+
                 startActivity(intent);
             }
 
         }, getContext());
-        adapter.setTrips(((ArrayList<Trip>) tripViewModel.getTripByRiderId(userPhoneNumber)));
+        if(userType.equals("rider")){
+            adapter.setTrips(((ArrayList<Trip>) tripViewModel.getTripByRiderId(userPhoneNumber)));
+        }
+        else{
+            adapter.setTrips(((ArrayList<Trip>) tripViewModel.getTripByDriverId(userPhoneNumber)));
+
+        }
 
         rv.setAdapter(adapter);
 
