@@ -142,7 +142,6 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
 
         }
         gettingName();
-
         searchMap = findViewById(R.id.searchMap);
         currentLocation = findViewById(R.id.gpsRider);
         searchDrivers=findViewById(R.id.searchDrivers);;
@@ -157,7 +156,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         mapFragment.getMapAsync(this);
         Window window = this.getWindow();
         window.setStatusBarColor(getResources().getColor(R.color.defaultBackground));
-        Toast.makeText(this,"Phone number is : "+ userPhoneNumber, Toast.LENGTH_SHORT).show();
+        ///Toast.makeText(this,"Phone number is : "+ userPhoneNumber, Toast.LENGTH_SHORT).show();
 
         getLocationPermission();
         searchForDrivers();
@@ -177,12 +176,12 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                     if (postDataSnapshot.child("phoneNumber").getValue().toString().equals(userPhoneNumber)) {
                         {
                             rider = postDataSnapshot.getValue(com.example.miniuber.entities.Rider.class);
+                            TextView textView = findViewById(R.id.textView4);
+                            textView.setText(rider.getName());
 
                             break;
                         }
                     }
-                    TextView textView = findViewById(R.id.textView4);
-                    textView.setText(rider.getName());
 
 
 
@@ -374,12 +373,12 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                                postDataSnapshot.child("rate").getRef().setValue(driverRateStars.getRating());
                            }
                        });
+                       ratingBar.setRating(driver.getRate());
+                       rider1.setText(driver.getName());
 
                        break;
                    }
                 }
-                ratingBar.setRating(driver.getRate());
-                rider1.setText(driver.getName());
 
             }
 

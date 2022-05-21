@@ -127,7 +127,6 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
         driverPhoneNumber = getIntent().getStringExtra("phoneNumber");
         if(driverPhoneNumber == null) {
             driverPhoneNumber="+201111111111";
-
         }
         gettingName();
         gettingCar();
@@ -153,7 +152,7 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postDataSnapshot : dataSnapshot.getChildren()) {
-                    if (postDataSnapshot.child("carPlateNumber").getValue().toString().equals("")) {
+                    if (postDataSnapshot.child("carPlateNumber").getValue().equals("0")) {
                         {
                             Toast.makeText(DriversMapsActivity.this, "You have no car", Toast.LENGTH_SHORT).show();
                             AppCompatButton searchRiders = findViewById(R.id.searchRiders);
