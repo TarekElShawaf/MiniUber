@@ -67,6 +67,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.maps.android.SphericalUtil;
 
 import java.io.IOException;
@@ -128,6 +129,8 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
             driverPhoneNumber="+201111111111";
 
         }
+        gettingName();
+        gettingCar();
         currentLocation = findViewById(R.id.gpsDriver);
 
 
@@ -144,6 +147,31 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
         getLocationPermission();
         searchRiders();
     }
+    private void gettingCar() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postDataSnapshot : dataSnapshot.getChildren()) {
+                    if (postDataSnapshot.child("carPlateNumber").getValue().toString().equals("")) {
+                        {
+                            Toast.makeText(DriversMapsActivity.this, "You have no car", Toast.LENGTH_SHORT).show();
+                            AppCompatButton searchRiders = findViewById(R.id.searchRiders);
+                            searchRiders.setVisibility(View.INVISIBLE);
+                            break;
+                        }
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
@@ -153,6 +181,37 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
 
 
 
+    }
+    private void gettingName() {
+        DatabaseReference driverRequest = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers");
+
+
+        driverRequest.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                com.example.miniuber.entities.Driver driver = null;
+                for (DataSnapshot postDataSnapshot : snapshot.getChildren()) {
+                    if (postDataSnapshot.child("phoneNumber").getValue().toString().equals(driverPhoneNumber)) {
+                        {
+                            driver = postDataSnapshot.getValue(com.example.miniuber.entities.Driver.class);
+                            TextView textView = findViewById(R.id.textView4);
+                            textView.setText(driver.getName());
+
+                            break;
+                        }
+                    }
+
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void settingNavigation() {

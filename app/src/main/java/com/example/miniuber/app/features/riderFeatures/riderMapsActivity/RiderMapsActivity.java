@@ -92,6 +92,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.http.GET;
 
 
@@ -140,6 +141,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             userPhoneNumber="+201111111111";
 
         }
+        gettingName();
 
         searchMap = findViewById(R.id.searchMap);
         currentLocation = findViewById(R.id.gpsRider);
@@ -162,6 +164,37 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         settingTime();
 
 
+    }
+    private void gettingName() {
+        DatabaseReference driverRequest = FirebaseDatabase.getInstance().getReference().child("Users").child("Riders");
+
+
+        driverRequest.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                com.example.miniuber.entities.Rider rider = null;
+                for (DataSnapshot postDataSnapshot : snapshot.getChildren()) {
+                    if (postDataSnapshot.child("phoneNumber").getValue().toString().equals(userPhoneNumber)) {
+                        {
+                            rider = postDataSnapshot.getValue(com.example.miniuber.entities.Rider.class);
+
+                            break;
+                        }
+                    }
+                    TextView textView = findViewById(R.id.textView4);
+                    textView.setText(rider.getName());
+
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
     private void settingDriverInformation(){
         binding.carImage.setOnClickListener(new View.OnClickListener() {
@@ -226,6 +259,8 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                 }
 
                 driverPhoneNumber = dataSnapshot.getKey();
+
+
                 binding.progressBar2.setVisibility(View.INVISIBLE);
                 putTripView();
                 double longitude = (double) dataSnapshot.child("l").child("1").getValue();
@@ -321,21 +356,30 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         dialog.findViewById(R.id.driverRealRate) ;
         ratingBar =dialog.findViewById(R.id.driverRateStars);
         TextView rider1 = dialog.findViewById(R.id.riderName);
-        DatabaseReference driverRequest = FirebaseDatabase.getInstance().getReference().child("Users").child("Riders");
+        DatabaseReference driverRequest = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers");
+
 
         driverRequest.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                com.example.miniuber.entities.Rider rider = null;
+                com.example.miniuber.entities.Driver driver = null;
                 for(DataSnapshot postDataSnapshot : snapshot.getChildren()){
                    if(postDataSnapshot.child("phoneNumber").getValue().toString().equals(driverPhoneNumber))
                    {
-                       rider = postDataSnapshot.getValue(com.example.miniuber.entities.Rider.class);
+                       driver = postDataSnapshot.getValue(com.example.miniuber.entities.Driver.class);
+                       RatingBar driverRateStars = dialog.findViewById(R.id.driverRateStars);
+                       driverRateStars.setOnClickListener(new View.OnClickListener() {
+                           @Override
+                           public void onClick(View v) {
+                               postDataSnapshot.child("rate").getRef().setValue(driverRateStars.getRating());
+                           }
+                       });
+
                        break;
                    }
                 }
-                ratingBar.setRating(rider.getRate());
-                rider1.setText(rider.getName());
+                ratingBar.setRating(driver.getRate());
+                rider1.setText(driver.getName());
 
             }
 
