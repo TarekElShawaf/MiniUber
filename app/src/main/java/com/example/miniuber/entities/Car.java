@@ -7,6 +7,8 @@ public class Car {
     private String color;
     private String plateNumber;
     private String driverPhoneNo;
+    private Driver driver;
+    private Location location ;
 
 
     public Car(String model, int year, String color, String plateNumber, String driverPhoneNo) {

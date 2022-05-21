@@ -354,10 +354,9 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         dialog.setContentView(R.layout.driver_details_diaglog);
         dialog.findViewById(R.id.driverRealRate) ;
         ratingBar =dialog.findViewById(R.id.driverRateStars);
+        TextView driverRealRate = dialog.findViewById(R.id.driverRealRate);
         TextView rider1 = dialog.findViewById(R.id.riderName);
         DatabaseReference driverRequest = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers");
-
-
         driverRequest.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -366,14 +365,8 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                    if(postDataSnapshot.child("phoneNumber").getValue().toString().equals(driverPhoneNumber))
                    {
                        driver = postDataSnapshot.getValue(com.example.miniuber.entities.Driver.class);
-                       RatingBar driverRateStars = dialog.findViewById(R.id.driverRateStars);
-                       driverRateStars.setOnClickListener(new View.OnClickListener() {
-                           @Override
-                           public void onClick(View v) {
-                               postDataSnapshot.child("rate").getRef().setValue(driverRateStars.getRating());
-                           }
-                       });
-                       ratingBar.setRating(driver.getRate());
+
+                       driverRealRate.setText(String.valueOf(driver.getRate()));
                        rider1.setText(driver.getName());
 
                        break;
@@ -385,6 +378,36 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+        RatingBar driverRateStars = dialog.findViewById(R.id.driverRateStars);
+        driverRateStars.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                DatabaseReference driverRequest = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers");
+                driverRequest.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        com.example.miniuber.entities.Driver driver = null;
+                        for(DataSnapshot postDataSnapshot : snapshot.getChildren()){
+                            if(postDataSnapshot.child("phoneNumber").getValue().toString().equals(driverPhoneNumber))
+                            {
+                                driver = postDataSnapshot.getValue(com.example.miniuber.entities.Driver.class);
+
+                                driver.setRate((int)ratingBar.getRating());
+                                Toast.makeText(getApplicationContext(), "Driver  rate is: " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
+
+                                break;
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
 

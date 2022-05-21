@@ -152,9 +152,10 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postDataSnapshot : dataSnapshot.getChildren()) {
-                    if (postDataSnapshot.child("carPlateNumber").getValue().equals("0")) {
+                    if (postDataSnapshot.child("carPlateNumber").getValue().equals("0")&&postDataSnapshot.child("phoneNumber").getValue().equals(driverPhoneNumber)) {
                         {
                             Toast.makeText(DriversMapsActivity.this, "You have no car", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DriversMapsActivity.this, "Request A Car From Employee", Toast.LENGTH_SHORT).show();
                             AppCompatButton searchRiders = findViewById(R.id.searchRiders);
                             searchRiders.setVisibility(View.INVISIBLE);
                             break;
@@ -418,6 +419,36 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
          rateRider.setVisibility(View.VISIBLE);
          ratingBar = findViewById(R.id.driverRateStars);
          ratingBar.setVisibility(View.VISIBLE);
+         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+             @Override
+             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                 DatabaseReference driverRequest = FirebaseDatabase.getInstance().getReference().child("Users").child("Riders");
+                 driverRequest.addListenerForSingleValueEvent(new ValueEventListener() {
+                     @Override
+                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                         com.example.miniuber.entities.Rider rider = null;
+                         for(DataSnapshot postDataSnapshot : snapshot.getChildren()){
+                             if(postDataSnapshot.child("phoneNumber").getValue().toString().equals(driverPhoneNumber))
+                             {
+                                 rider = postDataSnapshot.getValue(com.example.miniuber.entities.Rider.class);
+
+                                 rider.setRate((int)ratingBar.getRating());
+                                 Toast.makeText(getApplicationContext(), "Rider  rate is: " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
+
+                                 break;
+                             }
+                         }
+
+                     }
+
+                     @Override
+                     public void onCancelled(@NonNull DatabaseError error) {
+
+                     }
+                 });
+             }
+         });
+
          callRider = findViewById(R.id.driverPhoneNumber);
          callRider.setVisibility(View.VISIBLE);
          callRider.setOnClickListener(new View.OnClickListener() {

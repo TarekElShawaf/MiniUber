@@ -18,6 +18,7 @@ import com.example.miniuber.entities.Driver;
 import com.example.miniuber.entities.FormatChecker;
 import com.example.miniuber.entities.ModuleOption;
 
+import com.example.miniuber.entities.User;
 import com.example.miniuber.entities.UserFactory;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -59,13 +60,13 @@ public class SignUpDriverFragment extends Fragment {
                         Toast.makeText(v.getContext(), "your phone number or email has incorrect format"
                                 , Toast.LENGTH_SHORT).show();
                     } else {
-                        progressBar.setVisibility(View.VISIBLE);
                         String fullPhoneNo = "+" + countryCode.getSelectedCountryCode() + phoneNoWithoutCode;
+                        Driver driver1 = new Driver(name, email, fullPhoneNo, 2.1f, drivingLicense,"");
+                        progressBar.setVisibility(View.VISIBLE);
                         FireBaseChecker checker = new FireBaseChecker(ModuleOption.DRIVER, v.getContext(), progressBar);
-//                        Driver driver = new Driver(name, email, fullPhoneNo, "", 0, drivingLicense);
-                        Driver driver = (Driver) UserFactory.getUser("Driver",name,email,fullPhoneNo);
-                        driver.setDrivingLicense(drivingLicense);
-                        checker.checkIfUserHasAnExistingAccountUponSignUp(driver, () ->  addDriverDataToDatabase(driver,v));
+                        User driver =  UserFactory.getUser("Driver",name,email,fullPhoneNo);
+                        driver1.setDrivingLicense(drivingLicense);
+                        checker.checkIfUserHasAnExistingAccountUponSignUp(driver, () ->  addDriverDataToDatabase(driver1,v));
 
                     }
                 });

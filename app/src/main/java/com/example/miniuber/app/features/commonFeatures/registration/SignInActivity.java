@@ -22,6 +22,7 @@ import com.example.miniuber.R;
 
 import com.example.miniuber.entities.Rider;
 import com.example.miniuber.entities.SignOption;
+import com.example.miniuber.entities.User;
 import com.example.miniuber.entities.UserFactory;
 import com.hbb20.CountryCodePicker;
 
@@ -174,7 +175,7 @@ public class SignInActivity extends AppCompatActivity {
 
                 String fullNumber = "+" + countryCodePicker.getSelectedCountryCode() + phoneNoWithoutCountryCode;
                 //Rider rider = new Rider(name,email,fullNumber,"",0);
-                Rider rider = (Rider) UserFactory.getUser("Rider",name,email,fullNumber);
+                User rider =  UserFactory.getUser("Rider",name,email,fullNumber);
                 checker.checkIfUserHasAnExistingAccountUponSignUp(rider, () -> {
                     Intent intent = new Intent(getBaseContext(), PhoneVerificationActivity.class);
                     intent.putExtra("rider", rider);

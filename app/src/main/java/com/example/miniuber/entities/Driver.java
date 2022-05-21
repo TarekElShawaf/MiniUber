@@ -6,6 +6,8 @@ public class Driver extends User implements Serializable {
 
     private  String  drivingLicense ;
     private  String  carPlateNumber ;
+    private  Car car ;
+    private Location location ;
 
 
     public Driver() {

@@ -15,6 +15,7 @@ import com.example.miniuber.entities.Trip;
 
 @Database(entities = {Trip.class} ,version = 22, exportSchema = false)
 public abstract class TripsDatabase extends RoomDatabase {
+    TripDoa tripDoa;
 
     private static TripsDatabase instance;
 

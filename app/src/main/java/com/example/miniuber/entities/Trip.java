@@ -29,6 +29,7 @@ public class Trip implements Serializable {
 
 
 
+
     public Trip(String pickupPoint, String time, String destination, Float fare, String tripDate, String driverPhoneNumber, float rate, String riderPhoneNumber) {
         this.pickupPoint = pickupPoint;
         this.time = time;
