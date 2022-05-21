@@ -336,7 +336,7 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
          driverRate = findViewById(R.id.driverRate);
          driverRate.setVisibility(View.VISIBLE);
          riderName = findViewById(R.id.riderName);
-         riderName.setText(riderPhoneNumber);
+        /* riderName.setText(riderPhoneNumber);
          DatabaseReference driverRef = FirebaseDatabase.getInstance().getReference().child("Users").child(riderPhoneNumber);
          driverRef.child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
              @Override
@@ -346,7 +346,7 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
                      riderName.setText(name);
                  }
              }
-         });
+         });*/
          riderName.setVisibility(View.VISIBLE);
          textView = findViewById(R.id.textView);
          textView.setVisibility(View.VISIBLE);
@@ -399,8 +399,8 @@ public class DriversMapsActivity extends AppCompatActivity implements OnMapReady
             }
             this.googleMap.setMyLocationEnabled(true);
             this.googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-            setMapStyle();
-            //setLocationMark();
+            //setMapStyle();
+            //*setLocationMark();
             init();
 
         }

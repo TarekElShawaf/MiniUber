@@ -22,6 +22,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -49,7 +50,9 @@ import com.example.miniuber.app.features.riderFeatures.personalInfo.PersonalInfo
 import com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment.TripsHistoryFragment;
 
 
+import com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment.TripsViewModel;
 import com.example.miniuber.databinding.ActivityMapsBinding;
+import com.example.miniuber.entities.Trip;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
@@ -119,6 +122,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     private int searchRadius = 1;
     private String driverPhoneNumber;
     private Boolean isDriverFound = false;
+    private TripsViewModel tripsViewModel = new TripsViewModel(getApplication());
 
 
     @Override
@@ -226,7 +230,9 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                     ids++;
                 moveCamera(driverLocation,defaultZoom, "Your Driver",2 );
                 double distance = SphericalUtil.computeDistanceBetween(markersHashMap.get(0),markersHashMap.get(destinationId));
-                binding.tripDistance.setText(String.valueOf(String.format("%.1f",(distance))+" m"));
+                String price =String.valueOf(String.format("%.1f",(distance))+" m");
+                binding.tripDistance.setText(price);
+
                 binding.tripPrice.setText(String.valueOf(String.format("%.2f",(distance*0.4))+"$"));
                 binding.tripTime.setText(String.valueOf(binding.timeChecker.getHour()+":"+binding.timeChecker.getMinute()));
                 binding.confirmTrip.setVisibility(View.VISIBLE);
@@ -237,6 +243,9 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                         showDriverDialog();
                         DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("User Requests");
                         userRequest.child(userPhoneNumber).getRef().removeValue();
+                        Trip trip = new Trip(pickUpPoint.getText().toString(),binding.timeChecker.getHour() +":"+ binding.timeChecker.getMinute(),searchMap.getText().toString(),
+                                Float.parseFloat(price),Calendar.getInstance().getTime().toString(),driverPhoneNumber,ratingBar.getRating(),userPhoneNumber);
+                        tripsViewModel.insertTrip(trip);
                         //DatabaseReference driverRequest = FirebaseDatabase.getInstance().getReference().child("AvailableDrivers");
                        // Toast.makeText(RiderMapsActivity.this,"Driver Found"+driverRequest.child("+201142434195").child("driverStatus").toString(),Toast.LENGTH_SHORT).show();
                     }
@@ -298,11 +307,13 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         binding.timeChecker.setVisibility(View.INVISIBLE);
 
     }
+    RatingBar ratingBar;
     private void showDriverDialog(){
         final Dialog dialog = new Dialog(this);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.driver_details_diaglog);
         dialog.findViewById(R.id.driverRealRate) ;
+         ratingBar =dialog.findViewById(R.id.driverRateStars);
         dialog.findViewById(R.id.driverPhoneNumber).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -313,6 +324,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             }
         });
         dialog.show();
+
 
     }
     private void putTripView(){
