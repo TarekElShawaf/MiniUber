@@ -52,6 +52,7 @@ import com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment.Trip
 
 import com.example.miniuber.app.features.riderFeatures.tripsHistoryFragment.TripsViewModel;
 import com.example.miniuber.databinding.ActivityMapsBinding;
+import com.example.miniuber.entities.Rider;
 import com.example.miniuber.entities.Trip;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
@@ -78,10 +79,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.maps.android.SphericalUtil;
 
 import java.io.IOException;
+
+import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -235,6 +239,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                 binding.tripDistance.setText(price);
 
                 binding.tripPrice.setText(String.valueOf(String.format("%.2f",(distance*0.4))+"$"));
+                String tripPricing = (String.format("%.2f",(distance*0.4)));
                 binding.tripTime.setText(String.valueOf(binding.timeChecker.getHour()+":"+binding.timeChecker.getMinute()));
                 binding.confirmTrip.setVisibility(View.VISIBLE);
                 binding.confirmTrip.setOnClickListener(new View.OnClickListener() {
@@ -244,8 +249,7 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                         showDriverDialog();
                         DatabaseReference userRequest = FirebaseDatabase.getInstance().getReference().child("User Requests");
                         userRequest.child(userPhoneNumber).getRef().removeValue();
-                        Trip trip = new Trip(pickUpPoint.getText().toString(),binding.timeChecker.getHour() +":"+ binding.timeChecker.getMinute(),searchMap.getText().toString(),
-                                Float.parseFloat(price),Calendar.getInstance().getTime().toString(),driverPhoneNumber,ratingBar.getRating(),userPhoneNumber);
+                        Trip trip = new Trip(pickUpPoint.getText().toString(),binding.timeChecker.getHour() +":"+ binding.timeChecker.getMinute(),searchMap.getText().toString(), Float.parseFloat(tripPricing),Calendar.getInstance().getTime().toString(),driverPhoneNumber,ratingBar.getRating(),userPhoneNumber);
                         tripsViewModel.insertTrip(trip);
                         //DatabaseReference driverRequest = FirebaseDatabase.getInstance().getReference().child("AvailableDrivers");
                        // Toast.makeText(RiderMapsActivity.this,"Driver Found"+driverRequest.child("+201142434195").child("driverStatus").toString(),Toast.LENGTH_SHORT).show();
@@ -311,10 +315,36 @@ public class RiderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     RatingBar ratingBar;
     private void showDriverDialog(){
         final Dialog dialog = new Dialog(this);
+
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.driver_details_diaglog);
         dialog.findViewById(R.id.driverRealRate) ;
-         ratingBar =dialog.findViewById(R.id.driverRateStars);
+        ratingBar =dialog.findViewById(R.id.driverRateStars);
+        TextView rider1 = dialog.findViewById(R.id.riderName);
+        DatabaseReference driverRequest = FirebaseDatabase.getInstance().getReference().child("Users").child("Riders");
+
+        driverRequest.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                com.example.miniuber.entities.Rider rider = null;
+                for(DataSnapshot postDataSnapshot : snapshot.getChildren()){
+                   if(postDataSnapshot.child("phoneNumber").getValue().toString().equals(driverPhoneNumber))
+                   {
+                       rider = postDataSnapshot.getValue(com.example.miniuber.entities.Rider.class);
+                       break;
+                   }
+                }
+                ratingBar.setRating(rider.getRate());
+                rider1.setText(rider.getName());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         dialog.findViewById(R.id.driverPhoneNumber).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
