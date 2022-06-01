@@ -1,4 +1,4 @@
-# MiniUber
+# MiniUber App
 Mini Uber is an android mobile application using java . 
 
 ## The app has three different modules : 
