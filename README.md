@@ -1,7 +1,7 @@
 # MiniUber
 Mini Uber is an android mobile application using java . 
 
-## qsuThe app has three different modules : 
+## The app has three different modules : 
 
 Rider , Driver , Employee ( Administrator)
 ## Design Patterns used : 
